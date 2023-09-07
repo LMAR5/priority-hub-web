@@ -21,7 +21,7 @@
 |   Trevor Eichler   | teichler@mail.sfsu.edu |   trevor-e123   |  GitHub Master |
 |    Luis Aguilar    | teichler@mail.sfsu.edu |  luisaguilar159 |  Team Leader   |
 |      Lam Tran      | teichler@mail.sfsu.edu |   LamTran2530   |  Backend Lead  |
-|     Tyler Tam      | teichler@mail.sfsu.edu |     tytamz2     |  Scrum Master  |
+|     Tyler Tam      | ttam2@mail.sfsu.edu |     tytamz2     |  Scrum Master  |
 |      Andy Li       | teichler@mail.sfsu.edu |    ali32901     |  Front Lead    |
 __________________________________________________________________________________
 
