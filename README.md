@@ -22,7 +22,7 @@
 |    Luis Aguilar    | teichler@mail.sfsu.edu |  luisaguilar159 |  Team Leader   |
 |      Lam Tran      | teichler@mail.sfsu.edu |   LamTran2530   |  Backend Lead  |
 |     Tyler Tam      | ttam2@mail.sfsu.edu |     tytamz2     |  Scrum Master  |
-|      Andy Li       | teichler@mail.sfsu.edu |    ali32901     |  Front Lead    |
+|      Andy Li       | ali27@mail.sfsu.edu |    ali32901     |  Front Lead    |
 __________________________________________________________________________________
 
 **NO code should be stored in the root of your repository. You may rename the
