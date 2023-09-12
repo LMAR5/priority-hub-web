@@ -37,8 +37,8 @@ const Global = {
             path: "/MemberTyler",
             name: "Tyler Tam",
             role: "Scrum Master",
-            picture: require('./media/example.png'),
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictumst quisque sagittis purus sit amet volutpat consequat mauris nunc. Egestas dui id ornare arcu odio ut sem nulla. Justo eget magna fermentum iaculis eu non diam phasellus vestibulum. Porta non pulvinar neque laoreet suspendisse interdum consectetur libero id. Quis auctor elit sed vulputate. "
+            picture: require('./media/TylerTam.jpeg'),
+            description: "My name Is Tyler Tam, I'm from San Francisco and currently a senior at SF State. In my free time I enjoy playing online mutiplayer and stratgey games, along with watching youtube videos"
         }
     ]
 }
