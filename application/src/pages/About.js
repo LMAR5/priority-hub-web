@@ -1,8 +1,9 @@
 import React from 'react';
 import '../css/About.css';
 import {
-    Link,
+    Link, useNavigate
 } from 'react-router-dom';
+import Global from '../GlobalConstants';
 
 const About = () => {
     return (
@@ -16,7 +17,14 @@ const About = () => {
             {/* Links each button to corresponding member's about page in the page folder.
                 ex: '/MemberAndy' links to MemberAndy.js*/}
             <div className = "members">
-                <Link to=''>
+                {Global.team.map((member, idx) =>
+                    <Link to='/MemberGeneric' key={idx} state={member}>
+                    <button>
+                        <p>{member.name}<br /> {member.role}</p>
+                    </button>
+                    </Link>
+                )}
+                {/* <Link to=''>
                 <button>
                     <p>Luis Aguilar<br />Team Leader</p>
                 </button>
@@ -41,7 +49,7 @@ const About = () => {
                     <button>
                         <p>Tyler Tam<br />Scrum Master</p>
                     </button>
-                </Link>
+                </Link> */}
                 
             </div>
         </div>  

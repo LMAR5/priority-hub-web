@@ -4,10 +4,9 @@ import {
     Routes,
     Route,
 } from 'react-router-dom';
-
-import About from './pages/About';
-import MemberAndy from './pages/MemberAndy';
-
+// import About from './pages/About';
+// import MemberAndy from './pages/MemberAndy';
+import AppRoutes from './AppRoutes';
 
 const App = () => {
 
@@ -15,8 +14,12 @@ const App = () => {
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' element={<About />} />
-                    <Route path='/MemberAndy' element={<MemberAndy />} />
+                    {AppRoutes.map((route, idx) => {
+                        const { element, ...rest} = route;
+                        return <Route key={idx} {...rest} element={element} />;
+                    })}
+                    {/* <Route path='/' element={<About />} />
+                    <Route path='/MemberAndy' element={<MemberAndy />} /> */}
                 </Routes>
             </BrowserRouter>
              
