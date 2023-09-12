@@ -45,7 +45,7 @@ const About = () => {
                         <p>Trevor Eichler<br />GitHub Master</p>
                     </button>
                 </Link>
-                <Link to=''>
+                <Link to='/MemberTyler'>
                     <button>
                         <p>Tyler Tam<br />Scrum Master</p>
                     </button>
