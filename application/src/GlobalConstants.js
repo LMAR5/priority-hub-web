@@ -22,7 +22,7 @@ const Global = {
             name: "Lam Tran",
             role: "Back Lead",
             picture: require('./media/example.png'),
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictumst quisque sagittis purus sit amet volutpat consequat mauris nunc. Egestas dui id ornare arcu odio ut sem nulla. Justo eget magna fermentum iaculis eu non diam phasellus vestibulum. Porta non pulvinar neque laoreet suspendisse interdum consectetur libero id. Quis auctor elit sed vulputate. "
+            description: "Hello! My name is Lam Tran and this is my fifth year at SFSU. I usually spend my time playing video games and researching topics that peak my interests."
         },
         {
             id: 4,
