@@ -21,8 +21,8 @@ const Global = {
             path: "/MemberLam",
             name: "Lam Tran",
             role: "Back Lead",
-            picture: require('./media/example.png'),
-            description: "Hello! My name is Lam Tran and this is my fifth year at SFSU. I usually spend my time playing video games and researching topics that peak my interests."
+            picture: require('./media/Lam.jpg'),
+            description: "Hello! My name is Lam Tran and this is my fifth year at SFSU. I usually spend my time playing video games and researching topics that peak my interest."
         },
         {
             id: 4,
