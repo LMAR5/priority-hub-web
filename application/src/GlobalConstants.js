@@ -29,8 +29,8 @@ const Global = {
             path: "/MemberTrevor",
             name: "Trevor Eichler",
             role: "Github Master",
-            picture: require('./media/example.png'),
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictumst quisque sagittis purus sit amet volutpat consequat mauris nunc. Egestas dui id ornare arcu odio ut sem nulla. Justo eget magna fermentum iaculis eu non diam phasellus vestibulum. Porta non pulvinar neque laoreet suspendisse interdum consectetur libero id. Quis auctor elit sed vulputate. "
+            picture: require('./media/Eichler_Trevor.jpeg'),
+            description: "Hello! My name is Trevor Eichler and I am a fifth year student at SFSU. I have two major hobby interest, the first one being sports and the second one being computing/gaming. I enjoy both playing and watching sports, and I enjoy a broad range of sports from soccer to baseball to basketball to swimming. Just about any sport is enjoyable for me. I also enjoy the acts of programming and interesting with new technologies as well as playing video games with friends in my free time."
         },
         {
             id: 5,
