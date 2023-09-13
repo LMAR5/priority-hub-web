@@ -30,7 +30,7 @@ const Global = {
             name: "Trevor Eichler",
             role: "Github Master",
             picture: require('./media/Eichler_Trevor.jpeg'),
-            description: "Hello!git statI have two major hobby interest, the first one being sports and the second one being computing/gaming. I enjoy both playing and watching sports, and I enjoy a broad range of sports from soccer to baseball to basketball to swimming. Just about any sport is enjoyable for me. I also enjoy the acts of programming and interesting with new technologies as well as playing video games with friends in my free time."
+            description: "Hello! I have two major hobby interest, the first one being sports and the second one being computing/gaming. I enjoy both playing and watching sports, and I enjoy a broad range of sports from soccer to baseball to basketball to swimming. Just about any sport is enjoyable for me. I also enjoy the acts of programming and interesting with new technologies as well as playing video games with friends in my free time."
         },
         {
             id: 5,
