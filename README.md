@@ -1,6 +1,6 @@
 # CSC648-fall23-04-team05 Repository
 
-**Application URL: <https://example.com>**
+**Application URL: <http://54.162.22.91>**
 
 ## Before completing Milestone 0
 
@@ -19,10 +19,10 @@
 |    Student Name    |     Student Email      | GitHub Username | Student's role |
 | :----------------: | :--------------------: | :-------------: | :------------: |
 |   Trevor Eichler   | teichler@mail.sfsu.edu |   trevor-e123   |  GitHub Master |
-|    Luis Aguilar    | teichler@mail.sfsu.edu |  luisaguilar159 |  Team Leader   |
-|      Lam Tran      | teichler@mail.sfsu.edu |   LamTran2530   |  Backend Lead  |
-|     Tyler Tam      | ttam2@mail.sfsu.edu |     tytamz2     |  Scrum Master  |
-|      Andy Li       | ali27@mail.sfsu.edu |    ali32901     |  Front Lead    |
+|    Luis Aguilar    | laguilar@sfsu.edu      |  luisaguilar159 |  Team Leader   |
+|      Lam Tran      | ltran24@mail.sfsu.edu  |   LamTran2530   |  Backend Lead  |
+|     Tyler Tam      | ttam2@mail.sfsu.edu    |     tytamz2     |  Scrum Master  |
+|      Andy Li       | ali27@mail.sfsu.edu    |    ali32901     |  Front Lead    |
 __________________________________________________________________________________
 
 **NO code should be stored in the root of your repository. You may rename the
