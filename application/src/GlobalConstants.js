@@ -6,7 +6,7 @@ const Global = {
             name: "Luis Aguilar",
             role: "Team Lead",
             picture: require('./media/laguilar.jpeg'),
-            description: "This is a short description of myself."
+            description: "My name is Luis Aguilar, I'm from Lima-Peru, and I am currently a first year graduate student at SFSU. I usually spend my free time going out with my friends, listening to music/podcasts, and watching sports. I am a big fan of football and Formula 1."
         },
         {
             id: 2,
