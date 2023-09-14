@@ -1,4 +1,4 @@
-# CSC648-fa23-SectionName-teamNN Repository
+# CSC648-fall23-04-team05 Repository (Dev branch)
 
 **Application URL: <http://54.162.22.91>**
 
