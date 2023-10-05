@@ -1,4 +1,4 @@
-# CSC648-fall23-04-team05 Repository (Dev branch)
+# CSC648-fall23-04-team05 Repository (Prototype branch)
 
 **Application URL: <http://54.162.22.91>**
 
