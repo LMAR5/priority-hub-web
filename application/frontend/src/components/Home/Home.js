@@ -29,11 +29,9 @@ function Home() {
     let showStatusContent = loadingBackStatus ? <h2>Loading...</h2> : renderStatusCheck();
 
     return(
-        <div>            
-            <Container>
-                {/* Put the table of tasks here */}
-                {showStatusContent}
-            </Container>
+        <div>                        
+            {/* Put the table of tasks here */}
+            {showStatusContent}
         </div>
     );
 }
