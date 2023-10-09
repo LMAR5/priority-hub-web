@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const PORT = 3001;
+require('dotenv').config();
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -15,9 +16,9 @@ app.use(express.urlencoded({ extended: false }));
 //Enable CORS
 app.use(cors());
 
-app.use('/GenericController', genericRoute);
-app.use('/CategoryController', categoryRoute);
-app.use('/TaskController', taskRoute);
+app.use('/api/GenericController', genericRoute);
+app.use('/api/CategoryController', categoryRoute);
+app.use('/api/TaskController', taskRoute);
 
 app.listen(
     PORT,

@@ -9,10 +9,10 @@ router.use((request, response, next) => {
 // Uri: http://localhost:3001/GenericController/GetStatusCheck
 // Type: GET
 // Description: Methods that checks that backend is up.
-router.get('/GetStatusCheck', (request, response) => {
+router.get('/GetStatusCheck', (request, response) => {    
     response.status(200).send(
         {
-            message: 'Backend working on PORT 3001'
+            message: `Backend working on PORT ${process.env.PORT}`
         }
     );
 });

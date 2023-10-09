@@ -1,6 +1,7 @@
 import React from 'react';
 import CustomNavBar from './CustomNavBar';
 import Container from 'react-bootstrap/esm/Container';
+import CustomFooter from './CustomFooter';
 
 function Layout(props){
     return(
@@ -8,6 +9,7 @@ function Layout(props){
             <CustomNavBar />
             <Container>
                 {props.children}
+                <CustomFooter />
             </Container>
         </div>
     );

@@ -1,6 +1,6 @@
 const GenericService = {
     getCheckStatus: function (){
-        const checkstatus = fetch('http://localhost:3001/GenericController/GetStatusCheck')
+        const checkstatus = fetch('http://localhost:3001/api/GenericController/GetStatusCheck')
         .then(response => response.json())
         .then((data) => {
             return data;
