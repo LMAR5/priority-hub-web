@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-function CustomNavBar(){
+function CustomNavBar() {
     return (
         <header>
             <Navbar expand="lg" bg='dark' data-bs-theme='dark'>
@@ -14,10 +14,10 @@ function CustomNavBar(){
                         <Nav className='me-auto'>
                             <Nav.Link href='/'>Home</Nav.Link>
                             <Nav.Link href='/'>Tasks</Nav.Link>
-                            <Nav.Link href='/'>Categories</Nav.Link>
+                            <Nav.Link href='/Categories'>Categories</Nav.Link>
                             <Nav.Link href='/About'>About</Nav.Link>
                         </Nav>
-                    </Navbar.Collapse>                    
+                    </Navbar.Collapse>
                 </Container>
             </Navbar>
         </header>
