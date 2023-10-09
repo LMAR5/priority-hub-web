@@ -14,7 +14,7 @@ router.use((request, response, next) => {
 // Description: Get list of all the tasks in DB
 
 
-// Uri: http://localhost:3001/TaskController/SearchTask
+// Uri: http://localhost:3001/TaskController/SearchTask?key=[searchterm]
 // Type: GET
 // Description: Search a task by its name or other fields sending a keyword from frontend
 

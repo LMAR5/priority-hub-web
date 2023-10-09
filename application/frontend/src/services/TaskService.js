@@ -3,9 +3,19 @@ const TaskService = {
         //Perform fetch call here
         //Handle response from backend
     },
-    searchTask: function() {
+    searchTasks: function(searchKey) {
+        const url = "http://localhost:3001/TaskController/SearchTask?="
+        const searchResult = fetch(url.concat(searchKey))
+        .then(response => response.json())
+        .then((data) => {
+            return data;
+        })
+        .catch((error) => { 
+            console.log(error.message);
+        });
         //Perform fetch call here
         //Handle response from backend
+        return searchResult;
     }
 }
 

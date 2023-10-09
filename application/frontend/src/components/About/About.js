@@ -14,8 +14,8 @@ const About = () => {
             <div className="members">
                 {Global.teamAbout.map((member, idx) =>
                     <Link to='/MemberGeneric' key={idx} state={member}>
-                        <button>
-                            <p>{member.name}<br /> {member.role}</p>
+                        <button className="w-100">
+                            <p className="mt-3">{member.name}<br /> {member.role}</p>
                         </button>
                     </Link>
                 )}
