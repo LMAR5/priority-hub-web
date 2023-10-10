@@ -1,4 +1,4 @@
-const { Router } = require('express');
+const { Router, request } = require('express');
 //Import MySQL connection
 const db = require('../database');
 
@@ -12,6 +12,10 @@ router.use((request, response, next) => {
 // Uri: http://localhost:3001/TaskController/GetAllTasks
 // Type: GET
 // Description: Get list of all the tasks in DB
+router.get('/GetTask', async (request, response) => {
+    const results = await db.promise.query(`SELECT * FROM Task`);
+    response.status(200).send(results[0]);
+});
 
 
 // Uri: http://localhost:3001/api/TaskController/SearchTask?key=dog
