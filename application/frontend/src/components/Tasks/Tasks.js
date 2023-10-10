@@ -10,8 +10,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 const Tasks = () => {
 
-    const [loadingTaskTable, setLoadingTaskTable] = useState(false);
-    const [loadingSearchBar, setLoadingSearchBar] = useState(false);
+    const [loadingTaskTable, setLoadingTaskTable] = useState(true);
+    const [lstTasks, setLstTasks] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
 
     const renderTaskTable = () =>{
@@ -29,14 +29,14 @@ const Tasks = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {jsonData.map((info, idx) => 
+                    {lstTasks.map((info, idx) => 
                         <tr key={idx}>
-                            <td>{info.title}</td>
+                            <td>{info.Title}</td>
                             <td>{info.category}</td>
-                            <td>{info.status}</td>
-                            <td>{info.priority}</td>
-                            <td>{info.duedate}</td>
-                            <td>{info.lastupdateddatetime}</td>
+                            <td>{info.Status}</td>
+                            <td>{info.Priority}</td>
+                            <td>{info.DueDate}</td>
+                            <td>{info.LastUpdatedDateTime}</td>
                         </tr>
                     )}
                 </tbody>
@@ -44,15 +44,16 @@ const Tasks = () => {
         );
     }
 
-    const updateSearchTermBar = (event) => {
-        //console.log(event.target.value);
+    const updateSearchTermBar = (event) => {    
         setSearchTerm(event.target.value);
     }
 
     const performSearch = () => {
-        TaskService.searchTasks().then((data) => {
+        TaskService.searchTasks(searchTerm).then((data) => {
             console.log("Search task response:",data);
             //Update variable that stores the list of tasks from backend.
+            setLstTasks(data);
+            setLoadingTaskTable(false);
         });
     }
 
@@ -68,8 +69,8 @@ const Tasks = () => {
         );
     }
 
-    let contentTable = loadingTaskTable ? <h2>Loading...</h2> : renderTaskTable();
-    let showSearchBard = loadingSearchBar ? <h2>Loading...</h2> : renderSearchBar();
+    let contentTable = loadingTaskTable ? <p>Loading...</p> : renderTaskTable();
+    let showSearchBard = renderSearchBar();
 
     return(
         <div>
@@ -77,13 +78,13 @@ const Tasks = () => {
                 <Col md={{ span: 4, offset: 8 }}>{showSearchBard}</Col>
             </Row>
             <Row className="mt-3">
-            <Col>
-                <h1>List of tasks</h1>
-                {contentTable}
-            </Col>
-        </Row>
+                <Col>
+                    <h1>List of tasks</h1>
+                    {contentTable}
+                </Col>
+            </Row>
         </div>                
-        );
+    );
 };
 
 export default Tasks;

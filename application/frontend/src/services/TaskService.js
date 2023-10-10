@@ -4,7 +4,7 @@ const TaskService = {
         //Handle response from backend
     },
     searchTasks: function(searchKey) {
-        const url = "http://localhost:3001/api/TaskController/SearchTask?="
+        const url = "http://localhost:3001/api/TaskController/SearchTask?key="
         const searchResult = fetch(url.concat(searchKey))
         .then(response => response.json())
         .then((data) => {

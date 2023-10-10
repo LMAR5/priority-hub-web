@@ -19,7 +19,7 @@ function Home() {
     const renderStatusCheck = () => {
         return(
             <Stack gap={2} direction='horizontal' className="mt-3">
-                <Button variant="primary" onClick={() => {getBackendStatus()}}>Check Status</Button>
+                <Button variant="primary" onClick={() => {getBackendStatus()}}>Check Status</Button>                
                 <p>Status: {backStatus}</p>
             </Stack>
         );
