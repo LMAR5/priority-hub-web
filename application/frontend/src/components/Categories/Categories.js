@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CategoriesTable from './CategoriesTable';
 import CategoryService from '../../services/CategoryService'
 import Button from 'react-bootstrap/Button';
@@ -15,10 +15,10 @@ const Categories = () => {
 
 
   const renderCategoryTable = () => {
-    
-      return(
-        <CategoriesTable /> 
-      )
+
+    return (
+      <CategoriesTable />
+    )
   }
 
   const updateSearchTermBar = (event) => {
@@ -28,39 +28,39 @@ const Categories = () => {
 
   const performSearch = () => {
     CategoryService.searchCategory().then((data) => {
-        console.log("Search Category response:",data);
-        //Update variable that stores the list of categories from backend.
+      console.log("Search Category response:", data);
+      //Update variable that stores the list of categories from backend.
     });
   }
 
   const renderSearchBar = () => {
-    return(
-        <InputGroup className="mb-1 mt-3">
-            <Form.Control
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={(event) => {updateSearchTermBar(event)}} />
-            <Button variant="primary" onClick={() => {performSearch()}}>Search</Button>
-        </InputGroup>
+    return (
+      <InputGroup className="mb-1 mt-3">
+        <Form.Control
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(event) => { updateSearchTermBar(event) }} />
+        <Button variant="primary" onClick={() => { performSearch() }}>Search</Button>
+      </InputGroup>
     );
   }
 
   let contentTable = loadingCategoryTable ? <h2>Loading...</h2> : renderCategoryTable();
   let showSearchBard = loadingSearchBar ? <h2>Loading...</h2> : renderSearchBar();
 
-  return(
+  return (
     <div>
-        <Row>
-            <Col md={{ span: 4, offset: 8 }}>{showSearchBard}</Col>
-        </Row>
-        <Row className="mt-3">
+      <Row>
+        <Col md={{ span: 4, offset: 8 }}>{showSearchBard}</Col>
+      </Row>
+      <Row className="mt-3">
         <Col>
-            <h1>Categories</h1>
-            {contentTable}
+          <h1>Categories</h1>
+          {contentTable}
         </Col>
-    </Row>
-    </div>                
-    );
+      </Row>
+    </div>
+  );
 
 };
 

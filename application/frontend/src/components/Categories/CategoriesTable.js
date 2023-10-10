@@ -7,9 +7,9 @@ function CategoriesTable() {
 
   //Maps all the elements from the JSON file to be used later
   const Data = JsonData.map(
-    (info) => {
+    (info, idx) => {
       return (
-        <tr>
+        <tr key={idx}>
           <td>{info.id}</td>
           <td>{info.title}</td>
           <td>{info.description}</td>
