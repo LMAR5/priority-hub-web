@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
 import GenericService from '../../services/GenericService';
 import Row from 'react-bootstrap/Row';
+import Alert from 'react-bootstrap/Alert';
+
 
 function Home() {
     //State variables    
@@ -29,11 +31,13 @@ function Home() {
 
     return(
         <div>            
-            <Row className="mt-3 mb-3 text-center">
-                <h1>Welcome to our Protototype App</h1>
+            <Row className="mt-3 text-center">
+                <Alert key='secondary' variant='secondary'>
+                    <h1>Welcome to our Protototype App</h1>
+                </Alert>
             </Row>
             <Row>
-            {showStatusContent}
+                {showStatusContent}
             </Row>
         </div>
     );

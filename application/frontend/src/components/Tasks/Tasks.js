@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import jsonData from './TasksJSONSample.json'
 import TaskService from '../../services/TaskService'
@@ -13,6 +13,18 @@ const Tasks = () => {
     const [loadingTaskTable, setLoadingTaskTable] = useState(true);
     const [lstTasks, setLstTasks] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+
+    useEffect(() => {
+        //Get list of tasks once this component loads
+        getAllTasksData();
+    }, []);
+
+    const getAllTasksData = () => {
+        TaskService.getAllTasks().then((data) => {            
+            setLstTasks(data);
+            setLoadingTaskTable(false);
+        });
+    }
 
     const renderTaskTable = () =>{
 

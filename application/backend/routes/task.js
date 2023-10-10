@@ -12,8 +12,8 @@ router.use((request, response, next) => {
 // Uri: http://localhost:3001/TaskController/GetAllTasks
 // Type: GET
 // Description: Get list of all the tasks in DB
-router.get('/GetTask', async (request, response) => {
-    const results = await db.promise.query(`SELECT * FROM Task`);
+router.get('/GetAllTasks', async (request, response) => {
+    const results = await db.promise().query(`SELECT * FROM Task`);
     response.status(200).send(results[0]);
 });
 
