@@ -20,28 +20,28 @@ const Tasks = () => {
     }, []);
 
     const getAllTasksData = () => {
-        TaskService.getAllTasks().then((data) => {            
+        TaskService.getAllTasks().then((data) => {
             setLstTasks(data);
             setLoadingTaskTable(false);
         });
     }
 
-    const renderTaskTable = () =>{
+    const renderTaskTable = () => {
 
-        return(
+        return (
             <Table striped bordered hover>
                 <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Status</th>
-                    <th>Priority</th>
-                    <th>DueDate</th>
-                    <th>Last modification</th>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>DueDate</th>
+                        <th>Last modification</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {lstTasks.map((info, idx) => 
+                    {lstTasks.map((info, idx) =>
                         <tr key={idx}>
                             <td>{info.Title}</td>
                             <td>{info.category}</td>
@@ -56,13 +56,13 @@ const Tasks = () => {
         );
     }
 
-    const updateSearchTermBar = (event) => {    
+    const updateSearchTermBar = (event) => {
         setSearchTerm(event.target.value);
     }
 
     const performSearch = () => {
         TaskService.searchTasks(searchTerm).then((data) => {
-            console.log("Search task response:",data);
+            console.log("Search task response:", data);
             //Update variable that stores the list of tasks from backend.
             setLstTasks(data);
             setLoadingTaskTable(false);
@@ -70,13 +70,13 @@ const Tasks = () => {
     }
 
     const renderSearchBar = () => {
-        return(
+        return (
             <InputGroup className="mb-1 mt-3">
                 <Form.Control
                     placeholder="Search..."
                     value={searchTerm}
-                    onChange={(event) => {updateSearchTermBar(event)}} />
-                <Button variant="primary" onClick={() => {performSearch()}}>Search</Button>
+                    onChange={(event) => { updateSearchTermBar(event) }} />
+                <Button variant="primary" onClick={() => { performSearch() }}>Search</Button>
             </InputGroup>
         );
     }
@@ -84,7 +84,7 @@ const Tasks = () => {
     let contentTable = loadingTaskTable ? <p>Loading...</p> : renderTaskTable();
     let showSearchBard = renderSearchBar();
 
-    return(
+    return (
         <div>
             <Row>
                 <Col md={{ span: 4, offset: 8 }}>{showSearchBard}</Col>
@@ -95,7 +95,7 @@ const Tasks = () => {
                     {contentTable}
                 </Col>
             </Row>
-        </div>                
+        </div>
     );
 };
 

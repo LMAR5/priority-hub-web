@@ -1,25 +1,62 @@
-import React, { useState } from 'react';
-import CategoriesTable from './CategoriesTable';
+import React, { useEffect, useState } from 'react';
+
 import CategoryService from '../../services/CategoryService'
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Table from 'react-bootstrap/Table';
 
 const Categories = () => {
 
-  const [loadingCategoryTable, setLoadingCategoryTable] = useState(false);
-  const [loadingSearchBar, setLoadingSearchBar] = useState(false);
+  const [loadingCategoryTable, setLoadingCategoryTable] = useState(true);
+  const [lstCategories, setLstCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  useEffect(() => {
+    getAllCategories();
+  })
+
+  const getAllCategories = () => {
+    CategoryService.getAllCategories().then((categorydata) => {
+      setLstCategories(categorydata);
+      setLoadingCategoryTable(false);
+    }, []);
+  }
 
   const renderCategoryTable = () => {
 
     return (
-      <CategoriesTable />
-    )
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>description</th>
+            <th>deleted</th>
+            <th>createdby</th>
+            <th>createddatetime</th>
+            <th>lastupdateby</th>
+            <th>lastupdatedatetime</th>
+          </tr>
+        </thead>
+        <tbody>
+          {lstCategories.map((info, idx) =>
+            <tr key={idx}>
+              <td>{info.Title}</td>
+              <td>{info.category}</td>
+              <td>{info.Status}</td>
+              <td>{info.Priority}</td>
+              <td>{info.DueDate}</td>
+              <td>{info.LastUpdatedDateTime}</td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
+    );
   }
+
 
   const updateSearchTermBar = (event) => {
     //console.log(event.target.value);
@@ -27,9 +64,11 @@ const Categories = () => {
   }
 
   const performSearch = () => {
-    CategoryService.searchCategory().then((data) => {
-      console.log("Search Category response:", data);
+    CategoryService.searchCategory(searchTerm).then((categorydata) => {
+      console.log("Search Category response:", categorydata);
       //Update variable that stores the list of categories from backend.
+      setLstCategories(categorydata);
+      setLoadingCategoryTable(false);
     });
   }
 
@@ -45,8 +84,8 @@ const Categories = () => {
     );
   }
 
-  let contentTable = loadingCategoryTable ? <h2>Loading...</h2> : renderCategoryTable();
-  let showSearchBard = loadingSearchBar ? <h2>Loading...</h2> : renderSearchBar();
+  let contentTable = loadingCategoryTable ? <p>Loading...</p> : renderCategoryTable();
+  let showSearchBard = renderSearchBar();
 
   return (
     <div>
