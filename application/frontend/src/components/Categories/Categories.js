@@ -91,9 +91,9 @@ const Categories = () => {
       <Row>
         <Col md={{ span: 4, offset: 8 }}>{showSearchBard}</Col>
       </Row>
-      <Row className="mt-3">
+      <Row className="mt-0">
         <Col>
-          <h1>Categories</h1>
+          <h3>List of categories</h3>
           {contentTable}
         </Col>
       </Row>

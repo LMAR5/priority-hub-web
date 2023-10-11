@@ -105,9 +105,9 @@ const Tasks = () => {
             <Row>
                 <Col md={{ span: 4, offset: 8 }}>{showSearchBard}</Col>
             </Row>
-            <Row className="mt-3">
+            <Row className="mt-0">
                 <Col>
-                    <h1>List of tasks</h1>
+                    <h3>List of tasks</h3>
                     {contentTable}
                 </Col>
             </Row>
