@@ -7,16 +7,18 @@ import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import CategoryService from '../../services/CategoryService';
 
 const Tasks = () => {
 
     const [loadingTaskTable, setLoadingTaskTable] = useState(true);
     const [lstTasks, setLstTasks] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [lstCategories, setLstCategories] = useState([]);
 
     useEffect(() => {
         //Get list of tasks once this component loads
-        getAllTasksData();
+        getAllCategories();
     }, []);
 
     const getAllTasksData = () => {
@@ -24,6 +26,18 @@ const Tasks = () => {
             setLstTasks(data);
             setLoadingTaskTable(false);
         });
+    }
+
+    const getAllCategories = () => {
+        CategoryService.getAllCategories().then((data) => {
+            setLstCategories(data);
+            //setLoadingTaskTable(false);
+            getAllTasksData();
+        });
+    }
+
+    const filterCategories = (categoryId) => {
+        return lstCategories.filter((item) => item.Id === categoryId)[0].Title;
     }
 
     const renderTaskTable = () => {
@@ -44,7 +58,7 @@ const Tasks = () => {
                     {lstTasks.map((info, idx) =>
                         <tr key={idx}>
                             <td>{info.Title}</td>
-                            <td>{info.category}</td>
+                            <td>{filterCategories(info.CategoryID)}</td>
                             <td>{info.Status}</td>
                             <td>{info.Priority}</td>
                             <td>{info.DueDate}</td>

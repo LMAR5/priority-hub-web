@@ -16,13 +16,13 @@ const Categories = () => {
 
   useEffect(() => {
     getAllCategories();
-  })
+  }, [])
 
   const getAllCategories = () => {
     CategoryService.getAllCategories().then((categorydata) => {
       setLstCategories(categorydata);
       setLoadingCategoryTable(false);
-    }, []);
+    });
   }
 
   const renderCategoryTable = () => {
@@ -31,24 +31,24 @@ const Categories = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>id</th>
-            <th>title</th>
-            <th>description</th>
-            <th>deleted</th>
-            <th>createdby</th>
-            <th>createddatetime</th>
-            <th>lastupdateby</th>
-            <th>lastupdatedatetime</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Deleted</th>
+            <th>Created By</th>
+            <th>Created Date/Time</th>
+            <th>Last Update By</th>
+            <th>Last Update Date/Time</th>
           </tr>
         </thead>
         <tbody>
           {lstCategories.map((info, idx) =>
             <tr key={idx}>
               <td>{info.Title}</td>
-              <td>{info.category}</td>
-              <td>{info.Status}</td>
-              <td>{info.Priority}</td>
-              <td>{info.DueDate}</td>
+              <td>{info.Description}</td>
+              <td>{info.Deleted}</td>
+              <td>{info.CreatedBy}</td>
+              <td>{info.CreatedDateTime}</td>
+              <td>{info.LastUpdatedBy}</td>
               <td>{info.LastUpdatedDateTime}</td>
             </tr>
           )}
@@ -56,7 +56,6 @@ const Categories = () => {
       </Table>
     );
   }
-
 
   const updateSearchTermBar = (event) => {
     //console.log(event.target.value);

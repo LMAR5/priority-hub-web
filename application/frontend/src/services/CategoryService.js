@@ -13,11 +13,12 @@ const CategoryService = {
         return allcategories;
 
     },
-    searchCategory: function () {
+    searchCategory: function (keyTerm) {
         //Perform fetch call here
         //Handle response from backend
         // Uri: http://localhost:3001/api/CategoryController/SearchCategory
-        const Search = fetch(process.env.REACT_APP_API_URL.concat('/api/CategoryController/SearchCategory'))
+        const url = '/api/CategoryController/SearchCategory?key=';
+        const Search = fetch(process.env.REACT_APP_API_URL.concat(url.concat(keyTerm)))
             .then(response => response.json())
             .then((searchdata) => {
                 return searchdata;
