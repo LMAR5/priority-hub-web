@@ -47,22 +47,24 @@ const Tasks = () => {
                 <thead>
                     <tr>
                         <th>Title</th>
+                        <th>Description</th>
                         <th>Category</th>
                         <th>Status</th>
                         <th>Priority</th>
                         <th>DueDate</th>
-                        <th>Last modification</th>
+                        {/* <th>Last modification</th> */}
                     </tr>
                 </thead>
                 <tbody>
                     {lstTasks.map((info, idx) =>
                         <tr key={idx}>
                             <td>{info.Title}</td>
+                            <td>{info.Description}</td>
                             <td>{filterCategories(info.CategoryID)}</td>
                             <td>{info.Status}</td>
                             <td>{info.Priority}</td>
                             <td>{info.DueDate}</td>
-                            <td>{info.LastUpdatedDateTime}</td>
+                            {/* <td>{info.LastUpdatedDateTime}</td> */}
                         </tr>
                     )}
                 </tbody>

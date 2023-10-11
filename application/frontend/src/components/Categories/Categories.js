@@ -33,11 +33,11 @@ const Categories = () => {
           <tr>
             <th>Title</th>
             <th>Description</th>
-            <th>Deleted</th>
+            {/* <th>Deleted</th> */}
             <th>Created By</th>
             <th>Created Date/Time</th>
-            <th>Last Update By</th>
-            <th>Last Update Date/Time</th>
+            {/* <th>Last Update By</th> */}
+            {/* <th>Last Update Date/Time</th> */}
           </tr>
         </thead>
         <tbody>
@@ -45,11 +45,11 @@ const Categories = () => {
             <tr key={idx}>
               <td>{info.Title}</td>
               <td>{info.Description}</td>
-              <td>{info.Deleted}</td>
+              {/* <td>{info.Deleted}</td> */}
               <td>{info.CreatedBy}</td>
               <td>{info.CreatedDateTime}</td>
-              <td>{info.LastUpdatedBy}</td>
-              <td>{info.LastUpdatedDateTime}</td>
+              {/* <td>{info.LastUpdatedBy}</td> */}
+              {/* <td>{info.LastUpdatedDateTime}</td> */}
             </tr>
           )}
         </tbody>
