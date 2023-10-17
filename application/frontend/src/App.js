@@ -1,21 +1,13 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Layout from './components/Layout/Layout';
+
+const router = createBrowserRouter(AppRoutes);
 
 function App() {
   return (
-    <Layout>  
-    <BrowserRouter>
-    <Routes>
-        {AppRoutes.map((route, idx) => {
-          const {element, ...rest} = route;
-          return <Route key={idx} {...rest} element={element} />
-        })}
-      </Routes>
-    </BrowserRouter>             
-    </Layout>
+    <RouterProvider router={router} />
   );
 }
 

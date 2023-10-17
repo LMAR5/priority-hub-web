@@ -33,7 +33,7 @@ function Home() {
         <div>            
             <Row className="mt-3 text-center">
                 <Alert key='secondary' variant='secondary'>
-                    <h1>Welcome to our Protototype App</h1>
+                    <h1>Priority Hub Main page</h1>
                 </Alert>
             </Row>
             <Row>

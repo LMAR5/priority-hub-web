@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import jsonData from './TasksJSONSample.json'
 import TaskService from '../../services/TaskService'
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/esm/Row';

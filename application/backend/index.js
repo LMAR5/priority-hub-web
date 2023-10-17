@@ -6,8 +6,10 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const genericRoute = require('./routes/generic');
+const authRoute = require('./routes/authentication');
 const categoryRoute = require('./routes/category');
 const taskRoute = require('./routes/task');
+const userRoute = require('./routes/user');
 
 //Middleware to parse any request to JSON format (else, we cannot access the HTTP parameters)
 //Express does not parse requests to JSON by default
@@ -16,9 +18,11 @@ app.use(express.urlencoded({ extended: false }));
 //Enable CORS
 app.use(cors());
 
+app.use('/api/GenericController', authRoute);
 app.use('/api/GenericController', genericRoute);
 app.use('/api/CategoryController', categoryRoute);
 app.use('/api/TaskController', taskRoute);
+app.use('/api/UserController', userRoute);
 
 app.listen(
     PORT,
