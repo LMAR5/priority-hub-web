@@ -8,7 +8,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 function CustomNavBar() {
     return (
         <header>
-            <Navbar expand={false} bg='dark' data-bs-theme='dark' className='bg-body-tertiary mb-3'>
+            <Navbar expand={false} bg='dark' data-bs-theme='dark' className='bg-body-tertiary mb-0'>
                 <Container>
                     <Navbar.Toggle aria-controls='offcanvasNavbar-expand-false'></Navbar.Toggle>
                     <Navbar.Brand href='/Main/'>Priority Hub</Navbar.Brand>
