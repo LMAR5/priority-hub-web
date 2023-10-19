@@ -1,8 +1,43 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-function SignInCustom(){
-    return(
-        <h1>Sign In Custom</h1>
+function SignInCustom() {
+    return (
+        <>
+            <div className='d-flex justify-content-center'>
+
+                <Form className='signin rounded'>
+                    <h2 className='mb-3'>Sign In</h2>
+
+                    <Form.Group className='mb-3' controlId='formBasicEmail' >
+                        <Form.Control type='email' placeholder='Enter email' />
+                    </Form.Group>
+
+                    <Form.Group className='mb-3' controlId='formPassword' >
+                        <Form.Control type='password' placeholder='Enter password' />
+                    </Form.Group>
+
+                    <Form.Group className='mb-3' controlId='formCheckbox'>
+                        <Form.Check type='checkbox' label='Remember Me' />
+                    </Form.Group>
+
+                    <Container fluid>
+                        <Row>
+                            <Col>
+                                <Button variant="primary" type='submit'>Sign In</Button>{' '}
+                            </Col>
+                            <Col>
+                                <Button variant="primary" type='submit'>Sign Up</Button>{' '}
+                            </Col>
+                        </Row>
+                    </Container>
+                </Form>
+            </div>
+        </>
     );
 }
 

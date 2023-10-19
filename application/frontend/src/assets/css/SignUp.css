@@ -1,0 +1,17 @@
+.signup {
+  outline: 1px solid;
+  width: 400px;
+  height: 400px;
+  margin-top: 200px;
+  text-align: center;
+  padding: 50px;
+}
+
+.signin {
+  outline: 1px solid;
+  width: 400px;
+  height: 350px;
+  margin-top: 200px;
+  text-align: center;
+  padding: 50px;
+}
