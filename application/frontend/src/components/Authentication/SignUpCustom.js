@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import '../../assets/css/SignUp.css'
+import AuthenticationService from '../../services/AuthenticationService';
 
 function SignUpCustom() {
 
@@ -13,15 +14,18 @@ function SignUpCustom() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        const user = { username, email, password, };
+        const user = { username, email, password };
 
-        fetch('http://localhost:3001/api/AuthController/SignUp', {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(user)
-        }).then(() => {
 
-        })
+        AuthenticationService.signUp(user);
+
+        // fetch('http://localhost:3001/api/AuthController/SignUp', {
+        //     method: 'POST',
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify(user)
+        // }).then(() => {
+
+        // })
     }
 
     return (
