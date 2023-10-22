@@ -14,7 +14,7 @@ function SignUpCustom() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        const user = { username, email, password };
+        const newUser = { username, email, password };
 
 
         AuthenticationService.signUp(user);
