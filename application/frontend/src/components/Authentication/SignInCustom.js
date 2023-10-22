@@ -14,9 +14,9 @@ function SignInCustom() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        const returnUserData = { email, password };
+        const returnUser = { email, password };
 
-        AuthenticationService.signIn(returnUserData);
+        AuthenticationService.signIn(returnUser);
 
     }
 

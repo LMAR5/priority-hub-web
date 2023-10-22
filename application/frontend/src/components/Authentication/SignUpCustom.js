@@ -17,7 +17,7 @@ function SignUpCustom() {
         const newUser = { username, email, password };
 
 
-        AuthenticationService.signUp(user);
+        AuthenticationService.signUp(newUser);
 
         // fetch('http://localhost:3001/api/AuthController/SignUp', {
         //     method: 'POST',
