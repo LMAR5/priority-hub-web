@@ -28,4 +28,13 @@ router.get('/SearchTask', async (request, response) => {
     response.status(200).send(results[0]);
 });
 
+// Uri: http://localhost:3001/api/TaskController/GetTaskById?tid=0000000000
+// Type: GET
+// Description: Get a task entity using by its ID.
+router.get('/GetTaskById', async (request, response) => {
+    const taskId = request.query.tid;    
+    const results = await db.promise().query(`SELECT * FROM Task WHERE Id='${taskId}' and Deleted=0`);
+    response.status(200).send(results[0]);
+});
+
 module.exports = router;
