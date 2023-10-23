@@ -44,28 +44,28 @@ const CreateTask = () => {
         <Form className = "CreateTask">
       <Form.Group className="TaskCreate" controlId="TaskName">
         <Form.Label>Task Name</Form.Label>
-        <Form.Control type="Name" value={TaskName} onChange={(event) => {setTaskName(event.target.value)}} placeholder="Task Name"/>
+        <Form.Control type="text" value={TaskName} onChange={(event) => {setTaskName(event.target.value)}} placeholder="Task Name"/>
       </Form.Group>
 
       <Form.Group className="TaskCreate" controlId="Task Description">
         <Form.Label>Task Description</Form.Label>
-        <Form.Control type="Description" value={TaskDes} onChange={(event) => {setTaskDes(event.target.value)}} placeholder="Task Description"/>
+        <Form.Control type="text" value={TaskDes} onChange={(event) => {setTaskDes(event.target.value)}} placeholder="Task Description"/>
       </Form.Group>
 
       <Form.Group className="TaskCreate" controlId="Task Description">
         <Form.Label>Select Category</Form.Label>
         <Form.Select aria-label="Category" value={TaskCategory} onChange={(event) => {setTaskCategory(event.target.value)}}>
           <option>Select Task Category</option>
-          <option value="Study">Study</option>
-          <option value="Work">Work</option>
+          <option value="1">Study</option>
+          <option value="2">Work</option>
           <option value="3">Personal</option>
-          <option value="Personal">University</option>
-          <option value="Exercise">Exercise</option>
-          <option value="Projects">Projects</option>
-          <option value="Home Improvement">Home Improvement</option>
-          <option value="Pet">Pet</option>
-          <option value="Cooking">Cooking</option>
-          <option value="Other">Other</option>
+          <option value="4">University</option>
+          <option value="5">Exercise</option>
+          <option value="6">Projects</option>
+          <option value="7">Home Improvement</option>
+          <option value="8">Pet</option>
+          <option value="9">Cooking</option>
+          <option value="10">Other</option>
         </Form.Select>
     </Form.Group>
 
@@ -76,7 +76,7 @@ const CreateTask = () => {
 
     <Form.Group className="TaskCreate" controlId="Task Notes">
         <Form.Label>Notes</Form.Label>
-        <Form.Control type="Description" value={TaskNotes} onChange={(event) => {setTaskNotes(event.target.value)}} placeholder="Notes"/>
+        <Form.Control type="text" value={TaskNotes} onChange={(event) => {setTaskNotes(event.target.value)}} placeholder="Notes"/>
     </Form.Group>
 
 
