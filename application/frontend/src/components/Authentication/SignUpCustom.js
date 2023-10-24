@@ -6,7 +6,9 @@ import AuthenticationService from '../../services/AuthenticationService';
 
 function SignUpCustom() {
 
-    const [username, setUsername] = useState('');
+    // const [username, setUsername] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -14,7 +16,8 @@ function SignUpCustom() {
 
     const HandleSubmit = (e) => {
         e.preventDefault();
-        const newUser = { username, email, password };
+        // const newUser = { username, email, password };
+        const newUser = { firstname, lastname, email, password };
 
 
         AuthenticationService.signUp(newUser);
@@ -33,9 +36,18 @@ function SignUpCustom() {
             <div className='d-flex justify-content-center'>
                 <Form className='signup rounded' onSubmit={HandleSubmit}>
                     <h2 className='mb-3'>Sign Up</h2>
-                    <Form.Group className='mb-3' controlId='formName'>
-                        <Form.Control type='' placeholder='Enter name' onChange={(e) => setUsername(e.target.value)} />
+
+                    <Form.Group className='mb-3' controlId='formFirstname'>
+                        <Form.Control type='' placeholder='Enter first name' onChange={(e) => setFirstname(e.target.value)} />
                     </Form.Group>
+
+                    <Form.Group className='mb-3' controlId='formLastname'>
+                        <Form.Control type='' placeholder='Enter last name' onChange={(e) => setLastname(e.target.value)} />
+                    </Form.Group>
+
+                    {/* <Form.Group className='mb-3' controlId='formName'>
+                        <Form.Control type='' placeholder='Enter name' onChange={(e) => setUsername(e.target.value)} />
+                    </Form.Group> */}
 
                     <Form.Group className='mb-3' controlId='formBasicEmail' >
                         <Form.Control type='email' placeholder='Enter email' onChange={(e) => setEmail(e.target.value)} />

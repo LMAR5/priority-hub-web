@@ -5,9 +5,14 @@ const AuthenticationService = {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newUserData)
         })
-            .then(() => {
-
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                return data;
+            }).catch((error) => {
+                console.log(error.message);
             })
+            return signup;
     },
     signIn: function (returnUserData) {
         const signin = fetch('http://localhost:3001/api/AuthController/SignIn', {
