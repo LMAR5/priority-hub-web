@@ -40,7 +40,20 @@ const Global = {
             picture: require('../../assets/images/TylerTam.jpeg'),
             description: "My name Is Tyler Tam, I'm from San Francisco and currently a senior at SF State. In my free time I enjoy playing online mutiplayer and stratgey games, along with watching youtube videos. I am also intrested in historic warfare with one of my favorite games being World of Warships."
         }
-    ]
+    ],
+    dateOptions: {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    },
+    timeOptions: {
+        hour12: true,
+        timeZone: 'America/Los_Angeles',
+        timeZoneName: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+    }
 }
 
 export default Global;

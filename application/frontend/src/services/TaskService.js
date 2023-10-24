@@ -28,13 +28,14 @@ const TaskService = {
     },
     getTaskById: function (task_id) {
         const url = process.env.REACT_APP_API_URL.concat("/api/TaskController/GetTaskById?tid=")
-        const getask = fetch(process.env.REACT_APP_API_URL.concat(url.concat(task_id)))
+        const get_task = fetch(url.concat(task_id))
             .then(response => response.json())
             .then((data) => {
                 return data;
             }).catch((error) => {
                 console.log(error.message);
             });
+        return get_task;
     }
 }
 
