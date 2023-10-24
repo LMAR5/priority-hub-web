@@ -37,4 +37,20 @@ router.get('/GetTaskById', async (request, response) => {
     response.status(200).send(results[0]);
 });
 
+// Insert Task into DB
+router.get('/CreateTask', async (request, response) => {
+   
+    const TaskName = request.body.TaskName;
+    const Description = request.body.TaskDescription;
+    const Category = request.body.TaskCategory;
+    const DueDate = request.body.TaskDueDate;
+    const Notes = request.body.TaskNotes;
+    const Created = request.body.DateCreated;
+
+    const results = await db.promise.query('INSERT INTO Tasks (Title, Description, CategoryID, Status, DueDate ,Priority, CreatedDateTime, LastUpdatedDateTime) VALUES()');
+    response.status.send({
+        message: `Task successfuly created`
+    });
+});
+
 module.exports = router;

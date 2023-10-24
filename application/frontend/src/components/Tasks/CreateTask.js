@@ -17,7 +17,7 @@ const CreateTask = () => {
   const [TaskNotes, setTaskNotes] = useState("");
   const today = new Date();
 
-  function CreateTasks(){
+  function HandelSumbit(){
     const task = {
       TaskName: TaskName,
       TaskDes: TaskDes,
@@ -26,15 +26,8 @@ const CreateTask = () => {
       TaskNotes: TaskNotes,
       DateCreated: today,
     };
-    fetch('api/TaskController/CreateTask', {
-      method: 'Post',
-      body: JSON.stringify(task),
-    })
-
-    .then(response => {
-      console.log(response);
-    });
-
+    
+    TaskService.createTask(task);
     
   }
 
@@ -81,7 +74,7 @@ const CreateTask = () => {
 
 
      
-      <Button variant="primary" type="submit" onClick={() => { CreateTasks()}}>
+      <Button variant="primary" type="submit" onClick={() => { HandelSumbit()}}>
         Create Task
       </Button>
        </Form>
