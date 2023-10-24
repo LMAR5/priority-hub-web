@@ -35,6 +35,19 @@ const TaskService = {
             }).catch((error) => {
                 console.log(error.message);
             });
+    },
+
+    createTask: function (taskData){
+        fetch('api/TaskController/CreateTask', {
+            method: 'Post',
+            body: JSON.stringify(taskData),
+          })
+      
+          .then(response => {
+            console.log(response);
+          }).catch((error) => {
+            console.log(error.message);
+          });
     }
 }
 
