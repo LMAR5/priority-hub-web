@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/esm/Col';
 import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Table from 'react-bootstrap/Table';
 
 
 function Home() {
@@ -19,9 +20,12 @@ function Home() {
     const [loadingDataIsReady, setLoadingDataIsReady] = useState(true);    
     const [backStatus, setBackStatus] = useState("");
     const [lstCategories, setLstCategories] = useState([]);
+    const [lstTasks, setLstTasks] = useState([]);
+
     const [categoryForm, setCategoryForm] = useState(new CategoryModel());
     const [selectedTaskById, setSelectedTaskById] = useState(new TaskModel());
     const [showEditButton, setShowEditButton] = useState(false);
+    
 
     useEffect(() => {
         getAllCategories();
@@ -54,9 +58,16 @@ function Home() {
         );
     }
 
+    const getAllTasksData = () => {
+        TaskService.getAllTasks().then((data) => {
+            setLstTasks(data);
+        });
+    }
+
     const getAllCategories = () => {
         CategoryService.getAllCategories().then((data) => {
             setLstCategories(data);
+            getAllTasksData();
         });
     }
 
@@ -74,6 +85,8 @@ function Home() {
             getCategoryById(data[0].CategoryId);
         });
     }
+
+    
 
     const handleTaskChange = (event) => {
         let taskObj = new TaskModel();
@@ -229,6 +242,8 @@ function Home() {
         );
     }
 
+    
+
     let showSelectedTaskContent = loadingDataIsReady ? renderViewTaskForm() : renderEditTaskForm();
     let showStatusContent = loadingBackStatus ? <h2>Loading...</h2> : renderStatusCheck();
     let showSearchBard = renderSearchBar();
@@ -244,6 +259,21 @@ function Home() {
                         <Col>
                             <Alert variant='warning' className='mt-4'>
                                 <h4>Here goes the list of tasks.</h4>
+                                <Table striped bordered hover>
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {lstTasks.map((info, idx) =>
+                                            <tr key={idx}>
+                                                <td><Button variant='primary' onClick={() => { getTaskById(info.Id) }}>{info.Title}</Button></td>
+                                                
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </Table>
                             </Alert>
                             <h5>Buttons for testing JIRA PH-41</h5>
                             <Button variant='primary' onClick={() => { getTaskById(2) }}>Get Task ID 2</Button>
