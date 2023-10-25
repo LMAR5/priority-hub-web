@@ -25,7 +25,7 @@ function Home() {
     const [categoryForm, setCategoryForm] = useState(new CategoryModel());
     const [selectedTaskById, setSelectedTaskById] = useState(new TaskModel());
     const [showEditButton, setShowEditButton] = useState(false);
-
+    
 
     useEffect(() => {
         getAllCategories();
@@ -63,7 +63,7 @@ function Home() {
             setLstTasks(data);
         });
     }
-    
+
     const getAllCategories = () => {
         CategoryService.getAllCategories().then((data) => {
             setLstCategories(data);
@@ -86,8 +86,8 @@ function Home() {
         });
     }
 
-
     
+
     const handleTaskChange = (event) => {
         let taskObj = new TaskModel();
         taskObj.Id = selectedTaskById.Id;
@@ -250,6 +250,8 @@ function Home() {
         );
     }
 
+    
+
     let showSelectedTaskContent = loadingDataIsReady ? renderViewTaskForm() : renderEditTaskForm();
     let showStatusContent = loadingBackStatus ? <h2>Loading...</h2> : renderStatusCheck();
     let showSearchBard = renderSearchBar();
@@ -275,7 +277,7 @@ function Home() {
                                         {lstTasks.map((info, idx) =>
                                             <tr key={idx}>
                                                 <td><Button variant='primary' onClick={() => { getTaskById(info.Id) }}>{info.Title}</Button></td>
-
+                                                
                                             </tr>
                                         )}
                                     </tbody>
