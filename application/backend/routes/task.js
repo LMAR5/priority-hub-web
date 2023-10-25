@@ -47,10 +47,54 @@ router.get('/CreateTask', async (request, response) => {
     const Notes = request.body.TaskNotes;
     const Created = request.body.DateCreated;
 
-    const results = await db.promise.query('INSERT INTO Tasks (Title, Description, CategoryID, Status, DueDate ,Priority, CreatedDateTime, LastUpdatedDateTime) VALUES()');
-    response.status.send({
-        message: `Task successfuly created`
+    const createQuery = 'INSERT INTO Tasks (Title, Description, CategoryID, Status, Priority ,DueDate, Notes, CreatedDateTime, LastUpdatedDateTime) VALUES(?,?,?,?,?,?,?,?,?)';
+    const createValue = [TaskName, Description, Category, 'Pending', 'Low', DueDate, Notes, Created, Created];
+    query(createQuery, createValue, (err, result) => {
+        if(err){
+            console.error('Failed to create Task');
+            return response.status(500).json({message: 'Failed to create task'});
+        };
+
+        if (result.affectedRows === 1) {
+            return response.status(201).json({ message: 'Task sucessfuly created' });
+        } else {
+            return response.status(500).json({ message: 'Task creation Failed' });
+        };
     });
+});
+
+router.put('/UpdateTask', async (request, response) => {
+    debugger;
+    const TaskId = request.body.Id;
+    const TaskTitle = request.body.Title;
+    const TaskDescription = request.body.Description;
+    const TaskCategoryId = request.body.CategoryId;
+    //const TaskUserId = request.body.UserId;
+    //const TaskStatus = request.body.Status;
+    //const TaskPriority = request.body.Priority;
+    const TaskCompleted = request.body.Completed;
+    //const TaskDeleted = request.body.Deleted;
+    //const TaskIsFavorite = request.body.IsFavorite;
+    const TaskDueDate = request.body.DueDate;
+    const TaskNotes = request.body.Notes;
+    //const TaskCreatedBy = request.body.CreatedBy;
+    //const TaskCreatedDateTime = request.body.CreatedDateTime;
+    //const TaskLastUpdatedBy = request.body.LastUpdatedBy;
+    //const TaskLastUpdatedDateTime = request.body.LastUpdatedDateTime;
+    let nowDateTime = (new Date(Date.now()).toISOString()).slice(0,19);
+
+    const results = await db.promise().query(`UPDATE Task SET
+    Title = '${TaskTitle}', 
+    Description = '${TaskDescription}',
+    CategoryId = ${TaskCategoryId},
+    Completed = ${TaskCompleted},
+    DueDate = '${TaskDueDate}',
+    Notes = '${TaskNotes}',
+    LastUpdatedBy = 'System',
+    LastUpdatedDateTime = UTC_TIMESTAMP()
+    WHERE Id='${TaskId}';`);
+
+    response.status(200).send(results[0]);
 });
 
 module.exports = router;
