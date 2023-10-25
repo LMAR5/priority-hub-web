@@ -40,6 +40,7 @@ const TaskService = {
     createTask: function (taskData){
         const create = fetch(process.env.REACT_APP_API_URL.concat('api/TaskController/CreateTask'), {
             method: 'Post',
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(taskData),
           })
       
