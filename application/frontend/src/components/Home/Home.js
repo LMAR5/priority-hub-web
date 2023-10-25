@@ -12,6 +12,8 @@ import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Table from 'react-bootstrap/Table';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content'
 
 
 function Home() {
@@ -26,6 +28,7 @@ function Home() {
     const [selectedTaskById, setSelectedTaskById] = useState(new TaskModel());
     const [showEditButton, setShowEditButton] = useState(false);
     
+    const MySwal = withReactContent(Swal);
 
     useEffect(() => {
         getAllCategories();
@@ -141,10 +144,24 @@ function Home() {
 
     const HandleSaveChanges = (event) => {
         event.preventDefault();
-        TaskService.updateTask(selectedTaskById).then((data) => {
-            console.log("Task updated");
-            console.log(data);
-        });
+        MySwal.fire({
+            title: 'Are you sure?',
+            text: "This action will update this task.",
+            icon: 'warning',           
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Save',
+            confirmButtonColor: '#3085d6'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                TaskService.updateTask(selectedTaskById).then((data) => {
+                    if (data.serverStatus == 2) {
+                        getAllTasksData();
+                        MySwal.fire('Updated!', 'Your task has been updated', 'success');
+                    }
+                });
+            }
+          })
     }
 
     const renderViewTaskForm = () => {

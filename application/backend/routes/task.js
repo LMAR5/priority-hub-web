@@ -37,7 +37,10 @@ router.get('/GetTaskById', async (request, response) => {
     response.status(200).send(results[0]);
 });
 
-// Insert Task into DB
+// 
+// Uri: http://localhost:3001/api/TaskController/CreateTask
+// Type: POST
+// Description: Insert Task into DB
 router.get('/CreateTask', async (request, response) => {
    
     const TaskName = request.body.TaskName;
@@ -63,6 +66,9 @@ router.get('/CreateTask', async (request, response) => {
     });
 });
 
+// Uri: http://localhost:3001/api/TaskController/UpdateTask
+// Type: PUT
+// Description: Update the task based on the values receive from the HTTP request body
 router.put('/UpdateTask', async (request, response) => {
     debugger;
     const TaskId = request.body.Id;
@@ -75,7 +81,7 @@ router.put('/UpdateTask', async (request, response) => {
     const TaskCompleted = request.body.Completed;
     //const TaskDeleted = request.body.Deleted;
     //const TaskIsFavorite = request.body.IsFavorite;
-    const TaskDueDate = request.body.DueDate;
+    const TaskDueDate = request.body.DueDate.slice(0,19);
     const TaskNotes = request.body.Notes;
     //const TaskCreatedBy = request.body.CreatedBy;
     //const TaskCreatedDateTime = request.body.CreatedDateTime;
@@ -84,14 +90,14 @@ router.put('/UpdateTask', async (request, response) => {
     let nowDateTime = (new Date(Date.now()).toISOString()).slice(0,19);
 
     const results = await db.promise().query(`UPDATE Task SET
-    Title = '${TaskTitle}', 
+    Title = '${TaskTitle}',
     Description = '${TaskDescription}',
     CategoryId = ${TaskCategoryId},
     Completed = ${TaskCompleted},
     DueDate = '${TaskDueDate}',
     Notes = '${TaskNotes}',
     LastUpdatedBy = 'System',
-    LastUpdatedDateTime = UTC_TIMESTAMP()
+    LastUpdatedDateTime = '${nowDateTime}'
     WHERE Id='${TaskId}';`);
 
     response.status(200).send(results[0]);

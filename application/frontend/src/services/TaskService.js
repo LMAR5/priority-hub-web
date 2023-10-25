@@ -57,8 +57,8 @@ const TaskService = {
             body: JSON.stringify(taskUpdData)
         })
         .then(response => response.json())
-        .then((data) => {
-            console.log(data);
+        .then((data) => {            
+            return data;
         })
         .catch((error) => {
             console.log(error.message);
