@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/esm/Col';
 import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Table from 'react-bootstrap/Table';
 
 
 function Home() {
@@ -19,9 +20,12 @@ function Home() {
     const [loadingDataIsReady, setLoadingDataIsReady] = useState(true);    
     const [backStatus, setBackStatus] = useState("");
     const [lstCategories, setLstCategories] = useState([]);
+    const [lstTasks, setLstTasks] = useState([]);
+
     const [categoryForm, setCategoryForm] = useState(new CategoryModel());
     const [selectedTaskById, setSelectedTaskById] = useState(new TaskModel());
     const [showEditButton, setShowEditButton] = useState(false);
+
 
     useEffect(() => {
         getAllCategories();
@@ -54,9 +58,16 @@ function Home() {
         );
     }
 
+    const getAllTasksData = () => {
+        TaskService.getAllTasks().then((data) => {
+            setLstTasks(data);
+        });
+    }
+    
     const getAllCategories = () => {
         CategoryService.getAllCategories().then((data) => {
             setLstCategories(data);
+            getAllTasksData();
         });
     }
 
@@ -75,6 +86,8 @@ function Home() {
         });
     }
 
+
+    
     const handleTaskChange = (event) => {
         let taskObj = new TaskModel();
         taskObj.Id = selectedTaskById.Id;
@@ -124,6 +137,14 @@ function Home() {
                 break;
         }
         setSelectedTaskById(taskObj);    
+    }
+
+    const HandleSaveChanges = (event) => {
+        event.preventDefault();
+        TaskService.updateTask(selectedTaskById).then((data) => {
+            console.log("Task updated");
+            console.log(data);
+        });
     }
 
     const renderViewTaskForm = () => {
@@ -184,7 +205,7 @@ function Home() {
         return (
             <div>
                 <h4>Task #{selectedTaskById.Id}</h4>
-                <Form className='mt-3'>
+                <Form className='mt-3' onSubmit={HandleSaveChanges}>
                     <Form.Group as={Row}>
                         <Col sm={8}>
                             <Form.Label>Title</Form.Label>
@@ -220,7 +241,7 @@ function Home() {
                         </Alert>
                     </Form.Group>
                     <Form.Group className='text-end'>
-                        <Button variant="success">Save changes</Button>
+                        <Button variant="success" type='submit' >Save changes</Button>
                         <Button variant="primary ms-2">Complete</Button>
                         <Button variant="danger ms-2">Delete</Button>
                     </Form.Group>
@@ -244,10 +265,25 @@ function Home() {
                         <Col>
                             <Alert variant='warning' className='mt-4'>
                                 <h4>Here goes the list of tasks.</h4>
+                                <Table striped bordered hover>
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {lstTasks.map((info, idx) =>
+                                            <tr key={idx}>
+                                                <td><Button variant='primary' onClick={() => { getTaskById(info.Id) }}>{info.Title}</Button></td>
+
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </Table>
                             </Alert>
                             <h5>Buttons for testing JIRA PH-41</h5>
                             <Button variant='primary' onClick={() => { getTaskById(2) }}>Get Task ID 2</Button>
-                            <Button className='ms-2' variant='primary' onClick={() => { getTaskById(3) }}>Get Task ID 3</Button>
+                            <Button className='ms-2' variant='primary' onClick={() => { getTaskById(11) }}>Get Task ID 11</Button>
                         </Col>
                     </Row>
                 </Col>
