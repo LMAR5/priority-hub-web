@@ -37,9 +37,8 @@ const TaskService = {
             });
         return get_task;
     },
-
     createTask: function (taskData){
-        fetch('api/TaskController/CreateTask', {
+        const create = fetch(process.env.REACT_APP_API_URL.concat('api/TaskController/CreateTask'), {
             method: 'Post',
             body: JSON.stringify(taskData),
           })
@@ -49,6 +48,22 @@ const TaskService = {
           }).catch((error) => {
             console.log(error.message);
           });
+        return create;
+    },
+    updateTask: function (taskUpdData) {
+        const taskupd = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/UpdateTask'),{
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(taskUpdData)
+        })
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.log(error.message);
+        });
+        return taskupd;
     }
 }
 
