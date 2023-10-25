@@ -11,9 +11,12 @@ import Col from 'react-bootstrap/esm/Col';
 import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Table from 'react-bootstrap/Table';
+import Card from 'react-bootstrap/Card';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
+import ActivityTrackerService from '../../services/ActivityTrackerService';
 
 
 function Home() {
@@ -23,6 +26,7 @@ function Home() {
     const [backStatus, setBackStatus] = useState("");
     const [lstCategories, setLstCategories] = useState([]);
     const [lstTasks, setLstTasks] = useState([]);
+    const [lstActivityTrackers, setLstActivityTrackers] = useState([]);
 
     const [categoryForm, setCategoryForm] = useState(new CategoryModel());
     const [selectedTaskById, setSelectedTaskById] = useState(new TaskModel());
@@ -82,10 +86,18 @@ function Home() {
         });
     }
 
+    const getActivityTrackersById = (task_id) => {
+        ActivityTrackerService.getAllActivityTrackersByTaskId(task_id).then((data) => {
+            console.log(data);
+            setLstActivityTrackers(data);
+        });
+    }
+
     const getTaskById = (task_id) => {
         TaskService.getTaskById(task_id).then((data) => {            
             setSelectedTaskById(data[0]);
             getCategoryById(data[0].CategoryId);
+            getActivityTrackersById(data[0].Id);
         });
     }
 
@@ -204,10 +216,35 @@ function Home() {
                             <Form.Control id='task_notes' as="textarea" rows={8} value={selectedTaskById.Notes} onChange={handleTaskChange} disabled />
                         </Col>
                     </Form.Group>
-                    <Form.Group>
-                        <Alert variant='secondary' className='mt-4'>
-                            <h4>Here goes the stopwatch.</h4>
-                        </Alert>
+                    <Form.Group className='mt-2 p-2'>
+                        <div className='row alert alert-secondary'>
+                            <Col sm={6}>
+                                <Card className='text-center'>
+                                    <Card.Body>
+                                        <Card.Title>Stopwatch</Card.Title>
+                                        <Card.Text>00:00:00</Card.Text>
+                                        <Button variant='outline-primary'>Start</Button>
+                                        <Button variant='outline-warning' className='ms-3'>Pause</Button>
+                                        <Button variant='outline-danger' className='ms-3'>Stop</Button>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                            <Col sm={6}>
+                                <b>Activity tracker</b>
+                                <ListGroup as="ol" numbered className='mt-1'>
+                                    {lstActivityTrackers.map((item, idx) => 
+                                        <ListGroup.Item key={idx} as="li" className='d-flex justify-content-between align-items-start'>
+                                            <div className="ms-2 me-auto">
+                                                <div className="fw-bold">Time {item.Id}</div>
+                                                {item.StartTime}
+                                            </div>
+                                        </ListGroup.Item>
+                                    )}                                    
+                                </ListGroup>
+                            </Col>
+                        </div>                        
+                        {/* <Alert variant='secondary' className='mt-4'>                            
+                        </Alert>                         */}
                     </Form.Group>
                     <Form.Group className='text-end'>
                         <Button variant="primary ms-2">Complete</Button>
@@ -300,9 +337,9 @@ function Home() {
                                     </tbody>
                                 </Table>
                             </Alert>
-                            <h5>Buttons for testing JIRA PH-41</h5>
+                            {/* <h5>Buttons for testing JIRA PH-41</h5>
                             <Button variant='primary' onClick={() => { getTaskById(2) }}>Get Task ID 2</Button>
-                            <Button className='ms-2' variant='primary' onClick={() => { getTaskById(11) }}>Get Task ID 11</Button>
+                            <Button className='ms-2' variant='primary' onClick={() => { getTaskById(11) }}>Get Task ID 11</Button> */}
                         </Col>
                     </Row>
                 </Col>
