@@ -282,11 +282,11 @@ function Home() {
                     <Form.Group as={Row} className='mt-2'>
                         <Col sm={6}>
                             <Form.Label>Description</Form.Label>
-                            <Form.Control id='task_description' className='alert alert-warning' as="textarea" rows={8} value={selectedTaskById.Description} onChange={handleTaskChange} />
+                            <Form.Control id='task_description' className='alert alert-warning' as="textarea" rows={6} value={selectedTaskById.Description} onChange={handleTaskChange} />
                         </Col>
                         <Col sm={6}>
                             <Form.Label>Notes</Form.Label>
-                            <Form.Control id='task_notes' className='alert alert-warning' as="textarea" rows={8} value={selectedTaskById.Notes} onChange={handleTaskChange} />
+                            <Form.Control id='task_notes' className='alert alert-warning' as="textarea" rows={6} value={selectedTaskById.Notes} onChange={handleTaskChange} />
                         </Col>
                     </Form.Group>
                     <Form.Group>
@@ -311,7 +311,7 @@ function Home() {
     let showSearchBard = renderSearchBar();
 
     return (
-        <div>
+        <div className='mb-5'>
             <Row className="mt-0">
                 <Col sm={4} className='border border-top-0 border-end-0 p-3 text-center'>
                     <Row>
