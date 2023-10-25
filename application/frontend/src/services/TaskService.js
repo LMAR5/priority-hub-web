@@ -39,7 +39,7 @@ const TaskService = {
     },
 
     createTask: function (taskData){
-        fetch('api/TaskController/CreateTask', {
+        const create = fetch(process.env.REACT_APP_API_URL.concat('api/TaskController/CreateTask'), {
             method: 'Post',
             body: JSON.stringify(taskData),
           })
@@ -49,6 +49,7 @@ const TaskService = {
           }).catch((error) => {
             console.log(error.message);
           });
+        return create;
     }
 }
 
