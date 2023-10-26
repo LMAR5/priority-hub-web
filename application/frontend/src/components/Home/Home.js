@@ -17,12 +17,13 @@ import Card from 'react-bootstrap/Card';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 import ActivityTrackerService from '../../services/ActivityTrackerService';
+import '../../assets/css/Home.css';
 
 
 function Home() {
     //State variables
     const [loadingBackStatus, setLoadingBackStatus] = useState(false);
-    const [loadingDataIsReady, setLoadingDataIsReady] = useState(true);    
+    const [loadingDataIsReady, setLoadingDataIsReady] = useState(true);
     const [backStatus, setBackStatus] = useState("");
     const [lstCategories, setLstCategories] = useState([]);
     const [lstTasks, setLstTasks] = useState([]);
@@ -31,7 +32,7 @@ function Home() {
     const [categoryForm, setCategoryForm] = useState(new CategoryModel());
     const [selectedTaskById, setSelectedTaskById] = useState(new TaskModel());
     const [showEditButton, setShowEditButton] = useState(false);
-    
+
     const MySwal = withReactContent(Swal);
 
     useEffect(() => {
@@ -39,7 +40,7 @@ function Home() {
     }, []);
 
     const getBackendStatus = () => {
-        GenericService.getCheckStatus().then((data) => {            
+        GenericService.getCheckStatus().then((data) => {
             setBackStatus(data.message);
         });
     }
@@ -94,14 +95,14 @@ function Home() {
     }
 
     const getTaskById = (task_id) => {
-        TaskService.getTaskById(task_id).then((data) => {            
+        TaskService.getTaskById(task_id).then((data) => {
             setSelectedTaskById(data[0]);
             getCategoryById(data[0].CategoryId);
             getActivityTrackersById(data[0].Id);
         });
     }
 
-    
+
 
     const handleTaskChange = (event) => {
         let taskObj = new TaskModel();
@@ -151,7 +152,7 @@ function Home() {
             default:
                 break;
         }
-        setSelectedTaskById(taskObj);    
+        setSelectedTaskById(taskObj);
     }
 
     const HandleSaveChanges = (event) => {
@@ -159,12 +160,12 @@ function Home() {
         MySwal.fire({
             title: 'Are you sure?',
             text: "This action will update this task.",
-            icon: 'warning',           
+            icon: 'warning',
             showCancelButton: true,
             cancelButtonColor: '#d33',
             confirmButtonText: 'Save',
             confirmButtonColor: '#3085d6'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 TaskService.updateTask(selectedTaskById).then((data) => {
                     if (data.serverStatus == 2) {
@@ -173,7 +174,7 @@ function Home() {
                     }
                 });
             }
-          })
+        })
     }
 
     const renderViewTaskForm = () => {
@@ -232,17 +233,17 @@ function Home() {
                             <Col sm={6}>
                                 <b>Activity tracker</b>
                                 <ListGroup as="ol" numbered className='mt-1'>
-                                    {lstActivityTrackers.map((item, idx) => 
+                                    {lstActivityTrackers.map((item, idx) =>
                                         <ListGroup.Item key={idx} as="li" className='d-flex justify-content-between align-items-start'>
                                             <div className="ms-2 me-auto">
                                                 <div className="fw-bold">Time {item.Id}</div>
                                                 {item.StartTime}
                                             </div>
                                         </ListGroup.Item>
-                                    )}                                    
+                                    )}
                                 </ListGroup>
                             </Col>
-                        </div>                        
+                        </div>
                         {/* <Alert variant='secondary' className='mt-4'>                            
                         </Alert>                         */}
                     </Form.Group>
@@ -304,7 +305,40 @@ function Home() {
         );
     }
 
-    
+
+    const sortTask = (catId, taskCatId, taskId, taskName) => {
+        if (catId === taskCatId) {
+            return (
+                <tbody>
+                    <tr>
+                        <td><Button className='taskButton' variant='outline-primary' onClick={() => { getTaskById(taskId) }}>{taskName}</Button></td>
+                    </tr>
+                </tbody>
+            )
+        }
+    }
+
+    const showTaskList = () => {
+        return (
+            <div className='taskTable'>
+                <Table striped bordered hover>
+                    {lstCategories.map((catInfo, catIdx) =>
+                        <>
+                            <thead>
+                                <tr>
+                                    <th key={catIdx}>{catInfo.Title}</th>
+                                </tr>
+                            </thead>
+                            {lstTasks.map((taskInfo) =>
+                                sortTask(catInfo.Id, taskInfo.CategoryId, taskInfo.Id, taskInfo.Title)
+                            )}
+                        </>
+                    )}
+                </Table>
+            </div>
+        )
+    }
+
 
     let showSelectedTaskContent = loadingDataIsReady ? renderViewTaskForm() : renderEditTaskForm();
     let showStatusContent = loadingBackStatus ? <h2>Loading...</h2> : renderStatusCheck();
@@ -320,23 +354,10 @@ function Home() {
                     <Row className='mt-2'>
                         <Col>
                             <Alert variant='warning' className='mt-4'>
-                                <h4>Here goes the list of tasks.</h4>
-                                <Table striped bordered hover>
-                                    <thead>
-                                        <tr>
-                                            <th>Title</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {lstTasks.map((info, idx) =>
-                                            <tr key={idx}>
-                                                <td><Button variant='primary' onClick={() => { getTaskById(info.Id) }}>{info.Title}</Button></td>
-                                                
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                </Table>
+                                {/* <h4>Here goes the list of tasks. </h4> */}
+                                {showTaskList()}
                             </Alert>
+
                             {/* <h5>Buttons for testing JIRA PH-41</h5>
                             <Button variant='primary' onClick={() => { getTaskById(2) }}>Get Task ID 2</Button>
                             <Button className='ms-2' variant='primary' onClick={() => { getTaskById(11) }}>Get Task ID 11</Button> */}

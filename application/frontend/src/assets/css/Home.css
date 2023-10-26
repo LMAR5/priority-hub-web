@@ -1,0 +1,15 @@
+.taskButton {
+  width: 300px;
+  height: 40px;
+}
+
+.taskTable {
+  overflow: hidden;
+  overflow-y: scroll;
+
+  height: 600px;
+}
+
+.taskTable::-webkit-scrollbar {
+  width: 0;
+}
