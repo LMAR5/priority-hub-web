@@ -48,10 +48,10 @@ router.get('/CreateTask', async (request, response) => {
     const Category = request.body.TaskCategory;
     const DueDate = request.body.TaskDueDate;
     const Notes = request.body.TaskNotes;
-    const Created = request.body.DateCreated;
+      let Created = (new Date(Date.now()).toISOString()).slice(0,19);
 
-    const createQuery = 'INSERT INTO Tasks (Title, Description, CategoryID, Status, Priority ,DueDate, Notes, CreatedDateTime, LastUpdatedDateTime) VALUES(?,?,?,?,?,?,?,?,?)';
-    const createValue = [TaskName, Description, Category, 'Pending', 'Low', DueDate, Notes, Created, Created];
+    const createQuery = 'INSERT INTO Tasks (Title, Description, CategoryID, UserID, Status, Priority, DueDate, Notes, CreatedBy, CreatedDateTime, LastUpdatedBy, LastUpdatedDateTime) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
+    const createValue = [TaskName, Description, Category, 99, 'Pending', 'Low', DueDate, Notes, 'User', Created, 'User', Created];
     query(createQuery, createValue, (err, result) => {
         if(err){
             console.error('Failed to create Task');
