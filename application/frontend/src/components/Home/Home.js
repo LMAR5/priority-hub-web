@@ -52,14 +52,12 @@ function Home() {
       
       TaskService.createTask(task).then((data) => {
         if (data.serverStatus == 2) {
-            MySwal.fire('Task Was successfuly created');
-        }else{
             getAllTasksData();
-            MySwal.fire('Task Creatation Failed', 'Something Went Wrong');
+            MySwal.fire('Updated!', 'Your task has been Created', 'success');
+        }else{
+            MySwal.fire('Failed to create Task', 'Something went Wrong', 'error');
         }
-    });
-      
-    }
+    })}
 
     const MySwal = withReactContent(Swal);
 

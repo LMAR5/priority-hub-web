@@ -52,18 +52,8 @@ router.get('/CreateTask', async (request, response) => {
 
     const createQuery = 'INSERT INTO Tasks (Title, Description, CategoryID, UserID, Status, Priority, DueDate, Notes, CreatedBy, CreatedDateTime, LastUpdatedBy, LastUpdatedDateTime) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
     const createValue = [TaskName, Description, Category, 99, 'Pending', 'Low', DueDate, Notes, 'User', Created, 'User', Created];
-    query(createQuery, createValue, (err, result) => {
-        if(err){
-            console.error('Failed to create Task');
-            return response.status(500).json({message: 'Failed to create task'});
-        };
-
-        if (result.affectedRows === 1) {
-            return response.status(201).json({ message: 'Task sucessfuly created' });
-        } else {
-            return response.status(500).json({ message: 'Task creation Failed' });
-        };
-    });
+    const CreateResult = await db.promise().query(createQuery, createValue);
+    response.status(200).send(CreateResult[0]);
 });
 
 // Uri: http://localhost:3001/api/TaskController/UpdateTask

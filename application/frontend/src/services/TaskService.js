@@ -43,11 +43,12 @@ const TaskService = {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(taskData),
           })
-      
-          .then(response => {
-            console.log(response);
-          }).catch((error) => {
-            console.log(error.message);
+          .then(response => response.json())
+          .then((data) => {            
+              return data;
+          })
+          .catch((error) => {
+              console.log(error.message);
           });
         return create;
     },
