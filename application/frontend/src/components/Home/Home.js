@@ -389,7 +389,7 @@ function Home() {
                     {showSelectedTaskContent}
                 </Col>
             </Row>
-            <Row className='border border-top-0 px-2 py-3 text-center'>
+            <Row className='border border-top-0 px-2 py-3 text-center'>   
                 <Col sm={12} md={12} lg={8} className='mt-2'>
                     <Form.Control size='lg' type="text" value={TaskName} onChange={(event) => {setTaskName(event.target.value)}} placeholder="Add your task here..." />
                 </Col>
@@ -408,20 +408,27 @@ function Home() {
                         <option value="10">Other</option>
                     </Form.Select>
                 </Col>
-                <Col>
+            </Row>
+            <Row className='border border-top-0 px-2 py-3 text-center'>
+                <Col sm={6} md={7} lg={5}>
+                    <Form.Label>Task Description</Form.Label>
                     <Form.Control type="text" value={TaskDes} onChange={(event) => {setTaskDes(event.target.value)}} placeholder="Task Description"/>
                 </Col>
                 <Col>
+                    <Form.Label>Due Date</Form.Label>
                     <Form.Control type="datetime-local" min="2023-10-20T00:00" max="2024-10-21T00:00" value={TaskDueDate} onChange={(event) => {setTaskDueDate(event.target.value)}} placeholder="Due Date"/>
                 </Col>
                 <Col>
+                    <Form.Label>Notes</Form.Label>
                     <Form.Control type="text" value={TaskNotes} onChange={(event) => {setTaskNotes(event.target.value)}} placeholder="Notes"/>
                 </Col>
+            </Row>
+            <Row>    
                 <Col sm={6} md={6} lg={1} className='my-2' >
                     <Button variant="primary" size='lg' type="submit" onClick={() => {Create()}}>
                         Create
                     </Button>
-                </Col>
+                </Col>    
             </Row>
             <Row>
                 {/* {showStatusContent} */}
