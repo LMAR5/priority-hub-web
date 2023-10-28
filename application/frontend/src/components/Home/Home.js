@@ -208,6 +208,28 @@ function Home() {
         })
     }
 
+    const DeleteTask = (event) => {
+        event.preventDefault();
+        MySwal.fire({
+            title: 'Are you sure?',
+            text: "This action will delete this task.",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Save',
+            confirmButtonColor: '#3085d6'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                TaskService.updateTask(selectedTaskById).then((data) => {
+                    if (data.serverStatus == 2) {
+                        getAllTasksData();
+                        MySwal.fire('Your task has been successfully deleted!');
+                    }
+                });
+            }
+        })
+    }
+
     const renderViewTaskForm = () => {
         return (
             <div>
