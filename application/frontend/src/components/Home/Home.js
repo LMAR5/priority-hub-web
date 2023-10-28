@@ -50,7 +50,14 @@ function Home() {
         DateCreated: today,
       };
       
-      TaskService.createTask(task);
+      TaskService.createTask(task).then((data) => {
+        if (data.serverStatus == 2) {
+            MySwal.fire('Task Was successfuly created');
+        }else{
+            getAllTasksData();
+            MySwal.fire('Task Creatation Failed', 'Something Went Wrong');
+        }
+    });
       
     }
 
