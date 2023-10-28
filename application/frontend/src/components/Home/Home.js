@@ -208,26 +208,21 @@ function Home() {
         })
     }
 
-    const DeleteTask = (event) => {
-        event.preventDefault();
+    const DeleteTask = () => {
         MySwal.fire({
             title: 'Are you sure?',
             text: "This action will delete this task.",
             icon: 'warning',
             showCancelButton: true,
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Save',
+            confirmButtonText: 'Delete',
             confirmButtonColor: '#3085d6'
         }).then((result) => {
             if (result.isConfirmed) {
-                TaskService.updateTask(selectedTaskById).then((data) => {
-                    if (data.serverStatus == 2) {
-                        getAllTasksData();
-                        MySwal.fire('Your task has been successfully deleted!');
-                    }
-                });
+
+                MySwal.fire('Deleted!','Your task has been successfully deleted!','success');
             }
-        })
+        });
     }
 
     const renderViewTaskForm = () => {
@@ -300,10 +295,10 @@ function Home() {
                         {/* <Alert variant='secondary' className='mt-4'>                            
                         </Alert>                         */}
                     </Form.Group>
-                    <Form.Group className='text-end'>
+                    {/* <Form.Group className='text-end'>
                         <Button variant="primary ms-2">Complete</Button>
                         <Button variant="danger ms-2">Delete</Button>
-                    </Form.Group>
+                    </Form.Group> */}
                 </Form>
             </div>
         );
@@ -351,7 +346,7 @@ function Home() {
                     <Form.Group className='text-end'>
                         <Button variant="success" type='submit' >Save changes</Button>
                         <Button variant="primary ms-2">Complete</Button>
-                        <Button variant="danger ms-2">Delete</Button>
+                        <Button variant="danger ms-2" onClick={() => { DeleteTask() }}>Delete</Button>
                     </Form.Group>
                 </Form>
             </div>
