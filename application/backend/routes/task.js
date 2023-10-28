@@ -13,7 +13,7 @@ router.use((request, response, next) => {
 // Type: GET
 // Description: Get list of all the tasks in DB
 router.get('/GetAllTasks', async (request, response) => {
-    const results = await db.promise().query(`SELECT * FROM Task`);
+    const results = await db.promise().query(`SELECT * FROM Task WHERE Deleted = 0`);
     response.status(200).send(results[0]);
 });
 
@@ -89,6 +89,20 @@ router.put('/UpdateTask', async (request, response) => {
     LastUpdatedBy = 'System',
     LastUpdatedDateTime = '${nowDateTime}'
     WHERE Id='${TaskId}';`);
+
+    response.status(200).send(results[0]);
+});
+
+router.put ('/DeleteTask', async (request, response) => {
+    const delTaskID = request.body.Id;
+    debugger;
+    let nowDateTime = (new Date(Date.now()).toISOString()).slice(0,19);
+
+    const results = await db.promise().query(`UPDATE Task SET
+    LastUpdatedBy = 'System',
+    Deleted = 1,
+    LastUpdatedDateTime = '${nowDateTime}'
+    WHERE Id='${delTaskID}';`);
 
     response.status(200).send(results[0]);
 });

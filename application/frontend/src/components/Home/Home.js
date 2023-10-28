@@ -222,6 +222,7 @@ function Home() {
                 TaskService.deleteTask(selectedTaskById).then((data) => {
                     if (data.serverStatus == 2) {
                         getAllTasksData();
+                        setSelectedTaskById(new TaskModel());
                         MySwal.fire('Deleted!','Your task has been successfully deleted!','success');
                     }
                 });
