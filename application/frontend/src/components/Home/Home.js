@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import Stack from 'react-bootstrap/Stack';
 import GenericService from '../../services/GenericService';
 import TaskService from '../../services/TaskService';
@@ -33,32 +34,34 @@ function Home() {
     const [selectedTaskById, setSelectedTaskById] = useState(new TaskModel());
     const [showEditButton, setShowEditButton] = useState(false);
 
+    const [modalShow, setModalShow] = useState(false);
+
     const [TaskName, setTaskName] = useState("");
     const [TaskDes, setTaskDes] = useState("");
     const [TaskCategory, setTaskCategory] = useState("");
     const [TaskDueDate, setTaskDueDate] = useState("");
     const [TaskNotes, setTaskNotes] = useState("");
     const today = new Date();
-  
-    function Create(){
-      const task = {
-        TaskName: TaskName,
-        TaskDescription: TaskDes,
-        TaskCategory: TaskCategory,
-        TaskDueDate: TaskDueDate,
-        TaskNotes: TaskNotes,
-        DateCreated: today,
-      };
-      
-      TaskService.createTask(task).then((data) => {
-        if (data.serverStatus == 2) {
-            MySwal.fire('Task Was successfuly created');
-        }else{
-            getAllTasksData();
-            MySwal.fire('Task Creatation Failed', 'Something Went Wrong');
-        }
-    });
-      
+
+    function Create() {
+        const task = {
+            TaskName: TaskName,
+            TaskDescription: TaskDes,
+            TaskCategory: TaskCategory,
+            TaskDueDate: TaskDueDate,
+            TaskNotes: TaskNotes,
+            DateCreated: today,
+        };
+
+        TaskService.createTask(task).then((data) => {
+            if (data.serverStatus == 2) {
+                MySwal.fire('Task Was successfuly created');
+            } else {
+                getAllTasksData();
+                MySwal.fire('Task Creatation Failed', 'Something Went Wrong');
+            }
+        });
+
     }
 
     const MySwal = withReactContent(Swal);
@@ -339,7 +342,9 @@ function Home() {
             return (
                 <tbody>
                     <tr>
-                        <td><Button className='taskButton' variant='outline-primary' onClick={() => { getTaskById(taskId) }}>{taskName}</Button></td>
+                        <td className='d-grid'>
+                            <Button className='taskButton' variant='light' onClick={() => { getTaskById(taskId) }}>{taskName}</Button>
+                        </td>
                     </tr>
                 </tbody>
             )
@@ -367,6 +372,56 @@ function Home() {
         )
     }
 
+    const ShowHistory = (props) => {
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        History
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Row>
+                        <Col>
+                            <h4>Completed</h4>
+                        </Col>
+                        <Col>
+                            <h4>Deleted</h4>
+                        </Col>
+                    </Row>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={props.onHide}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+        )
+    }
+
+    const historyButton = () => {
+        return (
+            <>
+                <div className='d-grid'>
+                    <Button variant="primary" onClick={() => setModalShow(true)}>
+                        History
+                    </Button>
+
+                </div>
+
+                <ShowHistory
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                />
+
+            </>
+        )
+    }
+
 
     let showSelectedTaskContent = loadingDataIsReady ? renderViewTaskForm() : renderEditTaskForm();
     let showStatusContent = loadingBackStatus ? <h2>Loading...</h2> : renderStatusCheck();
@@ -386,6 +441,8 @@ function Home() {
                                 {showTaskList()}
                             </Alert>
 
+                            {historyButton()}
+
                             {/* <h5>Buttons for testing JIRA PH-41</h5>
                             <Button variant='primary' onClick={() => { getTaskById(2) }}>Get Task ID 2</Button>
                             <Button className='ms-2' variant='primary' onClick={() => { getTaskById(11) }}>Get Task ID 11</Button> */}
@@ -396,12 +453,12 @@ function Home() {
                     {showSelectedTaskContent}
                 </Col>
             </Row>
-            <Row className='border border-top-0 px-2 py-3 text-center'>   
+            <Row className='border border-top-0 px-2 py-3 text-center'>
                 <Col sm={12} md={12} lg={8} className='mt-2'>
-                    <Form.Control size='lg' type="text" value={TaskName} onChange={(event) => {setTaskName(event.target.value)}} placeholder="Add your task here..." />
+                    <Form.Control size='lg' type="text" value={TaskName} onChange={(event) => { setTaskName(event.target.value) }} placeholder="Add your task here..." />
                 </Col>
                 <Col sm={6} md={6} lg={3} className='my-2'>
-                    <Form.Select size='lg' value={TaskCategory} onChange={(event) => {setTaskCategory(event.target.value)}}>
+                    <Form.Select size='lg' value={TaskCategory} onChange={(event) => { setTaskCategory(event.target.value) }}>
                         <option>Select category</option>
                         <option value="1">Study</option>
                         <option value="2">Work</option>
@@ -419,23 +476,23 @@ function Home() {
             <Row className='border border-top-0 px-2 py-3 text-center'>
                 <Col sm={6} md={7} lg={5}>
                     <Form.Label>Task Description</Form.Label>
-                    <Form.Control type="text" value={TaskDes} onChange={(event) => {setTaskDes(event.target.value)}} placeholder="Task Description"/>
+                    <Form.Control type="text" value={TaskDes} onChange={(event) => { setTaskDes(event.target.value) }} placeholder="Task Description" />
                 </Col>
                 <Col>
                     <Form.Label>Due Date</Form.Label>
-                    <Form.Control type="datetime-local" min="2023-10-20T00:00" max="2024-10-21T00:00" value={TaskDueDate} onChange={(event) => {setTaskDueDate(event.target.value)}} placeholder="Due Date"/>
+                    <Form.Control type="datetime-local" min="2023-10-20T00:00" max="2024-10-21T00:00" value={TaskDueDate} onChange={(event) => { setTaskDueDate(event.target.value) }} placeholder="Due Date" />
                 </Col>
                 <Col>
                     <Form.Label>Notes</Form.Label>
-                    <Form.Control type="text" value={TaskNotes} onChange={(event) => {setTaskNotes(event.target.value)}} placeholder="Notes"/>
+                    <Form.Control type="text" value={TaskNotes} onChange={(event) => { setTaskNotes(event.target.value) }} placeholder="Notes" />
                 </Col>
             </Row>
-            <Row>    
+            <Row>
                 <Col sm={6} md={6} lg={1} className='my-2' >
-                    <Button variant="primary" size='lg' type="submit" onClick={() => {Create()}}>
+                    <Button variant="primary" size='lg' type="submit" onClick={() => { Create() }}>
                         Create
                     </Button>
-                </Col>    
+                </Col>
             </Row>
             <Row>
                 {/* {showStatusContent} */}
