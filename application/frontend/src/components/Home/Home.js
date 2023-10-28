@@ -219,8 +219,12 @@ function Home() {
             confirmButtonColor: '#3085d6'
         }).then((result) => {
             if (result.isConfirmed) {
-
-                MySwal.fire('Deleted!','Your task has been successfully deleted!','success');
+                TaskService.deleteTask(selectedTaskById).then((data) => {
+                    if (data.serverStatus == 2) {
+                        getAllTasksData();
+                        MySwal.fire('Deleted!','Your task has been successfully deleted!','success');
+                    }
+                });
             }
         });
     }

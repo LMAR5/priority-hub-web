@@ -66,6 +66,21 @@ const TaskService = {
             console.log(error.message);
         });
         return taskupd;        
+    },
+    deleteTask: function(delTaskData) {
+        const deltask = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/DeleteTask'),{
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(delTaskData)
+        })
+        .then(response => response.json())
+        .then((data) => {            
+            return data;
+        })
+        .catch((error) => {
+            console.log(error.message);
+        });
+        return deltask;
     }
 }
 
