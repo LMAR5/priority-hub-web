@@ -9,6 +9,7 @@ router.use((request, response, next) => {
     next();
 });
 
+
 // Uri: http://localhost:3001/api/UserController/GetUsers
 // Type: GET
 // Description: Methods that checks get the list of users in DB
