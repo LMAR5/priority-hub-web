@@ -58,7 +58,7 @@ router.get('/GetTaskById', async (request, response) => {
 // Uri: http://localhost:3001/api/TaskController/CreateTask
 // Type: POST
 // Description: Insert Task into DB
-router.get('/CreateTask', async (request, response) => {
+router.post('/CreateTask', async (request, response) => {
 
     const TaskName = request.body.TaskName;
     const Description = request.body.TaskDescription;
@@ -67,7 +67,7 @@ router.get('/CreateTask', async (request, response) => {
     const Notes = request.body.TaskNotes;
     let Created = (new Date(Date.now()).toISOString()).slice(0, 19);
 
-    const createQuery = 'INSERT INTO Tasks (Title, Description, CategoryID, UserID, Status, Priority, DueDate, Notes, CreatedBy, CreatedDateTime, LastUpdatedBy, LastUpdatedDateTime) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
+    const createQuery = 'INSERT INTO Task (Title, Description, CategoryID, UserID, Status, Priority, DueDate, Notes, CreatedBy, CreatedDateTime, LastUpdatedBy, LastUpdatedDateTime) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
     const createValue = [TaskName, Description, Category, 99, 'Pending', 'Low', DueDate, Notes, 'User', Created, 'User', Created];
     const CreateResult = await db.promise().query(createQuery, createValue);
     response.status(200).send(CreateResult[0]);
