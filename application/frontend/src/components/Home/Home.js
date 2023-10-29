@@ -28,6 +28,7 @@ function Home() {
     const [backStatus, setBackStatus] = useState("");
     const [lstCategories, setLstCategories] = useState([]);
     const [lstTasks, setLstTasks] = useState([]);
+    const [lstDelTasks, setDelTasks] = useState([]);
     const [lstActivityTrackers, setLstActivityTrackers] = useState([]);
 
     const [categoryForm, setCategoryForm] = useState(new CategoryModel());
@@ -35,6 +36,8 @@ function Home() {
     const [showEditButton, setShowEditButton] = useState(false);
 
     const [modalShow, setModalShow] = useState(false);
+
+
 
     const [TaskName, setTaskName] = useState("");
     const [TaskDes, setTaskDes] = useState("");
@@ -103,10 +106,17 @@ function Home() {
         });
     }
 
+    const getDeletedTasks = () => {
+        TaskService.getDeletedTask().then((data) => {
+            setDelTasks(data);
+        });
+    }
+
     const getAllCategories = () => {
         CategoryService.getAllCategories().then((data) => {
             setLstCategories(data);
             getAllTasksData();
+            getDeletedTasks();
         });
     }
 
@@ -132,6 +142,8 @@ function Home() {
             getActivityTrackersById(data[0].Id);
         });
     }
+
+
 
 
 
@@ -223,7 +235,7 @@ function Home() {
                     if (data.serverStatus == 2) {
                         getAllTasksData();
                         setSelectedTaskById(new TaskModel());
-                        MySwal.fire('Deleted!','Your task has been successfully deleted!','success');
+                        MySwal.fire('Deleted!', 'Your task has been successfully deleted!', 'success');
                     }
                 });
             }
@@ -395,6 +407,7 @@ function Home() {
     }
 
     const ShowHistory = (props) => {
+
         return (
             <Modal
                 {...props}
@@ -414,9 +427,13 @@ function Home() {
                         </Col>
                         <Col>
                             <h4>Deleted</h4>
+                            <Table>
+                                {lstDelTasks.map((info) =>
+                                    <tr>{info.Title}</tr>
+                                )}
+                            </Table>
                         </Col>
                     </Row>
-
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={props.onHide}>Close</Button>

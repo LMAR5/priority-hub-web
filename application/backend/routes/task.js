@@ -18,12 +18,13 @@ router.get('/GetAllTasks', async (request, response) => {
 });
 
 
+
 // Uri: http://localhost:3001/api/TaskController/SearchTask?key=dog
 // Type: GET
 // Description: Search a task by its name or other fields sending a keyword from frontend
 router.get('/SearchTask', async (request, response) => {
     const keyTerm = request.query.key;
-    console.log("keyTerm:",keyTerm);
+    console.log("keyTerm:", keyTerm);
     const results = await db.promise().query(`SELECT * FROM Task WHERE Title like '%${keyTerm}%' OR Description LIKE '%${keyTerm}%'`);
     response.status(200).send(results[0]);
 });
@@ -32,7 +33,7 @@ router.get('/SearchTask', async (request, response) => {
 // Type: GET
 // Description: Get a task entity using by its ID.
 router.get('/GetTaskById', async (request, response) => {
-    const taskId = request.query.tid;    
+    const taskId = request.query.tid;
     const results = await db.promise().query(`SELECT * FROM Task WHERE Id='${taskId}' and Deleted=0`);
     response.status(200).send(results[0]);
 });
@@ -42,13 +43,13 @@ router.get('/GetTaskById', async (request, response) => {
 // Type: POST
 // Description: Insert Task into DB
 router.get('/CreateTask', async (request, response) => {
-   
+
     const TaskName = request.body.TaskName;
     const Description = request.body.TaskDescription;
     const Category = request.body.TaskCategory;
     const DueDate = request.body.TaskDueDate;
     const Notes = request.body.TaskNotes;
-      let Created = (new Date(Date.now()).toISOString()).slice(0,19);
+    let Created = (new Date(Date.now()).toISOString()).slice(0, 19);
 
     const createQuery = 'INSERT INTO Tasks (Title, Description, CategoryID, UserID, Status, Priority, DueDate, Notes, CreatedBy, CreatedDateTime, LastUpdatedBy, LastUpdatedDateTime) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
     const createValue = [TaskName, Description, Category, 99, 'Pending', 'Low', DueDate, Notes, 'User', Created, 'User', Created];
@@ -71,13 +72,13 @@ router.put('/UpdateTask', async (request, response) => {
     const TaskCompleted = request.body.Completed;
     //const TaskDeleted = request.body.Deleted;
     //const TaskIsFavorite = request.body.IsFavorite;
-    const TaskDueDate = request.body.DueDate.slice(0,19);
+    const TaskDueDate = request.body.DueDate.slice(0, 19);
     const TaskNotes = request.body.Notes;
     //const TaskCreatedBy = request.body.CreatedBy;
     //const TaskCreatedDateTime = request.body.CreatedDateTime;
     //const TaskLastUpdatedBy = request.body.LastUpdatedBy;
     //const TaskLastUpdatedDateTime = request.body.LastUpdatedDateTime;
-    let nowDateTime = (new Date(Date.now()).toISOString()).slice(0,19);
+    let nowDateTime = (new Date(Date.now()).toISOString()).slice(0, 19);
 
     const results = await db.promise().query(`UPDATE Task SET
     Title = '${TaskTitle}',
@@ -93,10 +94,10 @@ router.put('/UpdateTask', async (request, response) => {
     response.status(200).send(results[0]);
 });
 
-router.put ('/DeleteTask', async (request, response) => {
+router.put('/DeleteTask', async (request, response) => {
     const delTaskID = request.body.Id;
     debugger;
-    let nowDateTime = (new Date(Date.now()).toISOString()).slice(0,19);
+    let nowDateTime = (new Date(Date.now()).toISOString()).slice(0, 19);
 
     const results = await db.promise().query(`UPDATE Task SET
     LastUpdatedBy = 'System',
@@ -106,5 +107,14 @@ router.put ('/DeleteTask', async (request, response) => {
 
     response.status(200).send(results[0]);
 });
+
+// GetAllDeletedTasks
+router.get('/GetAllDeletedTasks', async (request, response) => {
+    debugger
+    const results = await db.promise().query(`SELECT * FROM Task WHERE Deleted = 1`);
+    response.status(200).send(results[0]);
+});
+
+
 
 module.exports = router;

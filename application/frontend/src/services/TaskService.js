@@ -37,51 +37,63 @@ const TaskService = {
             });
         return get_task;
     },
-    createTask: function (taskData){
+    createTask: function (taskData) {
         const create = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/CreateTask'), {
             method: 'Post',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(taskData),
-          })
-          .then(response => response.json())
-          .then((data) => {            
-              return data;
-          })
-          .catch((error) => {
-              console.log(error.message);
-          });
+        })
+            .then(response => response.json())
+            .then((data) => {
+                return data;
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
         return create;
     },
     updateTask: function (taskUpdData) {
-        const taskupd = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/UpdateTask'),{
+        const taskupd = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/UpdateTask'), {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(taskUpdData)
         })
-        .then(response => response.json())
-        .then((data) => {            
-            return data;
-        })
-        .catch((error) => {
-            console.log(error.message);
-        });
-        return taskupd;        
+            .then(response => response.json())
+            .then((data) => {
+                return data;
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+        return taskupd;
     },
-    deleteTask: function(delTaskData) {
-        const deltask = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/DeleteTask'),{
+    deleteTask: function (delTaskData) {
+        const deltask = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/DeleteTask'), {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(delTaskData)
         })
-        .then(response => response.json())
-        .then((data) => {            
-            return data;
-        })
-        .catch((error) => {
-            console.log(error.message);
-        });
+            .then(response => response.json())
+            .then((data) => {
+                return data;
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
         return deltask;
+    },
+    getDeletedTask: function () {
+        const alldeltasks = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/GetAllDeletedTasks'))
+            .then(response => response.json())
+            .then((data) => {
+                return data;
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+        return alldeltasks;
     }
+
 }
 
 export default TaskService;
