@@ -1,6 +1,7 @@
 const { Router, request } = require('express');
 //Import MySQL connection
 const db = require('../database');
+const categoryModel = require('../models/categorymodel');
 
 const router = Router();
 
@@ -13,7 +14,27 @@ router.use((request, response, next) => {
 // Type: GET
 // Description: Get list of all the categories in DB
 router.get('/GetAllCategories', async (request, response) => {
-    const results = await db.promise().query(`SELECT * FROM Category`);
+    let lstcategories = [];
+    let newcat = new categoryModel();
+    newcat.Id = 0;
+    newcat.Title = "Select category"
+    newcat.Description = "Select category";
+    newcat.CreatedBy = "System";
+    newcat.LastUpdatedBy = "System";
+    lstcategories.push(newcat);
+    const results = await db.promise().query(`SELECT * FROM Category WHERE Deleted=0`);
+    results[0].forEach(element => {
+        lstcategories.push(element);
+    });
+    response.status(200).send(lstcategories);
+});
+
+// Uri: http://localhost:3001/CategoryController/GetCategoryById?cid=12345
+// Type: GET
+// Description: Get category by Id
+router.get('/GetCategoryById', async (request, response) => {
+    const catId = request.query.cid;
+    const results = await db.promise().query(`SELECT * FROM Category WHERE Id='${catId}' and Deleted=0`);
     response.status(200).send(results[0]);
 });
 

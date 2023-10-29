@@ -25,6 +25,45 @@ const TaskService = {
         //Perform fetch call here
         //Handle response from backend
         return searchResult;
+    },
+    getTaskById: function (task_id) {
+        const url = process.env.REACT_APP_API_URL.concat("/api/TaskController/GetTaskById?tid=")
+        const get_task = fetch(url.concat(task_id))
+            .then(response => response.json())
+            .then((data) => {
+                return data;
+            }).catch((error) => {
+                console.log(error.message);
+            });
+        return get_task;
+    },
+    createTask: function (taskData){
+        const create = fetch(process.env.REACT_APP_API_URL.concat('api/TaskController/CreateTask'), {
+            method: 'Post',
+            body: JSON.stringify(taskData),
+          })
+      
+          .then(response => {
+            console.log(response);
+          }).catch((error) => {
+            console.log(error.message);
+          });
+        return create;
+    },
+    updateTask: function (taskUpdData) {
+        const taskupd = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/UpdateTask'),{
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(taskUpdData)
+        })
+        .then(response => response.json())
+        .then((data) => {            
+            return data;
+        })
+        .catch((error) => {
+            console.log(error.message);
+        });
+        return taskupd;        
     }
 }
 
