@@ -9,26 +9,23 @@ import LandingPageMain from './components/LandingPage/LandingPageMain';
 import SignInCustom from './components/Authentication/SignInCustom';
 import SignUpCustom from './components/Authentication/SignUpCustom';
 import PasswordResetCustom from './components/Authentication/PasswordResetCustom';
+import AuthenticationService from './services/AuthenticationService';
 
 const AppRoutes = [
-    {        
-        element: <LandingPageLayout />,
+    {
+        element: <Layout />,
         children: [
             {
                 path: "/",
-                element: <LandingPageMain />
+                element: <Home />
             },
             {
-                path: "/SignIn",    
-                element: <SignInCustom />
+                path: "/Tasks",
+                element: <Tasks />
             },
             {
-                path: "/SignUp",
-                element: <SignUpCustom />
-            },
-            {
-                path: "/PasswordReset",
-                element: <PasswordResetCustom />
+                path: "/Categories",
+                element: <Categories />
             },
             {
                 path: "/About",
@@ -37,24 +34,6 @@ const AppRoutes = [
             {
                 path: "/MemberGeneric",
                 element: <MemberGeneric />
-            }
-        ]
-    },
-    {
-        path: "/Main",
-        element: <Layout />,
-        children: [
-            {
-                path: "/Main/",
-                element: <Home />
-            },
-            {
-                path: "/Main/Tasks",
-                element: <Tasks />
-            },
-            {
-                path: "/Main/Categories",
-                element: <Categories />
             }
         ]
     }
