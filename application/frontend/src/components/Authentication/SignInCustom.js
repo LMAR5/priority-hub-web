@@ -13,12 +13,13 @@ import CustomFooter from '../Layout/CustomFooter';
 
 function SignInCustom({ setToken }) {
 
-    // mode: SINGIN, SIGNUP, RESET
+    // mode: SIGNIN, SIGNUP, RESET
     const [mode, setMode] = useState('SIGNIN');
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const HandleSubmit = async (e) => {
         e.preventDefault();
@@ -42,10 +43,35 @@ function SignInCustom({ setToken }) {
             alert("Complete all fields");
         } else {
             AuthenticationService.signUp(newUser).then((data) => {
-                console.log(data);
-                setEmail('');
-                setPassword('');
-                setMode('SIGNIN');
+                if (data.result) {
+                    setEmail('');
+                    setPassword('');
+                    setMode('SIGNIN');
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+    }
+
+    const HandleResetPassword = (e) => {
+        e.preventDefault();
+        const confirmPassw = { email, password, confirmPassword };
+        if (isEmpty(email) || isEmpty(password) || isEmpty(confirmPassword)) {
+            alert("Complete all fields");
+        }
+        else if (password !== confirmPassword) {
+            alert("Passwords don't match");
+        } else {
+            AuthenticationService.resetPassword(confirmPassw).then((data) => {
+                if (data.result) {
+                    setEmail('');
+                    setPassword('');
+                    setMode('SIGNIN');
+                    alert('Password reset successful');
+                } else {
+                    alert(data.message);
+                }
             });
         }
     }
@@ -70,6 +96,9 @@ function SignInCustom({ setToken }) {
                 break;
             default:
                 setMode('RESET');
+                setEmail('');
+                setPassword('');
+                setConfirmPassword('');
                 break;
         }
     }
@@ -87,7 +116,7 @@ function SignInCustom({ setToken }) {
                         <Form.Group className='mb-3' controlId='signinPassword'>
                             <Form.Label>Password</Form.Label>
                             <Form.Control type='password' placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                            {/* <Button className='px-1' variant='link' onClick={() => { switchView('RESET') }}>Forgot password?</Button> */}
+                            <Button className='px-1' variant='link' onClick={() => { switchView('RESET') }}>Forgot password?</Button>
                         </Form.Group>
                         <Form.Group>
                             <Button className='w-100 mb-1' variant="primary" type='submit'>Sign In</Button>
@@ -133,6 +162,35 @@ function SignInCustom({ setToken }) {
         );
     }
 
+    const renderResetPassword = () => {
+        return (
+            <Card className='signin mt-5 m-auto p-3 shadow rounded-4'>
+                <Card.Body>
+                    <Form className='rounded' onSubmit={HandleResetPassword}>
+                        <h2 className='mb-4'>Reset password</h2>
+                        <Form.Group className="mb-3" controlId="signupBasicEmail">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control type="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group className='mb-3' controlId='resetPassword' >
+                            <Form.Label>New password</Form.Label>
+                            <Form.Control type='password' placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group className='my-3' controlId='resetConfirmPassword' >
+                            <Form.Label>Confirm password</Form.Label>
+                            <Form.Control type='password' placeholder='Confirm your password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group>
+                            <Button className='w-100 mb-1' variant="primary" type='submit'>Reset password</Button>
+                            <span>Already have an account?</span>
+                            <Button className='px-1' variant='link' onClick={() => { switchView('SIGNIN') }}>Sign In</Button>
+                        </Form.Group>
+                    </Form>
+                </Card.Body>
+            </Card>
+        );
+    }
+
     const renderImageCard = () => {
         return (
             <div className='vh-100'>
@@ -147,9 +205,6 @@ function SignInCustom({ setToken }) {
         );
     }
 
-    let contentScreen = mode === 'SIGNIN' ? renderSignIn() : renderSignUp();
-    let contentImage = renderImageCard();
-
     return (
         <div>
             <Container fluid>
@@ -162,10 +217,12 @@ function SignInCustom({ setToken }) {
                 </Row>
                 <Row>
                     <Col sm={12} lg={6} className='justify-content-center align-self-center my-3'>
-                        {contentScreen}
+                        {mode === 'SIGNIN' ? renderSignIn() : <span></span>}
+                        {mode === 'SIGNUP' ? renderSignUp() : <span></span>}
+                        {mode === 'RESET' ? renderResetPassword() : <span></span>}
                     </Col>
                     <Col sm={12} lg={6} className='justify-content-center align-self-center px-0 img-signin'>
-                        {contentImage}
+                        {renderImageCard()}
                     </Col>
                 </Row>
                 <CustomFooter />

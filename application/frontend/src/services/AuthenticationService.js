@@ -12,7 +12,7 @@ const AuthenticationService = {
             }).catch((error) => {
                 console.log(error.message);
             })
-            return signup;
+        return signup;
     },
     signIn: async function (userCredentials) {
         const signInAtempt = await fetch(process.env.REACT_APP_API_URL.concat('/api/AuthController/SignIn'), {
@@ -20,22 +20,36 @@ const AuthenticationService = {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userCredentials)
         }).then(response => response.json())
-        .then((data) => {
-            return data;
-        }).catch((error) => {
-            console.log(error.message);
-        });
+            .then((data) => {
+                return data;
+            }).catch((error) => {
+                console.log(error.message);
+            });
         return signInAtempt;
     },
-    getToken: function() {
+    resetPassword: function (passwordCredentials) {
+        const resetpassw = fetch(process.env.REACT_APP_API_URL.concat('/api/AuthController/ResetPassword'), {
+            method: 'PUT',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(passwordCredentials)
+        })
+            .then(response => response.json())
+            .then((data) => {
+                return data;
+            }).catch((error) => {
+                console.log(error.message);
+            });
+        return resetpassw;
+    },
+    getToken: function () {
         const tokenString = sessionStorage.getItem('phtoken');
-        if (tokenString !== 'undefined'){
+        if (tokenString !== 'undefined') {
             const userToken = JSON.parse(tokenString);
             return userToken?.token;
         }
     },
-    setToken: function(userToken) {
-        sessionStorage.setItem('phtoken',JSON.stringify(userToken));
+    setToken: function (userToken) {
+        sessionStorage.setItem('phtoken', JSON.stringify(userToken));
     },
     signOut: function () {
         sessionStorage.removeItem('phtoken');

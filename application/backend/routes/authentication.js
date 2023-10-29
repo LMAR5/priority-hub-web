@@ -23,10 +23,10 @@ router.post('/SignIn', (request, response) => {
         if (err) {
             return response.status(500).json({ message: 'Duplicate email entry in database', result: [], success: false });
         }
-
         if (result.length > 0) {
-            return response.status(201).json({ message: 'Access granted', result: result[0],  success: true,  token: 'priorityhubtoken123456789' });
-        } else {
+            return response.status(201).json({ message: 'Access granted', result: result[0], success: true, token: 'priorityhubtoken123456789' });
+        } 
+        else {
             return response.status(500).json({ message: 'Invalid credentials', result: [], success: false });
         }
     });
@@ -44,28 +44,42 @@ router.post('/SignUp', (request, response, next) => {
     }
 
     const insertQuery = 'INSERT INTO User (firstname, lastname, email, password, Status, createdby, lastupdatedby) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    const values = [firstname, lastname, email, password, 'ACTIVE','System','System'];
+    const values = [firstname, lastname, email, password, 'ACTIVE', 'System', 'System'];
 
     db.query(insertQuery, values, (err, result) => {
         if (err) {
             console.error('Error in SignUp route:', err.code);
             return response.status(500).json({ message: 'Duplicate email entry in database', result: false });
         }
-
         if (result.affectedRows === 1) {
             return response.status(201).json({ message: 'User registered successfully', result: true });
-        } else {
+        } 
+        else {
             return response.status(500).json({ message: 'Failed to register user', result: false });
         }
     });
 });
 
-// Uri: http://localhost:3001/api/AuthController/SignOut
-// Type: [pending]
-// Description: Method that close the session of the user
-
 // Uri: http://localhost:3001/api/AuthController/ResetPassword
-// Type: [pending]
+// Type: PUT
 // Description: Method that resets the password of the user
+router.put('/ResetPassword', (request, response) => {
+    const emailResetPassword = request.body.email;
+    const passwordResetPassword = request.body.password;
+
+    const resetQuery = 'UPDATE User SET Password=? WHERE Email=?';
+    const values = [passwordResetPassword, emailResetPassword];
+    db.query(resetQuery, values, (err, result) => {
+        if (err) {
+            return response.status(500).json({ message: 'Error when reset password', result: false });
+        }
+        if (result.affectedRows === 1) {
+            return response.status(201).json({ message: 'Reset password successfully', result: true });
+        } 
+        else {
+            return response.status(500).json({ message: 'Failed to reset password', result: false });
+        }
+    });
+});
 
 module.exports = router;
