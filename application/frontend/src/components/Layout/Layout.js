@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/esm/Container';
 import CustomFooter from './CustomFooter';
 import { Outlet } from 'react-router-dom';
 
-function Layout(props){
+function Layout(){
     return(
         <div>
             <CustomNavBar />            
