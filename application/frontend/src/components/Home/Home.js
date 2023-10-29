@@ -29,6 +29,8 @@ function Home() {
     const [lstCategories, setLstCategories] = useState([]);
     const [lstTasks, setLstTasks] = useState([]);
     const [lstDelTasks, setDelTasks] = useState([]);
+    const [lstComplTasks, setComplTasks] = useState([]);
+
     const [lstActivityTrackers, setLstActivityTrackers] = useState([]);
 
     const [categoryForm, setCategoryForm] = useState(new CategoryModel());
@@ -112,11 +114,18 @@ function Home() {
         });
     }
 
+    const getComplTasks = () => {
+        TaskService.getCompletedTask().then((data) => {
+            setComplTasks(data);
+        });
+    }
+
     const getAllCategories = () => {
         CategoryService.getAllCategories().then((data) => {
             setLstCategories(data);
             getAllTasksData();
             getDeletedTasks();
+            getComplTasks();
         });
     }
 
@@ -424,6 +433,9 @@ function Home() {
                     <Row>
                         <Col>
                             <h4>Completed</h4>
+                            {lstComplTasks.map((info) =>
+                                <tr>{info.Title}</tr>
+                            )}
                         </Col>
                         <Col>
                             <h4>Deleted</h4>

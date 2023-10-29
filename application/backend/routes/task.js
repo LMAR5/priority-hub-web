@@ -13,7 +13,23 @@ router.use((request, response, next) => {
 // Type: GET
 // Description: Get list of all the tasks in DB
 router.get('/GetAllTasks', async (request, response) => {
-    const results = await db.promise().query(`SELECT * FROM Task WHERE Deleted = 0`);
+    const results = await db.promise().query(`SELECT * FROM Task WHERE Deleted = 0 and Completed = 0`);
+    response.status(200).send(results[0]);
+});
+
+// GetAllDeletedTasks
+// Uri: http://localhost:3001/TaskController/GetAllDeletedTasks
+router.get('/GetAllDeletedTasks', async (request, response) => {
+    debugger
+    const results = await db.promise().query(`SELECT * FROM Task WHERE Deleted = 1`);
+    response.status(200).send(results[0]);
+});
+
+// GetAllDeletedTasks
+// Uri: http://localhost:3001/TaskController/GetAllCompletedTasks
+router.get('/GetAllCompletedTasks', async (request, response) => {
+    debugger
+    const results = await db.promise().query(`SELECT * FROM Task WHERE Completed = 1`);
     response.status(200).send(results[0]);
 });
 
@@ -108,12 +124,7 @@ router.put('/DeleteTask', async (request, response) => {
     response.status(200).send(results[0]);
 });
 
-// GetAllDeletedTasks
-router.get('/GetAllDeletedTasks', async (request, response) => {
-    debugger
-    const results = await db.promise().query(`SELECT * FROM Task WHERE Deleted = 1`);
-    response.status(200).send(results[0]);
-});
+
 
 
 

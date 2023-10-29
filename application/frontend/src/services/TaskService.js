@@ -92,6 +92,17 @@ const TaskService = {
                 console.log(error.message);
             });
         return alldeltasks;
+    },
+    getCompletedTask: function () {
+        const allcompltasks = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/GetAllCompletedTasks'))
+            .then(response => response.json())
+            .then((data) => {
+                return data;
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+        return allcompltasks;
     }
 
 }
