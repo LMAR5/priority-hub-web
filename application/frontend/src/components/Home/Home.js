@@ -39,8 +39,6 @@ function Home() {
 
     const [modalShow, setModalShow] = useState(false);
 
-
-
     const [TaskName, setTaskName] = useState("");
     const [TaskDes, setTaskDes] = useState("");
     const [TaskCategory, setTaskCategory] = useState("");
@@ -152,10 +150,6 @@ function Home() {
         });
     }
 
-
-
-
-
     const handleTaskChange = (event) => {
         let taskObj = new TaskModel();
         taskObj.Id = selectedTaskById.Id;
@@ -251,12 +245,31 @@ function Home() {
         });
     }
 
+    const undoChanges = (taskData) => {
+        MySwal.fire({
+            title: 'Are you sure?',
+            text: "This action will undo your changes.",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Undo changes',
+            confirmButtonColor: '#3085d6'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setShowEditButton(true);
+                setLoadingDataIsReady(true);
+                getTaskById(taskData.Id);
+                MySwal.fire('Done!', 'Your changes have been removed!', 'success');
+            }
+        });
+    }
+
     const renderViewTaskForm = () => {
         return (
             <div>
                 <Row>
                     <Col sm={8}>
-                        <h4>Task #{selectedTaskById.Id}</h4>
+                        <h4>Task details</h4>
                     </Col>
                     {showEditButton ?
                         <Col sm={4} className='text-end'>
@@ -291,40 +304,38 @@ function Home() {
                             <Form.Control id='task_notes' as="textarea" rows={8} value={selectedTaskById.Notes} onChange={handleTaskChange} disabled />
                         </Col>
                     </Form.Group>
-                    <Form.Group className='mt-2 p-2'>
-                        <div className='row alert alert-secondary'>
+                    <Form.Group className='mt-2 px-4 py-3 alert alert-secondary'>
+                        <Row className='mb-1'>
+                            <h5>Activity tracker</h5>
+                        </Row>
+                        <Row>
                             <Col sm={6}>
                                 <Card className='text-center'>
                                     <Card.Body>
                                         <Card.Title>Stopwatch</Card.Title>
                                         <Card.Text>00:00:00</Card.Text>
-                                        <Button variant='outline-primary'>Start</Button>
-                                        <Button variant='outline-warning' className='ms-3'>Pause</Button>
-                                        <Button variant='outline-danger' className='ms-3'>Stop</Button>
+                                        <Button variant='outline-primary' disabled>Start</Button>
+                                        <Button variant='outline-warning' className='ms-3' disabled>Pause</Button>
+                                        <Button variant='outline-danger' className='ms-3' disabled>Stop</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>
                             <Col sm={6}>
-                                <b>Activity tracker</b>
+                                <b>Recorded activity</b>
                                 <ListGroup as="ol" numbered className='mt-1'>
-                                    {lstActivityTrackers.map((item, idx) =>
-                                        <ListGroup.Item key={idx} as="li" className='d-flex justify-content-between align-items-start'>
-                                            <div className="ms-2 me-auto">
-                                                <div className="fw-bold">Time {item.Id}</div>
-                                                {item.StartTime}
-                                            </div>
-                                        </ListGroup.Item>
-                                    )}
+                                    {lstActivityTrackers.length === 0 ? <span><em>No recorded activity</em></span> :
+                                        lstActivityTrackers.map((item, idx) =>
+                                            <ListGroup.Item key={idx} as="li" className='d-flex justify-content-between align-items-start'>
+                                                <div className="ms-2 me-auto">
+                                                    <div className="fw-bold">Time {item.Id}</div>
+                                                    {item.StartTime}
+                                                </div>
+                                            </ListGroup.Item>
+                                        )}
                                 </ListGroup>
                             </Col>
-                        </div>
-                        {/* <Alert variant='secondary' className='mt-4'>                            
-                        </Alert>                         */}
+                        </Row>
                     </Form.Group>
-                    {/* <Form.Group className='text-end'>
-                        <Button variant="primary ms-2">Complete</Button>
-                        <Button variant="danger ms-2">Delete</Button>
-                    </Form.Group> */}
                 </Form>
             </div>
         );
@@ -333,7 +344,16 @@ function Home() {
     const renderEditTaskForm = () => {
         return (
             <div>
-                <h4>Task #{selectedTaskById.Id}</h4>
+                <Row>
+                    <Col sm={8}>
+                        <h4>Task details</h4>
+                    </Col>
+                    {!loadingDataIsReady ?
+                        <Col sm={4} className='text-end'>
+                            <Button variant="secondary" onClick={() => { undoChanges(selectedTaskById) }}>Undo</Button>
+                        </Col> : <span></span>
+                    }
+                </Row>
                 <Form className='mt-3' onSubmit={HandleSaveChanges}>
                     <Form.Group as={Row}>
                         <Col sm={8}>
@@ -364,10 +384,37 @@ function Home() {
                             <Form.Control id='task_notes' className='alert alert-warning' as="textarea" rows={6} value={selectedTaskById.Notes} onChange={handleTaskChange} />
                         </Col>
                     </Form.Group>
-                    <Form.Group>
-                        <Alert variant='primary' className='mt-4'>
-                            <h4>Here goes the stopwatch.</h4>
-                        </Alert>
+                    <Form.Group className='mt-2 px-4 py-3 alert alert-light'>
+                        <Row className='mb-1'>
+                            <h5>Activity tracker</h5>
+                        </Row>
+                        <Row>
+                            <Col sm={6}>
+                                <Card className='text-center'>
+                                    <Card.Body>
+                                        <Card.Title>Stopwatch</Card.Title>
+                                        <Card.Text>00:00:00</Card.Text>
+                                        <Button variant='outline-primary'>Start</Button>
+                                        <Button variant='outline-warning' className='ms-3'>Pause</Button>
+                                        <Button variant='outline-danger' className='ms-3'>Stop</Button>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                            <Col sm={6}>
+                                <b>Recorded activity</b>
+                                <ListGroup as="ol" numbered className='mt-1'>
+                                    {lstActivityTrackers.length === 0 ? <span><em>No recorded activity</em></span> :
+                                        lstActivityTrackers.map((item, idx) =>
+                                            <ListGroup.Item key={idx} as="li" className='d-flex justify-content-between align-items-start'>
+                                                <div className="ms-2 me-auto">
+                                                    <div className="fw-bold">Time {item.Id}</div>
+                                                    {item.StartTime}
+                                                </div>
+                                            </ListGroup.Item>
+                                        )}
+                                </ListGroup>
+                            </Col>
+                        </Row>
                     </Form.Group>
                     <Form.Group className='text-end'>
                         <Button variant="success" type='submit' >Save changes</Button>
@@ -378,7 +425,6 @@ function Home() {
             </div>
         );
     }
-
 
     const sortTask = (catId, taskCatId, taskId, taskName) => {
         if (catId === taskCatId) {
@@ -457,7 +503,7 @@ function Home() {
     const historyButton = () => {
         return (
             <>
-                <div className='d-grid'>
+                <div className='d-grid mt-3'>
                     <Button variant="primary" onClick={() => setModalShow(true)}>
                         History
                     </Button>
@@ -473,7 +519,6 @@ function Home() {
         )
     }
 
-
     let showSelectedTaskContent = loadingDataIsReady ? renderViewTaskForm() : renderEditTaskForm();
     let showStatusContent = loadingBackStatus ? <h2>Loading...</h2> : renderStatusCheck();
     let showSearchBard = renderSearchBar();
@@ -487,16 +532,8 @@ function Home() {
                     </Row>
                     <Row className='mt-2'>
                         <Col>
-                            <Alert variant='warning' className='mt-4'>
-                                {/* <h4>Here goes the list of tasks. </h4> */}
-                                {showTaskList()}
-                            </Alert>
-
+                            {showTaskList()}
                             {historyButton()}
-
-                            {/* <h5>Buttons for testing JIRA PH-41</h5>
-                            <Button variant='primary' onClick={() => { getTaskById(2) }}>Get Task ID 2</Button>
-                            <Button className='ms-2' variant='primary' onClick={() => { getTaskById(11) }}>Get Task ID 11</Button> */}
                         </Col>
                     </Row>
                 </Col>
