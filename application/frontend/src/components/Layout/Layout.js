@@ -9,7 +9,8 @@ function Layout(){
         <div>
             <CustomNavBar />            
             <Container>            
-                <Outlet />
+                {/* {props.children} */}
+                <Outlet/>
                 <CustomFooter />
             </Container>
         </div>
