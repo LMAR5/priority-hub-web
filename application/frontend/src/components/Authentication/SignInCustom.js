@@ -10,6 +10,8 @@ import AuthenticationService from '../../services/AuthenticationService';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image';
 import CustomFooter from '../Layout/CustomFooter';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 function SignInCustom({ setToken }) {
 
@@ -21,16 +23,62 @@ function SignInCustom({ setToken }) {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const MySwal = withReactContent(Swal);
+
     const HandleSubmit = async (e) => {
         e.preventDefault();
         const returnUser = { email, password };
         if (isEmpty(email) || isEmpty(password)) {
-            alert("Provide email and password");
+            const Toast = MySwal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', MySwal.stopTimer)
+                    toast.addEventListener('mouseleave', MySwal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'warning',
+                title: 'Provide email and password'
+            })
         } else {
             await AuthenticationService.signIn(returnUser).then((res) => {
                 setToken(res);
                 if (!res.success) {
-                    alert(res.message);
+                    const Toast = MySwal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', MySwal.stopTimer)
+                            toast.addEventListener('mouseleave', MySwal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'warning',
+                        title: `${res.message}`
+                    })
+                } else {
+                    const Toast = MySwal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', MySwal.stopTimer)
+                            toast.addEventListener('mouseleave', MySwal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'success',
+                        title: `${res.message}`
+                    })
                 }
             });
         }
@@ -40,15 +88,58 @@ function SignInCustom({ setToken }) {
         e.preventDefault();
         const newUser = { firstname, lastname, email, password };
         if (isEmpty(firstname) || isEmpty(lastname) || isEmpty(email) || isEmpty(password)) {
-            alert("Complete all fields");
+            const Toast = MySwal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', MySwal.stopTimer)
+                    toast.addEventListener('mouseleave', MySwal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'warning',
+                title: 'Complete all fields'
+            })
         } else {
             AuthenticationService.signUp(newUser).then((data) => {
                 if (data.result) {
                     setEmail('');
                     setPassword('');
                     setMode('SIGNIN');
+                    const Toast = MySwal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', MySwal.stopTimer)
+                            toast.addEventListener('mouseleave', MySwal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Signed up successfully'
+                    })
                 } else {
-                    alert(data.message);
+                    const Toast = MySwal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', MySwal.stopTimer)
+                            toast.addEventListener('mouseleave', MySwal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'warning',
+                        title: `${data.message}`
+                    })
                 }
             });
         }
@@ -58,19 +149,76 @@ function SignInCustom({ setToken }) {
         e.preventDefault();
         const confirmPassw = { email, password, confirmPassword };
         if (isEmpty(email) || isEmpty(password) || isEmpty(confirmPassword)) {
-            alert("Complete all fields");
+            const Toast = MySwal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', MySwal.stopTimer)
+                    toast.addEventListener('mouseleave', MySwal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'warning',
+                title: 'Complete all fields'
+            })
         }
         else if (password !== confirmPassword) {
-            alert("Passwords don't match");
+            //alert("Passwords don't match");
+            const Toast = MySwal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', MySwal.stopTimer)
+                    toast.addEventListener('mouseleave', MySwal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'warning',
+                title: "Passwords don't match"
+            })
         } else {
             AuthenticationService.resetPassword(confirmPassw).then((data) => {
                 if (data.result) {
                     setEmail('');
                     setPassword('');
                     setMode('SIGNIN');
-                    alert('Password reset successful');
+                    const Toast = MySwal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', MySwal.stopTimer)
+                            toast.addEventListener('mouseleave', MySwal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Password reset successful'
+                    })
                 } else {
-                    alert(data.message);
+                    const Toast = MySwal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', MySwal.stopTimer)
+                            toast.addEventListener('mouseleave', MySwal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'success',
+                        title: `${data.message}`
+                    })
                 }
             });
         }

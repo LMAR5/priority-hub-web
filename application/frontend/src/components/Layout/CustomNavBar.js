@@ -35,8 +35,6 @@ function CustomNavBar() {
                         <Offcanvas.Body>
                             <Nav className="justify-content-end flex-grow-1 pe-3">
                                 <Nav.Link href='/'>Home</Nav.Link>
-                                <Nav.Link href='/Tasks'>Tasks</Nav.Link>
-                                <Nav.Link href='/Categories'>Categories</Nav.Link>
                                 <Nav.Link href='/About'>About Us</Nav.Link>
                             </Nav>
                         </Offcanvas.Body>
