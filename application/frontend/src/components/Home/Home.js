@@ -57,11 +57,11 @@ function Home() {
         };
 
         TaskService.createTask(task).then((data) => {
-            if (data.serverStatus == 2) {
-                MySwal.fire('Task Was successfuly created');
-            } else {
+            if (data.status == 201) {
                 getAllTasksData();
-                MySwal.fire('Task Creatation Failed', 'Something Went Wrong');
+                MySwal.fire('Task Was successfuly created', 'sucess');
+            } else {
+                MySwal.fire('Task Creatation Failed', 'Something Went Wrong', 'error');
             }
         });
 

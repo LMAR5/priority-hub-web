@@ -68,9 +68,9 @@ router.post('/CreateTask', async (request, response) => {
     let Created = (new Date(Date.now()).toISOString()).slice(0, 19);
 
     const createQuery = 'INSERT INTO Task (Title, Description, CategoryID, UserID, Status, Priority, DueDate, Notes, CreatedBy, CreatedDateTime, LastUpdatedBy, LastUpdatedDateTime) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
-    const createValue = [TaskName, Description, Category, 99, 'Pending', 'Low', DueDate, Notes, 'User', Created, 'User', Created];
+    const createValue = [TaskName, Description, Category, 1, 'Pending', 'Low', DueDate, Notes, 'User', Created, 'User', Created];
     const CreateResult = await db.promise().query(createQuery, createValue);
-    response.status(200).send(CreateResult[0]);
+    response.status(201).send(CreateResult[0]);
 });
 
 // Uri: http://localhost:3001/api/TaskController/UpdateTask
