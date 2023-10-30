@@ -9,7 +9,7 @@ import TaskModel from '../../models/TaskModel';
 import CategoryModel from '../../models/CategoryModel';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/esm/Col';
-import Alert from 'react-bootstrap/Alert';
+import Global from '../Generic/GlobalConstants';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -31,6 +31,7 @@ function Home() {
     const [lstTasks, setLstTasks] = useState([]);
     const [lstDelTasks, setDelTasks] = useState([]);
     const [lstComplTasks, setComplTasks] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const [lstActivityTrackers, setLstActivityTrackers] = useState([]);
 
@@ -50,10 +51,10 @@ function Home() {
     const Create = () => {
 
         if (isEmpty(TaskName) || isEmpty(TaskCategory) || isEmpty(TaskDueDate)) {
-            MySwal.fire({ 
-                title: 'Create task', 
-                text: 'Complete all fields.', 
-                icon: 'warning', 
+            MySwal.fire({
+                title: 'Create task',
+                text: 'Complete all fields.',
+                icon: 'warning',
                 confirmButtonColor: '#000'
             });
         } else {
@@ -118,14 +119,24 @@ function Home() {
         );
     }
 
+    const searchTermTasks = () => {
+        let searchData = {
+            searchkey: searchTerm
+        }
+
+        TaskService.searchTasks(searchData).then((data) => {
+            setLstTasks(data);
+        });
+    }
+
     const renderSearchBar = () => {
         return (
             <InputGroup className="mb-1 mt-3">
                 <Form.Control
                     placeholder="Search..."
-                    value=""
-                    onChange={() => { }} />
-                <Button variant="dark" onClick={() => { }}>
+                    value={searchTerm}
+                    onChange={(event) => { setSearchTerm(event.target.value) }} />
+                <Button variant="dark" onClick={() => { searchTermTasks() }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                     </svg>
@@ -272,6 +283,8 @@ function Home() {
                     if (data.serverStatus == 2) {
                         getAllTasksData();
                         getDeletedTasks();
+                        setLoadingDataIsReady(true);
+                        setShowEditButton(false);
                         setSelectedTaskById(new TaskModel());
                         MySwal.fire('Deleted!', 'Your task has been successfully deleted!', 'success');
                     }
@@ -295,6 +308,8 @@ function Home() {
                     if (data.serverStatus == 2) {
                         getAllTasksData();
                         getComplTasks();
+                        setLoadingDataIsReady(true);
+                        setShowEditButton(false);
                         setSelectedTaskById(new TaskModel());
                         MySwal.fire('Complete!', 'Your task has been successfully completed!', 'success');
                     }
@@ -328,7 +343,7 @@ function Home() {
                 <Row>
                     <Col sm={8}>
                         <h4>Task details</h4>
-                        {selectedTaskById.Completed ? <Badge bg="primary">Completed</Badge> : <span></span> }
+                        {selectedTaskById.Completed ? <Badge bg="primary">Completed</Badge> : <span></span>}
                     </Col>
                     {showEditButton ?
                         <Col sm={4} className='text-end'>
@@ -406,7 +421,7 @@ function Home() {
                 <Row>
                     <Col sm={8}>
                         <h4>Task details</h4>
-                        {selectedTaskById.Completed ? <Badge bg="primary">Completed</Badge> : <span></span> }
+                        {selectedTaskById.Completed ? <Badge bg="primary">Completed</Badge> : <span></span>}
                     </Col>
                     {!loadingDataIsReady ?
                         <Col sm={4} className='text-end'>
@@ -477,7 +492,7 @@ function Home() {
                     </Form.Group>
                     <Form.Group className='text-end'>
                         <Button variant="warning" type='submit' >Save changes</Button>
-                        <Button variant="primary ms-2" onClick={ () => { CompleteTask() } } >Complete</Button>
+                        <Button variant="primary ms-2" onClick={() => { CompleteTask() }} >Complete</Button>
                         <Button variant="danger ms-2" onClick={() => { DeleteTask() }}>Delete</Button>
                     </Form.Group>
                 </Form>
@@ -531,7 +546,7 @@ function Home() {
                 centered>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        History
+                        History of tasks
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -539,20 +554,38 @@ function Home() {
                         <Col>
                             <h4>Completed</h4>
                             <Table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Completed date</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
-                                    {lstComplTasks.map((info, idx) =>
-                                        <tr key={idx}><td className='border-0'>{info.Title}</td></tr>
-                                    )}
+                                    {lstComplTasks.length !== 0 ? lstComplTasks.map((info, idx) =>
+                                        <tr key={idx}>
+                                            <td className='border-0'>{info.Title}</td>
+                                            <td className='border-0'>{(new Date(info.LastUpdatedDateTime)).toLocaleDateString('en-US', Global.dateOptions)}</td>
+                                        </tr>
+                                    ) : <tr><em className='p-0'>No results</em></tr>}
                                 </tbody>
                             </Table>
                         </Col>
-                        <Col>
+                        <Col className='border-start'>
                             <h4>Deleted</h4>
                             <Table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Deleted date</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
-                                    {lstDelTasks.map((info, idx) =>
-                                        <tr key={idx}><td className='border-0'>{info.Title}</td></tr>
-                                    )}
+                                    {lstDelTasks.length !== 0 ? lstDelTasks.map((info, idx) =>
+                                        <tr key={idx}>
+                                            <td className='border-0'>{info.Title}</td>
+                                            <td className='border-0'>{(new Date(info.LastUpdatedDateTime)).toLocaleDateString('en-US', Global.dateOptions)}</td>
+                                        </tr>
+                                    ) : <tr><em className='p-0'>No results</em></tr>}
                                 </tbody>
                             </Table>
                         </Col>
@@ -580,7 +613,6 @@ function Home() {
 
     let showSelectedTaskContent = loadingDataIsReady ? renderViewTaskForm() : renderEditTaskForm();
     let showStatusContent = loadingBackStatus ? <h2>Loading...</h2> : renderStatusCheck();
-    //let showSearchBard = renderSearchBar();
 
     return (
         <div className='mb-5'>

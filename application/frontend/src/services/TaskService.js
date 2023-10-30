@@ -10,9 +10,12 @@ const TaskService = {
             });
         return alltasks;
     },
-    searchTasks: function (searchKey) {
-        const url = process.env.REACT_APP_API_URL.concat("/api/TaskController/SearchTask?key=")
-        const searchResult = fetch(url.concat(searchKey))
+    searchTasks: function (searchKey) {        
+        const searchResult = fetch(process.env.REACT_APP_API_URL.concat("/api/TaskController/SearchTask"), {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(searchKey)
+        })
             .then(response => response.json())
             .then((data) => {
                 return data;

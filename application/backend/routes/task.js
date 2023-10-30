@@ -35,10 +35,9 @@ router.get('/GetAllCompletedTasks', async (request, response) => {
 // Uri: http://localhost:3001/api/TaskController/SearchTask?key=dog
 // Type: GET
 // Description: Search a task by its name or other fields sending a keyword from frontend
-router.get('/SearchTask', async (request, response) => {
-    const keyTerm = request.query.key;
-    console.log("keyTerm:", keyTerm);
-    const results = await db.promise().query(`SELECT * FROM Task WHERE Title like '%${keyTerm}%' OR Description LIKE '%${keyTerm}%'`);
+router.post('/SearchTask', async (request, response) => {
+    const keyTerm = request.body.searchkey;
+    const results = await db.promise().query(`SELECT * FROM Task WHERE Title like '%${keyTerm}%' OR Description LIKE '%${keyTerm}%' OR Notes LIKE '%${keyTerm}'`);
     response.status(200).send(results[0]);
 });
 
