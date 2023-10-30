@@ -46,26 +46,50 @@ function Home() {
     const [TaskNotes, setTaskNotes] = useState("");
     const today = new Date();
 
-    function Create() {
-        const task = {
-            TaskName: TaskName,
-            TaskDescription: TaskDes,
-            TaskCategory: TaskCategory,
-            TaskDueDate: TaskDueDate,
-            TaskNotes: TaskNotes,
-            DateCreated: today,
-        };
+    const Create = () => {
 
-        TaskService.createTask(task).then((data) => {
-            if (data.status == 201) {
-                getAllTasksData();
-                MySwal.fire('Task Was successfuly created', 'sucess');
-            } else {
-                getAllTasksData();
-                MySwal.fire('Task Creatation Failed', 'Something Went Wrong', 'error');
-            }
-        });
+        if (isEmpty(TaskName) || isEmpty(TaskCategory) || isEmpty(TaskDueDate)) {
+            MySwal.fire({ 
+                title: 'Create task', 
+                text: 'Complete all fields.', 
+                icon: 'warning', 
+                confirmButtonColor: '#000'
+            });
+        } else {
+            const task = {
+                TaskName: TaskName,
+                TaskDescription: TaskDes,
+                TaskCategory: TaskCategory,
+                TaskDueDate: TaskDueDate,
+                TaskNotes: TaskNotes,
+                DateCreated: today,
+            };
 
+            MySwal.fire({
+                title: 'Are you sure?',
+                text: "This action will create a task.",
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Create',
+                confirmButtonColor: '#3085d6'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    TaskService.createTask(task).then((data) => {
+                        if (data.serverStatus == 2) {
+                            getAllTasksData();
+                            setTaskName("");
+                            setTaskCategory("");
+                            setTaskDueDate("");
+                            MySwal.fire('Created!', 'Task was successfuly created', 'success');
+                        } else {
+                            getAllTasksData();
+                            MySwal.fire('Error!', 'Task creation failed.', 'error');
+                        }
+                    });
+                }
+            })
+        }
     }
 
     const MySwal = withReactContent(Swal);
@@ -73,6 +97,10 @@ function Home() {
     useEffect(() => {
         getAllCategories();
     }, []);
+
+    const isEmpty = (str) => {
+        return (!str || str.length === 0);
+    }
 
     const getBackendStatus = () => {
         GenericService.getCheckStatus().then((data) => {
@@ -91,12 +119,16 @@ function Home() {
 
     const renderSearchBar = () => {
         return (
-            <InputGroup className="mb-1 mt-3 px-2">
+            <InputGroup className="mb-1 mt-3">
                 <Form.Control
                     placeholder="Search..."
                     value=""
                     onChange={() => { }} />
-                <Button variant="primary" onClick={() => { }}>Search</Button>
+                <Button variant="dark" onClick={() => { }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </Button>
             </InputGroup>
         );
     }
@@ -305,7 +337,7 @@ function Home() {
                             <Form.Control id='task_notes' as="textarea" rows={8} value={selectedTaskById.Notes} onChange={handleTaskChange} disabled />
                         </Col>
                     </Form.Group>
-                    <Form.Group className='mt-2 px-4 py-3 alert alert-secondary'>
+                    <Form.Group className='mt-3 px-4 py-3 alert alert-secondary'>
                         <Row className='mb-1'>
                             <h5>Activity tracker</h5>
                         </Row>
@@ -373,7 +405,6 @@ function Home() {
                     <Form.Group className='mt-2'>
                         <Form.Label>Due Date</Form.Label>
                         <Form.Control id='task_duedate' type='datetime-local' onChange={handleTaskChange} value={selectedTaskById.DueDate.slice(0, 16)} />
-                        {/* {selectedTaskById.DueDate} */}
                     </Form.Group>
                     <Form.Group as={Row} className='mt-2'>
                         <Col sm={6}>
@@ -418,7 +449,7 @@ function Home() {
                         </Row>
                     </Form.Group>
                     <Form.Group className='text-end'>
-                        <Button variant="success" type='submit' >Save changes</Button>
+                        <Button variant="warning" type='submit' >Save changes</Button>
                         <Button variant="primary ms-2">Complete</Button>
                         <Button variant="danger ms-2" onClick={() => { DeleteTask() }}>Delete</Button>
                     </Form.Group>
@@ -430,32 +461,34 @@ function Home() {
     const sortTask = (catId, taskCatId, taskId, taskName) => {
         if (catId === taskCatId) {
             return (
-                <tbody>
-                    <tr>
-                        <td className='d-grid'>
-                            <Button className='taskButton' variant='light' onClick={() => { getTaskById(taskId) }}>{taskName}</Button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tr key={taskId}>
+                    <td className='d-grid'>
+                        <Button className='rounded-0' variant='light' onClick={() => { getTaskById(taskId) }}>{taskName}</Button>
+                    </td>
+                </tr>
             )
         }
     }
 
     const showTaskList = () => {
         return (
-            <div className='taskTable'>
+            <div className='taskTable text-center'>
                 <Table striped bordered hover>
                     {lstCategories.map((catInfo, catIdx) =>
-                        <>
-                            <thead>
-                                <tr>
-                                    <th key={catIdx}>{catInfo.Title}</th>
-                                </tr>
-                            </thead>
-                            {lstTasks.map((taskInfo) =>
-                                sortTask(catInfo.Id, taskInfo.CategoryId, taskInfo.Id, taskInfo.Title)
-                            )}
-                        </>
+                        catInfo.Id !== 0 ?
+                            <>
+                                <thead>
+                                    <tr className='table-secondary border-0'>
+                                        <th className='border border-0' key={catIdx}>{catInfo.Title}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {lstTasks.map((taskInfo) =>
+                                        sortTask(catInfo.Id, taskInfo.CategoryId, taskInfo.Id, taskInfo.Title)
+                                    )}
+                                </tbody>
+                            </>
+                            : ""
                     )}
                 </Table>
             </div>
@@ -463,14 +496,12 @@ function Home() {
     }
 
     const ShowHistory = (props) => {
-
         return (
             <Modal
                 {...props}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
+                centered>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         History
@@ -480,22 +511,28 @@ function Home() {
                     <Row>
                         <Col>
                             <h4>Completed</h4>
-                            {lstComplTasks.map((info) =>
-                                <tr>{info.Title}</tr>
-                            )}
+                            <Table>
+                                <tbody>
+                                    {lstComplTasks.map((info, idx) =>
+                                        <tr key={idx}><td className='border-0'>{info.Title}</td></tr>
+                                    )}
+                                </tbody>
+                            </Table>
                         </Col>
                         <Col>
                             <h4>Deleted</h4>
                             <Table>
-                                {lstDelTasks.map((info) =>
-                                    <tr>{info.Title}</tr>
-                                )}
+                                <tbody>
+                                    {lstDelTasks.map((info, idx) =>
+                                        <tr key={idx}><td className='border-0'>{info.Title}</td></tr>
+                                    )}
+                                </tbody>
                             </Table>
                         </Col>
                     </Row>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={props.onHide}>Close</Button>
+                    <Button variant='dark' onClick={props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
         )
@@ -504,47 +541,44 @@ function Home() {
     const historyButton = () => {
         return (
             <>
-                <div className='d-grid mt-3'>
-                    <Button variant="primary" onClick={() => setModalShow(true)}>
-                        History
+                <div className='mb-2'>
+                    <Button variant="dark" className='text-start' onClick={() => setModalShow(true)}>
+                        History of tasks
                     </Button>
-
                 </div>
-
-                <ShowHistory
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
-                />
-
+                <ShowHistory show={modalShow} onHide={() => setModalShow(false)} />
             </>
         )
     }
 
     let showSelectedTaskContent = loadingDataIsReady ? renderViewTaskForm() : renderEditTaskForm();
     let showStatusContent = loadingBackStatus ? <h2>Loading...</h2> : renderStatusCheck();
-    let showSearchBard = renderSearchBar();
+    //let showSearchBard = renderSearchBar();
 
     return (
         <div className='mb-5'>
             <Row className="mt-0">
-                <Col sm={4} className='border border-top-0 border-end-0 p-3 text-center'>
+                <Col sm={12} md={3} lg={4} className='border border-top-0 border-end-0 px-4 text-center'>
                     <Row>
-                        <Col>{showSearchBard}</Col>
+                        <Col>{renderSearchBar()}</Col>
                     </Row>
                     <Row className='mt-2'>
-                        <Col>
-                            {showTaskList()}
+                        <Col className='text-start'>
                             {historyButton()}
+                            {showTaskList()}
                         </Col>
                     </Row>
                 </Col>
-                <Col sm={8} className='border border-top-0 p-4'>
+                <Col sm={12} md={9} lg={8} className='border border-top-0 p-4'>
                     {showSelectedTaskContent}
                 </Col>
             </Row>
             <Row className='border border-top-0 px-2 py-3 text-center'>
-                <Col sm={12} md={12} lg={8} className='mt-2'>
+                <Col sm={12} md={12} lg={4} className='mt-2'>
                     <Form.Control size='lg' type="text" value={TaskName} onChange={(event) => { setTaskName(event.target.value) }} placeholder="Add your task here..." />
+                </Col>
+                <Col sm={12} md={12} lg={4} className='mt-2'>
+                    <Form.Control size='lg' type="datetime-local" min="2023-10-20T00:00" max="2024-10-21T00:00" value={TaskDueDate} onChange={(event) => { setTaskDueDate(event.target.value) }} placeholder="Due Date" />
                 </Col>
                 <Col sm={6} md={6} lg={3} className='my-2'>
                     <Form.Select size='lg' value={TaskCategory} onChange={(event) => { setTaskCategory(event.target.value) }}>
@@ -561,8 +595,13 @@ function Home() {
                         <option value="10">Other</option>
                     </Form.Select>
                 </Col>
+                <Col sm={6} md={6} lg={1} className='mt-2 ps-0'>
+                    <Button variant="dark" size='lg' type="submit" onClick={() => { Create() }}>
+                        Create
+                    </Button>
+                </Col>
             </Row>
-            <Row className='border border-top-0 px-2 py-3 text-center'>
+            {/* <Row className='border border-top-0 px-2 py-3 text-center'>
                 <Col sm={6} md={7} lg={5}>
                     <Form.Label>Task Description</Form.Label>
                     <Form.Control type="text" value={TaskDes} onChange={(event) => { setTaskDes(event.target.value) }} placeholder="Task Description" />
@@ -575,17 +614,7 @@ function Home() {
                     <Form.Label>Notes</Form.Label>
                     <Form.Control type="text" value={TaskNotes} onChange={(event) => { setTaskNotes(event.target.value) }} placeholder="Notes" />
                 </Col>
-            </Row>
-            <Row>
-                <Col sm={6} md={6} lg={1} className='my-2' >
-                    <Button variant="primary" size='lg' type="submit" onClick={() => { Create() }}>
-                        Create
-                    </Button>
-                </Col>
-            </Row>
-            <Row>
-                {/* {showStatusContent} */}
-            </Row>
+            </Row> */}
         </div>
     );
 }

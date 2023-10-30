@@ -1,6 +1,7 @@
 const { Router, request } = require('express');
 //Import MySQL connection
 const db = require('../database');
+const taskModelBack = require('../models/taskmodel');
 
 const router = Router();
 
@@ -20,7 +21,6 @@ router.get('/GetAllTasks', async (request, response) => {
 // GetAllDeletedTasks
 // Uri: http://localhost:3001/TaskController/GetAllDeletedTasks
 router.get('/GetAllDeletedTasks', async (request, response) => {
-    debugger
     const results = await db.promise().query(`SELECT * FROM Task WHERE Deleted = 1`);
     response.status(200).send(results[0]);
 });
@@ -28,12 +28,9 @@ router.get('/GetAllDeletedTasks', async (request, response) => {
 // GetAllDeletedTasks
 // Uri: http://localhost:3001/TaskController/GetAllCompletedTasks
 router.get('/GetAllCompletedTasks', async (request, response) => {
-    debugger
     const results = await db.promise().query(`SELECT * FROM Task WHERE Completed = 1`);
     response.status(200).send(results[0]);
 });
-
-
 
 // Uri: http://localhost:3001/api/TaskController/SearchTask?key=dog
 // Type: GET
@@ -50,22 +47,46 @@ router.get('/SearchTask', async (request, response) => {
 // Description: Get a task entity using by its ID.
 router.get('/GetTaskById', async (request, response) => {
     const taskId = request.query.tid;
+    let lsttask = [];
     const results = await db.promise().query(`SELECT * FROM Task WHERE Id='${taskId}' and Deleted=0`);
-    response.status(200).send(results[0]);
+    results[0].forEach(element => {
+        let newtask = new taskModelBack();
+        newtask.Id = element.Id;
+        newtask.Title = element.Title;
+        newtask.Description = element.Description;
+        newtask.CategoryId = element.CategoryId;
+        newtask.UserId = element.UserId;
+        newtask.Status = element.Status;
+        newtask.Priority = element.Priority;
+        newtask.Completed = element.Completed;
+        newtask.Deleted = element.Deleted;
+        newtask.IsFavorite = element.IsFavorite;
+        let tmpDate = new Date(element.DueDate);
+        tmpDate.setHours(tmpDate.getHours() - 7);
+        newtask.DueDate = tmpDate.toISOString().slice(0, 19);
+        newtask.Notes = element.Notes;
+        newtask.CreatedBy = element.CreatedBy;
+        newtask.CreatedDateTime = element.CreatedDateTime;
+        newtask.LastUpdatedBy = element.LastUpdatedBy;
+        newtask.LastUpdatedDateTime = element.LastUpdatedDateTime;
+        lsttask.push(newtask);
+    });
+
+    response.status(200).send(lsttask);
 });
 
-// 
 // Uri: http://localhost:3001/api/TaskController/CreateTask
 // Type: POST
 // Description: Insert Task into DB
 router.post('/CreateTask', async (request, response) => {
-
     const TaskName = request.body.TaskName;
     const Description = request.body.TaskDescription;
     const Category = request.body.TaskCategory;
     const DueDate = request.body.TaskDueDate;
     const Notes = request.body.TaskNotes;
-    let Created = (new Date(Date.now()).toISOString()).slice(0, 19);
+    let Createdtmp = new Date(Date.now());
+    Createdtmp.setHours(Createdtmp.getHours() - 7);
+    let Created = Createdtmp.toISOString().slice(0, 19);
 
     const createQuery = 'INSERT INTO Task (Title, Description, CategoryID, UserID, Status, Priority, DueDate, Notes, CreatedBy, CreatedDateTime, LastUpdatedBy, LastUpdatedDateTime) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
     const createValue = [TaskName, Description, Category, 1, 'Pending', 'Low', DueDate, Notes, 'User', Created, 'User', Created];
@@ -77,7 +98,6 @@ router.post('/CreateTask', async (request, response) => {
 // Type: PUT
 // Description: Update the task based on the values receive from the HTTP request body
 router.put('/UpdateTask', async (request, response) => {
-    debugger;
     const TaskId = request.body.Id;
     const TaskTitle = request.body.Title;
     const TaskDescription = request.body.Description;
@@ -112,7 +132,6 @@ router.put('/UpdateTask', async (request, response) => {
 
 router.put('/DeleteTask', async (request, response) => {
     const delTaskID = request.body.Id;
-    debugger;
     let nowDateTime = (new Date(Date.now()).toISOString()).slice(0, 19);
 
     const results = await db.promise().query(`UPDATE Task SET

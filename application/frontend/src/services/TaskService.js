@@ -1,7 +1,5 @@
 const TaskService = {
     getAllTasks: function () {
-        //Perform fetch call here
-        //Handle response from backend
         const alltasks = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/GetAllTasks'))
             .then(response => response.json())
             .then((data) => {
@@ -22,8 +20,6 @@ const TaskService = {
             .catch((error) => {
                 console.log(error.message);
             });
-        //Perform fetch call here
-        //Handle response from backend
         return searchResult;
     },
     getTaskById: function (task_id) {
@@ -39,7 +35,7 @@ const TaskService = {
     },
     createTask: function (taskData) {
         const create = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/CreateTask'), {
-            method: 'Post',
+            method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(taskData),
         })
