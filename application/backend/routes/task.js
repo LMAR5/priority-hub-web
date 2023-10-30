@@ -130,13 +130,16 @@ router.put('/UpdateTask', async (request, response) => {
     response.status(200).send(results[0]);
 });
 
+// Uri: http://localhost:3001/api/TaskController/DeleteTask
+// Type: PUT
+// Description: Delete a task by updating the "Deleted" field in DB
 router.put('/DeleteTask', async (request, response) => {
     const delTaskID = request.body.Id;
     let nowDateTime = (new Date(Date.now()).toISOString()).slice(0, 19);
 
-    const results = await db.promise().query(`UPDATE Task SET
-    LastUpdatedBy = 'System',
+    const results = await db.promise().query(`UPDATE Task SET    
     Deleted = 1,
+    LastUpdatedBy = 'User',
     LastUpdatedDateTime = '${nowDateTime}'
     WHERE Id='${delTaskID}';`);
 
@@ -144,6 +147,24 @@ router.put('/DeleteTask', async (request, response) => {
 });
 
 
+// Uri: http://localhost:3001/api/TaskController/CompleteTask
+// Type: PUT
+// Description: Complete a task by updating the "Completed" field in DB
+router.put('/CompleteTask', async (request, response) => {
+    const delTaskID = request.body.Id;
+    let nowDateTimetmp = new Date(Date.now());
+    nowDateTimetmp.setHours(nowDateTimetmp.getHours() - 7);
+    let nowDateTime = nowDateTimetmp.toISOString().slice(0, 19);
+    //let nowDateTime = (new Date(Date.now()).toISOString()).slice(0, 19);
+
+    const results = await db.promise().query(`UPDATE Task SET    
+    Completed = 1,
+    LastUpdatedBy = 'User',
+    LastUpdatedDateTime = '${nowDateTime}'
+    WHERE Id='${delTaskID}';`);
+
+    response.status(200).send(results[0]);
+});
 
 
 

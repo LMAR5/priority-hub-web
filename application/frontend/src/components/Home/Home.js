@@ -15,6 +15,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Table from 'react-bootstrap/Table';
 import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 import ActivityTrackerService from '../../services/ActivityTrackerService';
@@ -270,8 +271,32 @@ function Home() {
                 TaskService.deleteTask(selectedTaskById).then((data) => {
                     if (data.serverStatus == 2) {
                         getAllTasksData();
+                        getDeletedTasks();
                         setSelectedTaskById(new TaskModel());
                         MySwal.fire('Deleted!', 'Your task has been successfully deleted!', 'success');
+                    }
+                });
+            }
+        });
+    }
+
+    const CompleteTask = () => {
+        MySwal.fire({
+            title: 'Are you sure?',
+            text: "This action will complete this task.",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Complete',
+            confirmButtonColor: '#3085d6'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                TaskService.completeTask(selectedTaskById).then((data) => {
+                    if (data.serverStatus == 2) {
+                        getAllTasksData();
+                        getComplTasks();
+                        setSelectedTaskById(new TaskModel());
+                        MySwal.fire('Complete!', 'Your task has been successfully completed!', 'success');
                     }
                 });
             }
@@ -303,6 +328,7 @@ function Home() {
                 <Row>
                     <Col sm={8}>
                         <h4>Task details</h4>
+                        {selectedTaskById.Completed ? <Badge bg="primary">Completed</Badge> : <span></span> }
                     </Col>
                     {showEditButton ?
                         <Col sm={4} className='text-end'>
@@ -380,6 +406,7 @@ function Home() {
                 <Row>
                     <Col sm={8}>
                         <h4>Task details</h4>
+                        {selectedTaskById.Completed ? <Badge bg="primary">Completed</Badge> : <span></span> }
                     </Col>
                     {!loadingDataIsReady ?
                         <Col sm={4} className='text-end'>
@@ -450,7 +477,7 @@ function Home() {
                     </Form.Group>
                     <Form.Group className='text-end'>
                         <Button variant="warning" type='submit' >Save changes</Button>
-                        <Button variant="primary ms-2">Complete</Button>
+                        <Button variant="primary ms-2" onClick={ () => { CompleteTask() } } >Complete</Button>
                         <Button variant="danger ms-2" onClick={() => { DeleteTask() }}>Delete</Button>
                     </Form.Group>
                 </Form>

@@ -78,6 +78,21 @@ const TaskService = {
             });
         return deltask;
     },
+    completeTask: function (compTaskData) {
+        const deltask = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/CompleteTask'), {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(compTaskData)
+        })
+            .then(response => response.json())
+            .then((data) => {
+                return data;
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+        return deltask;
+    },
     getDeletedTask: function () {
         const alldeltasks = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/GetAllDeletedTasks'))
             .then(response => response.json())
