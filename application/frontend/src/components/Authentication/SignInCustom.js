@@ -267,7 +267,7 @@ function SignInCustom({ setToken }) {
                             <Button className='px-1' variant='link' onClick={() => { switchView('RESET') }}>Forgot password?</Button>
                         </Form.Group>
                         <Form.Group>
-                            <Button className='w-100 mb-1' variant="primary" type='submit'>Sign In</Button>
+                            <Button className='w-100 mb-1' variant="dark" type='submit'>Sign In</Button>
                             <span>Don't have an account?</span>
                             <Button className='px-1' variant='link' onClick={() => { switchView('SIGNUP') }}>Sign Up</Button>
                         </Form.Group>
@@ -300,7 +300,7 @@ function SignInCustom({ setToken }) {
                             <Form.Control type='password' placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)} />
                         </Form.Group>
                         <Form.Group>
-                            <Button className='w-100 mb-1' variant="primary" type='submit'>Sign Up</Button>
+                            <Button className='w-100 mb-1' variant="dark" type='submit'>Sign Up</Button>
                             <span>Already have an account?</span>
                             <Button className='px-1' variant='link' onClick={() => { switchView('SIGNIN') }}>Sign In</Button>
                         </Form.Group>
@@ -329,7 +329,7 @@ function SignInCustom({ setToken }) {
                             <Form.Control type='password' placeholder='Confirm your password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                         </Form.Group>
                         <Form.Group>
-                            <Button className='w-100 mb-1' variant="primary" type='submit'>Reset password</Button>
+                            <Button className='w-100 mb-1' variant="dark" type='submit'>Reset password</Button>
                             <span>Already have an account?</span>
                             <Button className='px-1' variant='link' onClick={() => { switchView('SIGNIN') }}>Sign In</Button>
                         </Form.Group>
