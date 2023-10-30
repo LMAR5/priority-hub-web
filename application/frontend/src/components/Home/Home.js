@@ -61,6 +61,7 @@ function Home() {
                 getAllTasksData();
                 MySwal.fire('Task Was successfuly created', 'sucess');
             } else {
+                getAllTasksData();
                 MySwal.fire('Task Creatation Failed', 'Something Went Wrong', 'error');
             }
         });
