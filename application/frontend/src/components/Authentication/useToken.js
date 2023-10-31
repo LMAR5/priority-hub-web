@@ -4,6 +4,9 @@ function useToken() {
 
     const localGetToken = () => {
         const tokenString = sessionStorage.getItem('phtoken');
+        if (tokenString === "undefined") {
+            return "";
+        }
         const userToken = JSON.parse(tokenString);
         return userToken?.token
     };
