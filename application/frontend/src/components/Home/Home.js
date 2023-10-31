@@ -74,7 +74,7 @@ function Home() {
                 showCancelButton: true,
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Create',
-                confirmButtonColor: '#3085d6'
+                confirmButtonColor: '#000'
             }).then((result) => {
                 if (result.isConfirmed) {
                     TaskService.createTask(task).then((data) => {
@@ -83,10 +83,10 @@ function Home() {
                             setTaskName("");
                             setTaskCategory("");
                             setTaskDueDate("");
-                            MySwal.fire('Created!', 'Task was successfuly created', 'success');
+                            MySwal.fire({ title: 'Created!', text: 'Task was successfuly created', icon: 'success', confirmButtonColor: '#000' });
                         } else {
-                            getAllTasksData();
-                            MySwal.fire('Error!', 'Task creation failed.', 'error');
+                            getAllTasksData();                            
+                            MySwal.fire({ title: 'Error!', text: 'Task creation failed.', icon: 'error', confirmButtonColor: '#000' });
                         }
                     });
                 }
@@ -255,13 +255,13 @@ function Home() {
             showCancelButton: true,
             cancelButtonColor: '#d33',
             confirmButtonText: 'Save',
-            confirmButtonColor: '#3085d6'
+            confirmButtonColor: '#000'
         }).then((result) => {
             if (result.isConfirmed) {
                 TaskService.updateTask(selectedTaskById).then((data) => {
                     if (data.serverStatus == 2) {
-                        getAllTasksData();
-                        MySwal.fire('Updated!', 'Your task has been updated', 'success');
+                        getAllTasksData();                        
+                        MySwal.fire({ title: 'Updated!', text: 'Your task has been updated.', icon: 'success', confirmButtonColor: '#000' });
                     }
                 });
             }
@@ -276,7 +276,7 @@ function Home() {
             showCancelButton: true,
             cancelButtonColor: '#d33',
             confirmButtonText: 'Delete',
-            confirmButtonColor: '#3085d6'
+            confirmButtonColor: '#000'
         }).then((result) => {
             if (result.isConfirmed) {
                 TaskService.deleteTask(selectedTaskById).then((data) => {
@@ -285,8 +285,8 @@ function Home() {
                         getDeletedTasks();
                         setLoadingDataIsReady(true);
                         setShowEditButton(false);
-                        setSelectedTaskById(new TaskModel());
-                        MySwal.fire('Deleted!', 'Your task has been successfully deleted!', 'success');
+                        setSelectedTaskById(new TaskModel());                        
+                        MySwal.fire({ title: 'Deleted!', text: 'Your task has been successfully deleted!', icon: 'success', confirmButtonColor: '#000' });
                     }
                 });
             }
@@ -301,7 +301,7 @@ function Home() {
             showCancelButton: true,
             cancelButtonColor: '#d33',
             confirmButtonText: 'Complete',
-            confirmButtonColor: '#3085d6'
+            confirmButtonColor: '#000'
         }).then((result) => {
             if (result.isConfirmed) {
                 TaskService.completeTask(selectedTaskById).then((data) => {
@@ -310,8 +310,8 @@ function Home() {
                         getComplTasks();
                         setLoadingDataIsReady(true);
                         setShowEditButton(false);
-                        setSelectedTaskById(new TaskModel());
-                        MySwal.fire('Complete!', 'Your task has been successfully completed!', 'success');
+                        setSelectedTaskById(new TaskModel());                        
+                        MySwal.fire({ title: 'Complete!', text: 'Your task has been successfully completed!', icon: 'success', confirmButtonColor: '#000' });
                     }
                 });
             }
@@ -326,13 +326,13 @@ function Home() {
             showCancelButton: true,
             cancelButtonColor: '#d33',
             confirmButtonText: 'Undo changes',
-            confirmButtonColor: '#3085d6'
+            confirmButtonColor: '#000'
         }).then((result) => {
             if (result.isConfirmed) {
                 setShowEditButton(true);
                 setLoadingDataIsReady(true);
-                getTaskById(taskData.Id);
-                MySwal.fire('Done!', 'Your changes have been removed!', 'success');
+                getTaskById(taskData.Id);            
+                MySwal.fire({ title: 'Done!', text: 'Your changes have been removed!', icon: 'success', confirmButtonColor: '#000' });
             }
         });
     }
@@ -347,7 +347,7 @@ function Home() {
                     </Col>
                     {showEditButton ?
                         <Col sm={4} className='text-end'>
-                            <Button variant="warning" onClick={() => { setLoadingDataIsReady(!loadingDataIsReady) }}>Edit</Button>
+                            <Button className='' variant="dark" onClick={() => { setLoadingDataIsReady(!loadingDataIsReady) }}>Edit</Button>
                         </Col> : <span></span>
                     }
                 </Row>
@@ -388,7 +388,7 @@ function Home() {
                                     <Card.Body>
                                         <Card.Title>Stopwatch</Card.Title>
                                         <Card.Text>00:00:00</Card.Text>
-                                        <Button variant='outline-primary' disabled>Start</Button>
+                                        <Button variant='outline-dark' disabled>Start</Button>
                                         <Button variant='outline-warning' className='ms-3' disabled>Pause</Button>
                                         <Button variant='outline-danger' className='ms-3' disabled>Stop</Button>
                                     </Card.Body>
@@ -425,7 +425,7 @@ function Home() {
                     </Col>
                     {!loadingDataIsReady ?
                         <Col sm={4} className='text-end'>
-                            <Button variant="secondary" onClick={() => { undoChanges(selectedTaskById) }}>Undo</Button>
+                            <Button className='btn bg-dark-subtle border border-dark-subtle' variant="" onClick={() => { undoChanges(selectedTaskById) }}>Undo</Button>
                         </Col> : <span></span>
                     }
                 </Row>
@@ -468,7 +468,7 @@ function Home() {
                                     <Card.Body>
                                         <Card.Title>Stopwatch</Card.Title>
                                         <Card.Text>00:00:00</Card.Text>
-                                        <Button variant='outline-primary'>Start</Button>
+                                        <Button variant='outline-dark'>Start</Button>
                                         <Button variant='outline-warning' className='ms-3'>Pause</Button>
                                         <Button variant='outline-danger' className='ms-3'>Stop</Button>
                                     </Card.Body>
@@ -491,9 +491,9 @@ function Home() {
                         </Row>
                     </Form.Group>
                     <Form.Group className='text-end'>
-                        <Button variant="warning" type='submit' >Save changes</Button>
-                        <Button variant="primary ms-2" onClick={() => { CompleteTask() }} >Complete</Button>
-                        <Button variant="danger ms-2" onClick={() => { DeleteTask() }}>Delete</Button>
+                        <Button className="btn bg-dark-subtle border border-dark-subtle" variant='' type='submit' >Save changes</Button>
+                        <Button className="btn bg-primary-subtle border border-primary-subtle ms-2" variant='' onClick={() => { CompleteTask() }} >Complete</Button>
+                        <Button className="btn bg-danger-subtle border border-danger-subtle ms-2" variant='' onClick={() => { DeleteTask() }}>Delete</Button>
                     </Form.Group>
                 </Form>
             </div>
