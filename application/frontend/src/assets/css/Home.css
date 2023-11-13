@@ -17,3 +17,10 @@
 .d-grid {
   padding: 0% !important;
 }
+
+.activityTrackerList {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 240px;
+}

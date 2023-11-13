@@ -20,6 +20,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 import ActivityTrackerService from '../../services/ActivityTrackerService';
 import '../../assets/css/Home.css';
+import Stopwatch from './Stopwatch';
 
 
 function Home() {
@@ -34,6 +35,7 @@ function Home() {
     const [searchTerm, setSearchTerm] = useState("");
 
     const [lstActivityTrackers, setLstActivityTrackers] = useState([]);
+    const [updActivityTracker, setUpdActivityTracker] = useState(false);
 
     const [categoryForm, setCategoryForm] = useState(new CategoryModel());
     const [selectedTaskById, setSelectedTaskById] = useState(new TaskModel());
@@ -85,7 +87,7 @@ function Home() {
                             setTaskDueDate("");
                             MySwal.fire({ title: 'Created!', text: 'Task was successfuly created', icon: 'success', confirmButtonColor: '#000' });
                         } else {
-                            getAllTasksData();                            
+                            getAllTasksData();
                             MySwal.fire({ title: 'Error!', text: 'Task creation failed.', icon: 'error', confirmButtonColor: '#000' });
                         }
                     });
@@ -187,10 +189,17 @@ function Home() {
         });
     }
 
+    const updateListActivityTrackersById = () => {
+        ActivityTrackerService.getAllActivityTrackersByTaskId(selectedTaskById.Id).then((data) => {
+            setLstActivityTrackers(data);
+        });
+    }
+
     const getTaskById = (task_id) => {
         TaskService.getTaskById(task_id).then((data) => {
             setSelectedTaskById(data[0]);
             getCategoryById(data[0].CategoryId);
+            setUpdActivityTracker(!updActivityTracker);
             getActivityTrackersById(data[0].Id);
         });
     }
@@ -260,7 +269,7 @@ function Home() {
             if (result.isConfirmed) {
                 TaskService.updateTask(selectedTaskById).then((data) => {
                     if (data.serverStatus == 2) {
-                        getAllTasksData();                        
+                        getAllTasksData();
                         MySwal.fire({ title: 'Updated!', text: 'Your task has been updated.', icon: 'success', confirmButtonColor: '#000' });
                     }
                 });
@@ -285,7 +294,7 @@ function Home() {
                         getDeletedTasks();
                         setLoadingDataIsReady(true);
                         setShowEditButton(false);
-                        setSelectedTaskById(new TaskModel());                        
+                        setSelectedTaskById(new TaskModel());
                         MySwal.fire({ title: 'Deleted!', text: 'Your task has been successfully deleted!', icon: 'success', confirmButtonColor: '#000' });
                     }
                 });
@@ -310,7 +319,7 @@ function Home() {
                         getComplTasks();
                         setLoadingDataIsReady(true);
                         setShowEditButton(false);
-                        setSelectedTaskById(new TaskModel());                        
+                        setSelectedTaskById(new TaskModel());
                         MySwal.fire({ title: 'Complete!', text: 'Your task has been successfully completed!', icon: 'success', confirmButtonColor: '#000' });
                     }
                 });
@@ -331,7 +340,7 @@ function Home() {
             if (result.isConfirmed) {
                 setShowEditButton(true);
                 setLoadingDataIsReady(true);
-                getTaskById(taskData.Id);            
+                getTaskById(taskData.Id);
                 MySwal.fire({ title: 'Done!', text: 'Your changes have been removed!', icon: 'success', confirmButtonColor: '#000' });
             }
         });
@@ -383,31 +392,7 @@ function Home() {
                             <h5>Activity tracker</h5>
                         </Row>
                         <Row>
-                            <Col sm={6}>
-                                <Card className='text-center'>
-                                    <Card.Body>
-                                        <Card.Title>Stopwatch</Card.Title>
-                                        <Card.Text>00:00:00</Card.Text>
-                                        <Button variant='outline-dark' disabled>Start</Button>
-                                        <Button variant='outline-warning' className='ms-3' disabled>Pause</Button>
-                                        <Button variant='outline-danger' className='ms-3' disabled>Stop</Button>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                            <Col sm={6}>
-                                <b>Recorded activity</b>
-                                <ListGroup as="ol" numbered className='mt-1'>
-                                    {lstActivityTrackers.length === 0 ? <span><em>No recorded activity</em></span> :
-                                        lstActivityTrackers.map((item, idx) =>
-                                            <ListGroup.Item key={idx} as="li" className='d-flex justify-content-between align-items-start'>
-                                                <div className="ms-2 me-auto">
-                                                    <div className="fw-bold">Time {item.Id}</div>
-                                                    {item.StartTime}
-                                                </div>
-                                            </ListGroup.Item>
-                                        )}
-                                </ListGroup>
-                            </Col>
+                            <Stopwatch isDisabled={true} taskData={selectedTaskById} lstTrackers={lstActivityTrackers} updateLst={updateListActivityTrackersById} />
                         </Row>
                     </Form.Group>
                 </Form>
@@ -463,31 +448,7 @@ function Home() {
                             <h5>Activity tracker</h5>
                         </Row>
                         <Row>
-                            <Col sm={6}>
-                                <Card className='text-center'>
-                                    <Card.Body>
-                                        <Card.Title>Stopwatch</Card.Title>
-                                        <Card.Text>00:00:00</Card.Text>
-                                        <Button variant='outline-dark'>Start</Button>
-                                        <Button variant='outline-warning' className='ms-3'>Pause</Button>
-                                        <Button variant='outline-danger' className='ms-3'>Stop</Button>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                            <Col sm={6}>
-                                <b>Recorded activity</b>
-                                <ListGroup as="ol" numbered className='mt-1'>
-                                    {lstActivityTrackers.length === 0 ? <span><em>No recorded activity</em></span> :
-                                        lstActivityTrackers.map((item, idx) =>
-                                            <ListGroup.Item key={idx} as="li" className='d-flex justify-content-between align-items-start'>
-                                                <div className="ms-2 me-auto">
-                                                    <div className="fw-bold">Time {item.Id}</div>
-                                                    {item.StartTime}
-                                                </div>
-                                            </ListGroup.Item>
-                                        )}
-                                </ListGroup>
-                            </Col>
+                            <Stopwatch isDisabled={false} taskData={selectedTaskById} lstTrackers={lstActivityTrackers} updateLst={updateListActivityTrackersById} />
                         </Row>
                     </Form.Group>
                     <Form.Group className='text-end'>
