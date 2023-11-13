@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import DashboardTaskByCategory from './DashboardTaskByCategory';
 import DashboardTaskByStatus from './DashboardTaskByStatus';
+import DashboardTaskByDate from './DashboardTaskByDate';
+import Form from 'react-bootstrap/Form';
 
 function DashboardMain() {
-    return (
+
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+
+    const [todayDate, setTodayDate] = useState(new Date());
+    return (        
         <div>
-            <h1>Dashboard view</h1>
-            <Row className='mt-3'>
-                <Col sm={4}>
-                    <h3>Start date</h3>
+            <h2>Dashboard view</h2>
+            <Form.Group as={Row} className='my-4'>
+                <Form.Label column sm={1}>Start date</Form.Label>
+                <Col sm={3}>                    
+                    <Form.Control type="datetime-local" min="2023-10-20T00:00" max={todayDate.toISOString().slice(0,16)} value={startDate} onChange={(event) => { setStartDate(event.target.value) }} placeholder="Start date" />
                 </Col>
-                <Col sm={4}>
-                    <h3>End date</h3>
+                <Form.Label column sm={1}>End date</Form.Label>
+                <Col sm={3}>
+                    <Form.Control type="datetime-local" min="2023-10-20T00:00" max={todayDate.toISOString().slice(0,16)} value={endDate} onChange={(event) => { setEndDate(event.target.value) }} placeholder="End date" />
                 </Col>
-                <Col sm={4}>
-                    <Button variant="dark" size='lg' type="submit" onClick={() => { }}>
+                <Col sm={4} className='text-center'>
+                    <Button variant="dark" type="submit" onClick={() => { }}>
                         Search
                     </Button>
                 </Col>
-            </Row>
+            </Form.Group>
             <Row className='mt-4'>
                 <Col>
                     <DashboardTaskByCategory />
@@ -29,7 +38,9 @@ function DashboardMain() {
                 </Col>
             </Row>
             <Row>
-                <Col></Col>
+                <Col>
+                    <DashboardTaskByDate start={startDate} end={endDate} />
+                </Col>
                 <Col></Col>
             </Row>
         </div>
