@@ -1,61 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
-const data = [
-    {
-        name: 'Page A',
-        uv: 4000,
-        pv: 2400,
-        amt: 2400,
-    },
-    {
-        name: 'Page B',
-        uv: 3000,
-        pv: 1398,
-        amt: 2210,
-    },
-    {
-        name: 'Page C',
-        uv: 2000,
-        pv: 9800,
-        amt: 2290,
-    },
-    {
-        name: 'Page D',
-        uv: 2780,
-        pv: 3908,
-        amt: 2000,
-    },
-    {
-        name: 'Page E',
-        uv: 1890,
-        pv: 4800,
-        amt: 2181,
-    },
-    {
-        name: 'Page F',
-        uv: 2390,
-        pv: 3800,
-        amt: 2500,
-    },
-    {
-        name: 'Page G',
-        uv: 3490,
-        pv: 4300,
-        amt: 2100,
-    },
-];
+import DashboardService from '../../services/DashboardService';
 
 function DashboardTaskByDate(props) {
 
+    const [lstActivityTrackersChart, setLstActivityTrackersChart] = useState([]);
+
+    useEffect(  () => {
+        getDataTrackersByDate(props.start, props.end);
+    }, [props.start, props.end]);
+
+    const getDataTrackersByDate = (start_date, end_date) => {
+        let tempEndDate = new Date(end_date);
+        tempEndDate.setDate(tempEndDate.getDate() + 1);
+        tempEndDate = tempEndDate.toISOString().slice(0, 10);
+        DashboardService.getActivityTrackersByDateChart(start_date, tempEndDate).then((data) => {
+            setLstActivityTrackersChart(data);
+        });
+    }
+
     return (
         <div className='mt-3'>
-            <h3>Number of tasks by date</h3>
+            <h3>Number of Activity Tracker records by Date</h3>
             <ResponsiveContainer width={"100%"} height={300}>
                 <LineChart
-                    width={500}
+                    width={550}
                     height={300}
-                    data={data}
+                    data={lstActivityTrackersChart}
                     margin={{
                         top: 5,
                         right: 30,
@@ -63,12 +34,11 @@ function DashboardTaskByDate(props) {
                         bottom: 5,
                     }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="DateTitle" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="TrackerNum" name="Activity Tracker records" stroke="#000" fill='#000' activeDot={{ r: 8 }} />
                 </LineChart>
             </ResponsiveContainer>
         </div>
