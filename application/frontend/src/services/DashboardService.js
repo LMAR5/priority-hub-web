@@ -1,6 +1,10 @@
 const DashboardService = {
     //getTasksByCategory
+
+
     //getTaskByStatus
+    
+
     //getTasksByDate
     getActivityTrackersByDateChart: function (startDate, endDate) {
         const url = '/api/DashboardController/GetActivityTrackersByDateChart';
