@@ -14,7 +14,7 @@ router.use((request, response, next) => {
 // Type: GET or POST
 // Description: Method will receive the 2 dates from the frontend, and then use them in their filtering logic
 
-router.get('/GetTasksByCategory' , async (request, response) => {
+router.get('/GetTasksByCategory', async (request, response) => {
     const startDate = request.body.startDate;
     const endDate = request.body.endDate
 
@@ -26,6 +26,17 @@ router.get('/GetTasksByCategory' , async (request, response) => {
 // Uri: http://localhost:3001/api/DashboardController/GetTasksByStatusChart
 // Type: GET or POST
 // Description: Method will receive the 2 dates from the frontend, and then use them in their filtering logic
+
+router.get('/GetTasksByStatusChart', async (request, response) => {
+    const startDate = request.query.start;
+    const endDate = request.query.end;
+
+    const queryResults = await db.promise().query(`SELECT Status as TaskStatus, COUNT(Id) as NumStatus from Task WHERE Deleted=0 AND CreatedDateTime >= '${startDate}' AND CreatedDateTime < '${endDate}' GROUP BY status ORDER BY status`);
+    response.status(200).send(queryResults[0]);
+})
+
+
+
 
 // Uri: http://localhost:3001/api/DashboardController/GetActivityTrackersByDateChart?start=2023-10-30&end=2023-11-12
 // Type: GET

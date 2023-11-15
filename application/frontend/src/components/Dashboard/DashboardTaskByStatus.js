@@ -9,7 +9,7 @@ function TaskByStatus(){
       // Change values to nubmer of task by status
       { name: 'In Progress', value: 5 },
       { name: 'Completed', value: 6 },
-      { name: 'Deleted', value: 2 },
+      { name: 'Pending', value: 2 },
     ];
     
     const COLORS = ['#0088FE', '#00C49F', '#FF0000'];
