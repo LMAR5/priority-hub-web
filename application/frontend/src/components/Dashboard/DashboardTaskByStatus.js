@@ -1,24 +1,21 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {Col, Row } from 'react-bootstrap';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 
-const data = [
 
-    // Change values to nubmer of task by status
+function TaskByStatus(){
+  const data = [
 
-    { name: 'In Progress', value: 5 },
-    { name: 'Completed', value: 6 },
-    { name: 'Deleted', value: 2 },
-  ];
-  
-  const COLORS = ['#0088FE', '#00C49F', '#FF0000'];
-  
-  const RADIAN = Math.PI / 180;
-  
-  export default class Example extends PureComponent {
-    static demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
-  
-    render() {
+      // Change values to nubmer of task by status
+      { name: 'In Progress', value: 5 },
+      { name: 'Completed', value: 6 },
+      { name: 'Deleted', value: 2 },
+    ];
+    
+    const COLORS = ['#0088FE', '#00C49F', '#FF0000'];
+    
+    const RADIAN = Math.PI / 180;
+    
       return (
         <ResponsiveContainer width="100%" height="100%">
             <Row>
@@ -44,5 +41,7 @@ const data = [
           
         </ResponsiveContainer>
       );
-    }
-  }
+}
+
+export default TaskByStatus;
+

@@ -3,7 +3,7 @@ const DashboardService = {
 
 
     //getTaskByStatus
-    
+   
 
     //getTasksByDate
     getActivityTrackersByDateChart: function (startDate, endDate) {
