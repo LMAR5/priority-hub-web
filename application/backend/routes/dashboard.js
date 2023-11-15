@@ -14,6 +14,15 @@ router.use((request, response, next) => {
 // Type: GET or POST
 // Description: Method will receive the 2 dates from the frontend, and then use them in their filtering logic
 
+router.get('/GetTasksByCategory' , async (request, response) => {
+    const startDate = request.body.startDate;
+    const endDate = request.body.endDatel
+
+    const results = await db.promise().query(`SELECT task.CategoryId, category.Title, count(task.CategoryId) AS TaskCount from task inner join category on task.CategoryId = category.Id where task.CreatedDateTime between '${startDate}' and '${endDate}' group by task.CategoryId order by task.CategoryId`);
+    response.status(200).send(results[0]);
+});
+
+
 // Uri: http://localhost:3001/api/DashboardController/GetTasksByStatusChart
 // Type: GET or POST
 // Description: Method will receive the 2 dates from the frontend, and then use them in their filtering logic
