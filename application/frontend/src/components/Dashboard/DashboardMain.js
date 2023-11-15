@@ -6,6 +6,7 @@ import DashboardTaskByDate from './DashboardTaskByDate';
 import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
+import DashboardTaskByTimeSpent from './DashboardTaskByTimeSpent';
 
 const formatDate = (date) => {
     var d = new Date(date),
@@ -74,7 +75,9 @@ function DashboardMain() {
                 <Col>
                     <DashboardTaskByDate start={startDate} end={endDate} />
                 </Col>
-                <Col></Col>
+                <Col>
+                    <DashboardTaskByTimeSpent start={startDate} end={endDate} />
+                </Col>
             </Row>
         </div>
     );
