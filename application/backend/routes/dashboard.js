@@ -15,8 +15,8 @@ router.use((request, response, next) => {
 // Description: Method will receive the 2 dates from the frontend, and then use them in their filtering logic
 
 router.get('/GetTasksByCategory', async (request, response) => {
-    const startDate = request.body.startDate;
-    const endDate = request.body.endDate
+    const startDate = request.query.start;
+    const endDate = request.query.end;
 
     const results = await db.promise().query(`SELECT task.CategoryId, category.Title, count(task.CategoryId) AS TaskCount from task inner join category on task.CategoryId = category.Id where task.CreatedDateTime between '${startDate}' and '${endDate}' group by task.CategoryId order by task.CategoryId`);
     response.status(200).send(results[0]);
