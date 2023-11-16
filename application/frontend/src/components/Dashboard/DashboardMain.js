@@ -65,7 +65,7 @@ function DashboardMain() {
             </Form.Group>
             <Row className='mt-4'>
                 <Col>
-                    <DashboardTaskByCategory />
+                    <DashboardTaskByCategory start={startDate} end={endDate}/>
                 </Col>
                 <Col>
                     <DashboardTaskByStatus />
