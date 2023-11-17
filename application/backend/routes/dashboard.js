@@ -18,7 +18,7 @@ router.get('/GetTasksByCategory', async (request, response) => {
     const startDate = request.query.start;
     const endDate = request.query.end;
 
-    const results = await db.promise().query(`SELECT task.CategoryId, category.Title, count(task.CategoryId) AS TaskCount from task inner join category on task.CategoryId = category.Id where task.CreatedDateTime between '${startDate}' and '${endDate}' group by task.CategoryId order by task.CategoryId`);
+    const results = await db.promise().query(`SELECT CategoryId, category.Title, count(CategoryId) AS TaskCount FROM Task INNER JOIN category ON CategoryId = category.Id WHERE task.Deleted=0 AND task.CreatedDateTime >= '${startDate}' AND task.CreatedDateTime <= '${endDate}' GROUP BY CategoryId ORDER BY CategoryId`);
     response.status(200).send(results[0]);
 });
 
