@@ -1,7 +1,7 @@
 const DashboardService = {
     //getTasksByCategory
     getTaskByCategory: function (startDate,endDate){
-        const url = '/api/DashboardController/GetTasksByStatusChart'
+        const url = '/api/DashboardController/GetTasksByCategory'
         const startString = "?start=".concat(startDate);
         const endString = "&end=".concat(endDate);
         const finalurl = url.concat(startString).concat(endString);

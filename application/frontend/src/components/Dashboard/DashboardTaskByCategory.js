@@ -44,7 +44,7 @@ import Col from 'react-bootstrap/esm/Col';
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar type="monotone" dataKey="TaskCount" name="Activity Tracker records" stroke="#000" fill='#000' activeDot={{ r: 8 }} />
+                    <Bar dataKey="TaskCount" name="Tasks" fill="#8884d8" activeBar={<Rectangle fill="black" stroke="blue" />}  />
                 </BarChart>
             </ResponsiveContainer>
         </div>
