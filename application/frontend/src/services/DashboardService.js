@@ -1,6 +1,6 @@
 const DashboardService = {
     //getTasksByCategory
-    getTaskByCategory: function (startDate,endDate){
+    getTaskByCategory: function (startDate, endDate) {
         const url = '/api/DashboardController/GetTasksByCategory'
         const startString = "?start=".concat(startDate);
         const endString = "&end=".concat(endDate);
@@ -17,12 +17,12 @@ const DashboardService = {
     },
 
     //getTaskByStatus
-    getTaskByStatus: function (startDate, endDate) {
+    getTasksByStatus: function (startDate, endDate) {
         const url = '/api/DashboardController/GetTasksByStatusChart'
         const startString = "?start=".concat(startDate);
         const endString = "&end=".concat(endDate);
         const finalurl = url.concat(startString).concat(endString);
-        const tasksdate = fetch(process.env.REACT_APP_API_URL.concat(finalurl))
+        const tasksStatus = fetch(process.env.REACT_APP_API_URL.concat(finalurl))
             .then(response => response.json())
             .then((data) => {
                 return data;
@@ -30,7 +30,7 @@ const DashboardService = {
             .catch((error) => {
                 console.log(error.message);
             });
-        return tasksdate;
+        return tasksStatus;
     },
 
 

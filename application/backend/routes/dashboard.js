@@ -2,6 +2,7 @@ const { Router, request } = require('express');
 //Import MySQL connection
 const db = require('../database');
 const TasksByDateChartModel = require('../models/tasksbydatechartmodel');
+const TasksByStatusChartModel = require('../models/tasksbystatuschartmodel');
 
 const router = Router();
 
@@ -32,7 +33,19 @@ router.get('/GetTasksByStatusChart', async (request, response) => {
     const endDate = request.query.end;
 
     const queryResults = await db.promise().query(`SELECT Status as TaskStatus, COUNT(Id) as NumStatus from Task WHERE Deleted=0 AND CreatedDateTime >= '${startDate}' AND CreatedDateTime < '${endDate}' GROUP BY status ORDER BY status`);
-    response.status(200).send(queryResults[0]);
+    // response.status(200).send(queryResults[0]);
+
+    let lstTasksByStatus = [];
+
+    queryResults[0].forEach((element, idx) => {
+        let newstatuschart = new TasksByStatusChartModel();
+        // newstatuschart.Id = idx;
+
+        newstatuschart.name = element.TaskStatus;
+        newstatuschart.StatusNum = element.NumStatus;
+        lstTasksByStatus.push(newstatuschart);
+    });
+    response.status(200).send(lstTasksByStatus);
 })
 
 
