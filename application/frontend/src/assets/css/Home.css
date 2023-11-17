@@ -24,3 +24,10 @@
   scrollbar-width: none;
   height: 240px;
 }
+
+.summaryListScroll {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 600px;
+}

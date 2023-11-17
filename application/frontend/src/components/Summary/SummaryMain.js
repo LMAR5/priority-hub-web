@@ -12,6 +12,7 @@ import Global from '../Generic/GlobalConstants';
 
 import SummaryTasksCompleted from './SummaryTasksCompleted';
 import SummaryTimeSpent from './SummaryTimeSpent';
+import SummaryTimeSpentTable from './SummaryTimeSpentTable';
 
 function SummaryMain() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -56,7 +57,7 @@ function SummaryMain() {
 
     const renderListofDates = () => {
         return (
-            <ListGroup>
+            <ListGroup className='summaryListScroll'>
                 {lstDates.map((date, idx) =>
                     <ListGroup.Item key={idx} action variant='light' onClick={() => { setSelectedDate(date) }}>{(new Date(date)).toLocaleDateString('en-US', Global.dateOptions)}</ListGroup.Item>
                 )}
@@ -79,9 +80,24 @@ function SummaryMain() {
                     </Row>
                 </Col>
                 <Col sm={12} md={9} lg={8}>
-                    <h3 className='text-center my-3'>{selectedDate == "" ? "Select a date" : (new Date(selectedDate)).toLocaleDateString('en-US', Global.dateOptions2)}</h3>
-                    <SummaryTimeSpent />
-                    <SummaryTasksCompleted />
+                    <Row>
+                        <Col>
+                            <h3 className='text-center my-3'>{selectedDate === "" ? "Select a date" : (new Date(selectedDate)).toLocaleDateString('en-US', Global.dateOptions2)}</h3>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={6} md={6} lg={6}>
+                            <SummaryTimeSpent inputDate={selectedDate} />
+                        </Col>
+                        <Col sm={6} md={6} lg={6}>
+                            <SummaryTimeSpentTable inputDate={selectedDate} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <SummaryTasksCompleted inputDate={selectedDate} />
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
         </div>
