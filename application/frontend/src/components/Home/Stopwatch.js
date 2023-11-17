@@ -9,6 +9,7 @@ import Global from '../Generic/GlobalConstants';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
+import TaskService from '../../services/TaskService';
 
 function Stopwatch(props) {
     const [activityTrackerForm, setActivityTrackerForm] = useState(new ActivityTrackerModel());
@@ -66,8 +67,12 @@ function Stopwatch(props) {
                         setTime(0);
                         //Start timer
                         setIsRunning(!isRunning);
+                        // TaskService update
                         ActivityTrackerService.startTrackTime(activityTrackerForm).then((data) => {
                             if (data.success) {
+                                TaskService.updateStatusToInProgress(activityTrackerForm.TaskId).then((dataUpdate) => {
+                                    console.log(dataUpdate);
+                                })
                                 setActivityTrackerForm(data.result[0]);
                                 updateListActivityTrackers(data.result[0].Id);
                                 MySwal.fire({ title: 'Started!', text: data.message, icon: 'success', confirmButtonColor: '#000' });
