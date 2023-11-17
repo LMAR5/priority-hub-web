@@ -47,6 +47,12 @@ const Global = {
         month: 'short',
         day: 'numeric'
     },
+    dateOptions2: {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    },
     timeOptions: {
         hour12: true,
         timeZone: 'America/Los_Angeles',

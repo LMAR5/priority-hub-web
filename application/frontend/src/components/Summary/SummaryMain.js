@@ -1,39 +1,70 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import Button from 'react-bootstrap/Button';
-import SummaryTimeSpent from './SummaryTimeSpent';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Spinner from 'react-bootstrap/Spinner';
+
+import SummaryService from '../../services/SummaryService';
+import Global from '../Generic/GlobalConstants';
+
 import SummaryTasksCompleted from './SummaryTasksCompleted';
+import SummaryTimeSpent from './SummaryTimeSpent';
 
 function SummaryMain() {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [loadingListDates, setLoadingListDates] = useState(true);
+    const [lstDates, setLstDates] = useState([]);
+    const [selectedDate, setSelectedDate] = useState('');
 
-    const [searchTerm, setSearchTerm] = useState("");
+    useEffect(() => {
+        getListOfDates();
+    }, []);
 
-    const searchTermSummary = () => {
-        let searchData = {
-            searchkey: searchTerm
+    const searchTermSummary =
+        () => {
+            let searchData = { searchkey: searchTerm }
+            // Update list of dates
         }
 
-        //Update list of dates
-    }
+    const getListOfDates =
+        () => {
+            SummaryService.getSummaryDateList().then((data) => {
+                setLstDates(data.result);
+                setLoadingListDates(false);
+            });
+        }
 
-    const renderSearchBar = () => {
+    const renderSearchBar =
+        () => {
+            return (
+                <InputGroup className='mb-2'>
+                    <Form.Control placeholder=
+                        'Search...' value={searchTerm} onChange=
+                        {
+                            (event) => {
+                                setSearchTerm(event.target.value)
+                            }
+                        } />
+                    <Button variant="dark" onClick={() => { searchTermSummary() }}>
+                        <i className="bi bi-search"></i>
+                    </Button>
+                </InputGroup>);
+        }
+
+    const renderListofDates = () => {
         return (
-            <InputGroup className="mb-2">
-                <Form.Control
-                    placeholder="Search..."
-                    value={searchTerm}
-                    onChange={(event) => { setSearchTerm(event.target.value) }} />
-                <Button variant="dark" onClick={() => { searchTermSummary() }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                    </svg>
-                </Button>
-            </InputGroup>
+            <ListGroup>
+                {lstDates.map((date, idx) =>
+                    <ListGroup.Item key={idx} action variant='light' onClick={() => { setSelectedDate(date) }}>{(new Date(date)).toLocaleDateString('en-US', Global.dateOptions)}</ListGroup.Item>
+                )}
+            </ListGroup>
         );
     }
+
+    let contentList = loadingListDates ? <Spinner animation='border' variant='dark' /> : renderListofDates();
 
     return (
         <div>
@@ -43,11 +74,12 @@ function SummaryMain() {
                         <Col>{renderSearchBar()}</Col>
                     </Row>
                     <Row>
-                        <h3>List of dates here</h3>
+                        <h3>Dates</h3>
+                        {contentList}
                     </Row>
                 </Col>
                 <Col sm={12} md={9} lg={8}>
-                    <h2>Date</h2>
+                    <h3 className='text-center my-3'>{selectedDate == "" ? "Select a date" : (new Date(selectedDate)).toLocaleDateString('en-US', Global.dateOptions2)}</h3>
                     <SummaryTimeSpent />
                     <SummaryTasksCompleted />
                 </Col>
