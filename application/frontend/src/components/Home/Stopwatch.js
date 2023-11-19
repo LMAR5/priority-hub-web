@@ -67,7 +67,6 @@ function Stopwatch(props) {
                         setTime(0);
                         //Start timer
                         setIsRunning(!isRunning);
-                        // TaskService update
                         ActivityTrackerService.startTrackTime(activityTrackerForm).then((data) => {
                             if (data.success) {
                                 TaskService.updateStatusToInProgress(activityTrackerForm.TaskId).then((dataUpdate) => {

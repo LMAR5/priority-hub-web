@@ -133,9 +133,6 @@ const TaskService = {
             });
         return statusupd;
     }
-
-
-
 }
 
 export default TaskService;

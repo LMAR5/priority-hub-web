@@ -139,7 +139,7 @@ function Home() {
                     value={searchTerm}
                     onChange={(event) => { setSearchTerm(event.target.value) }} />
                 <Button variant="dark" onClick={() => { searchTermTasks() }}>
-                    <i className="bi bi-search"></i>                    
+                    <i className="bi bi-search"></i>
                 </Button>
             </InputGroup>
         );
@@ -349,10 +349,10 @@ function Home() {
             <div>
                 <Row>
                     <Col sm={8}>
-                    <Stack direction="horizontal" gap={3}>
-                        <h4>Task details</h4>
-                        {selectedTaskById.Status === 'In Progress' ? <Badge bg="primary" className="mb-2">In Progress</Badge> : <span></span>}
-                    </Stack>                                            
+                        <Stack direction="horizontal" gap={3}>
+                            <h4>Task details</h4>
+                            {selectedTaskById.Status === 'In Progress' ? <Badge bg="primary" className="mb-2">In Progress</Badge> : <span></span>}
+                        </Stack>
                     </Col>
                     {showEditButton ?
                         <Col sm={4} className='text-end'>
@@ -620,7 +620,7 @@ function Home() {
                         Create
                     </Button>
                 </Col>
-            </Row>            
+            </Row>
         </div>
     );
 }

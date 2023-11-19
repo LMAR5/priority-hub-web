@@ -158,6 +158,7 @@ router.put('/CompleteTask', async (request, response) => {
 
     const results = await db.promise().query(`UPDATE Task SET    
     Completed = 1,
+    Status = 'Completed',
     LastUpdatedBy = 'User',
     LastUpdatedDateTime = '${nowDateTime}'
     WHERE Id='${delTaskID}';`);
@@ -167,7 +168,6 @@ router.put('/CompleteTask', async (request, response) => {
 
 router.put('/UpdateStatusToInProgress', async (request, response) => {
     const taskid = request.body.Id;
-
     const selectQuery = 'SELECT * FROM ActivityTracker WHERE TaskId=?';
     const selectValues = [taskid];
     db.query(selectQuery, selectValues, async (error, result) => {
@@ -188,9 +188,7 @@ router.put('/UpdateStatusToInProgress', async (request, response) => {
         }
 
     });
-
-})
-
+});
 
 
 module.exports = router;
