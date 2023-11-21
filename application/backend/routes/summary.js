@@ -1,6 +1,7 @@
-const { Router, request } = require('express');
+const { Router, request, response } = require('express');
 // Import MySQL connection
 const db = require('../database');
+const CompletedTasksByDateModel = require('../models/completedTasksByDateModel')
 
 const router = Router();
 
@@ -57,5 +58,23 @@ router.get('/GetSummaryDateList', (request, response) => {
     }
   });
 });
+
+router.get('/GetCompletedTasksByDate', async(request,response) => {
+  const summaryDate = request.query.date;
+  const results = await db.promise.query(`SELECT * FROM task WHERE LastUpdatedDateTime LIKE '${summaryDate}%' AND Completed = 1 ORDER BY LastUpdatedDateTime`);
+
+  let CompletedTasksByDate = [];
+
+  results[0].foreach((element, idx) => {
+    let newCompletedTask = new CompletedTasksByDateModel();
+
+    newCompletedTask.ID = element.Id;
+    newCompletedTask.Title = element.Title;
+    newCompletedTask.CompletedDate = element.LastUpdatedDateTime;
+    CompletedTasksByDate.push(newCompletedTask);
+    
+    response.status(200).send(newCompletedTask);
+  }); 
+})
 
 module.exports = router;
