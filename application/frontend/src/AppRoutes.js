@@ -4,12 +4,8 @@ import MemberGeneric from './components/About/MemberGeneric';
 import Layout from './components/Layout/Layout';
 import Categories from './components/Categories/Categories';
 import Tasks from './components/Tasks/Tasks';
-import SignInCustom from './components/Authentication/SignInCustom';
-import SignUpCustom from './components/Authentication/SignUpCustom';
-import PasswordResetCustom from './components/Authentication/PasswordResetCustom';
 import DashboardMain from './components/Dashboard/DashboardMain';
 import SummaryMain from './components/Summary/SummaryMain';
-//import AuthenticationService from './services/AuthenticationService';
 
 const AppRoutes = [
     {
