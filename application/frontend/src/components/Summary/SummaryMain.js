@@ -70,7 +70,7 @@ function SummaryMain() {
     return (
         <div>
             <Row>
-                <Col sm={12} md={3} lg={4} className='border-end'>
+                <Col sm={12} md={3} lg={3} className='border-end'>
                     <Row>
                         <Col>{renderSearchBar()}</Col>
                     </Row>
@@ -79,7 +79,7 @@ function SummaryMain() {
                         {contentList}
                     </Row>
                 </Col>
-                <Col sm={12} md={9} lg={8}>
+                <Col sm={12} md={9} lg={9}>
                     <Row>
                         <Col>
                             <h3 className='text-center my-3'>{selectedDate === "" ? "Select a date" : (new Date(selectedDate)).toLocaleDateString('en-US', Global.dateOptions2)}</h3>

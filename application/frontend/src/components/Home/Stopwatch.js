@@ -129,24 +129,6 @@ function Stopwatch(props) {
         }
     };
 
-    const reset = () => {
-        if (milliseconds > 0) {
-            MySwal.fire({
-                title: 'Are you sure?',
-                text: "This action will reset the recorded time",
-                icon: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Reset',
-                confirmButtonColor: '#000'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    setTime(0);
-                }
-            });
-        }
-    };
-
     const updateListActivityTrackers = (task_id) => {
         //Reset the timer
         setTime(0);
@@ -165,8 +147,7 @@ function Stopwatch(props) {
                             {milliseconds.toString().padStart(2, "0")}
                         </Card.Text>
                         {props.isDisabled ? <Button variant='outline-dark' disabled>Start</Button> : isRunning ? <Button variant='outline-dark' disabled>Start</Button> : <Button variant='dark' onClick={() => { startAndStop('START') }}>Start</Button>}
-                        {props.isDisabled ? <Button variant='outline-danger' className='ms-3' disabled>Stop</Button> : !isRunning ? <Button variant='outline-danger' className='ms-3' disabled>Stop</Button> : <Button variant='danger' className='ms-3' onClick={() => { startAndStop('STOP') }}>Stop</Button>}
-                        {props.isDisabled ? <span></span> : isRunning ? <span></span> : <Button variant='outline-warning' className='ms-3' onClick={() => { reset() }} >Reset</Button>}
+                        {props.isDisabled ? <Button variant='outline-danger' className='ms-3' disabled>Stop</Button> : !isRunning ? <Button variant='outline-danger' className='ms-3' disabled>Stop</Button> : <Button variant='danger' className='ms-3' onClick={() => { startAndStop('STOP') }}>Stop</Button>}                        
                     </Card.Body>
                 </Card>
             </Col>

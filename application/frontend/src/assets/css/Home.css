@@ -31,3 +31,10 @@
   scrollbar-width: none;
   height: 600px;
 }
+
+.summaryTimeTableScroll {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 270px;
+}
