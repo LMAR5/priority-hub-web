@@ -11,6 +11,8 @@ const categoryRoute = require('./routes/category');
 const taskRoute = require('./routes/task');
 const userRoute = require('./routes/user');
 const activityTrackerRoute = require('./routes/activitytracker');
+const dashboardRoute = require('./routes/dashboard');
+const summaryRoute = require('./routes/summary');
 
 //Middleware to parse any request to JSON format (else, we cannot access the HTTP parameters)
 //Express does not parse requests to JSON by default
@@ -25,6 +27,8 @@ app.use('/api/CategoryController', categoryRoute);
 app.use('/api/TaskController', taskRoute);
 app.use('/api/UserController', userRoute);
 app.use('/api/ActivityTrackerController', activityTrackerRoute);
+app.use('/api/DashboardController', dashboardRoute);
+app.use('/api/SummaryController', summaryRoute);
 
 app.listen(
     PORT,

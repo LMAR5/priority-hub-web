@@ -10,7 +10,7 @@ const TaskService = {
             });
         return alltasks;
     },
-    searchTasks: function (searchKey) {        
+    searchTasks: function (searchKey) {
         const searchResult = fetch(process.env.REACT_APP_API_URL.concat("/api/TaskController/SearchTask"), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -117,8 +117,22 @@ const TaskService = {
                 console.log(error.message);
             });
         return allcompltasks;
+    },
+    updateStatusToInProgress: function (taskUpdStatus) {
+        const statusupd = fetch(process.env.REACT_APP_API_URL.concat('/api/TaskController/UpdateStatusToInProgress'), {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ Id: taskUpdStatus })
+        })
+            .then(response => response.json())
+            .then((data) => {
+                return data;
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+        return statusupd;
     }
-
 }
 
 export default TaskService;

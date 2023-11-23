@@ -84,7 +84,7 @@ router.post('/CreateTask', async (request, response) => {
     const DueDate = request.body.TaskDueDate;
     const Notes = request.body.TaskNotes;
     let Createdtmp = new Date(Date.now());
-    Createdtmp.setHours(Createdtmp.getHours() - 7);
+    Createdtmp.setHours(Createdtmp.getHours() - 8);
     let Created = Createdtmp.toISOString().slice(0, 19);
 
     const createQuery = 'INSERT INTO Task (Title, Description, CategoryID, UserID, Status, Priority, DueDate, Notes, CreatedBy, CreatedDateTime, LastUpdatedBy, LastUpdatedDateTime) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
@@ -158,6 +158,7 @@ router.put('/CompleteTask', async (request, response) => {
 
     const results = await db.promise().query(`UPDATE Task SET    
     Completed = 1,
+    Status = 'Completed',
     LastUpdatedBy = 'User',
     LastUpdatedDateTime = '${nowDateTime}'
     WHERE Id='${delTaskID}';`);
@@ -165,6 +166,29 @@ router.put('/CompleteTask', async (request, response) => {
     response.status(200).send(results[0]);
 });
 
+router.put('/UpdateStatusToInProgress', async (request, response) => {
+    const taskid = request.body.Id;
+    const selectQuery = 'SELECT * FROM ActivityTracker WHERE TaskId=?';
+    const selectValues = [taskid];
+    db.query(selectQuery, selectValues, async (error, result) => {
+        if (error) {
+            return response.status(500).json({ message: 'Error when creating record. Your time has not been recorded.', success: false });
+        }
+        if (result.length === 1) {
+            debugger
+            const newres = await db.promise().query(`UPDATE Task SET Status='In Progress' WHERE Id='${taskid}'`);
+            if (newres[0].affectedRows === 1) {
+                return response.status(200).json({ message: 'Your task is updated', result: newres[0], success: true });
+            } else {
+                return response.status(200).json({ message: 'Your task was not updated.', success: true });
+            }
+        }
+        else {
+            return response.status(500).json({ message: 'Something went wrong. Your time has not been recorded.', success: false });
+        }
+
+    });
+});
 
 
 module.exports = router;

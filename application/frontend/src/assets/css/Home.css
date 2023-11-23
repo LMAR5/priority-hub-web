@@ -17,3 +17,24 @@
 .d-grid {
   padding: 0% !important;
 }
+
+.activityTrackerList {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 240px;
+}
+
+.summaryListScroll {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 600px;
+}
+
+.summaryTimeTableScroll {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 270px;
+}
