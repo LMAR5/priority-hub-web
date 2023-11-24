@@ -64,8 +64,9 @@ router.get('/GetSummaryDateList', (request, response) => {
 });
 
 router.get('/GetCompletedTasksByDate', async (request, response) => {
-  const summaryDate = request.query.date;
-  const results = await db.promise.query(`SELECT * FROM task WHERE LastUpdatedDateTime LIKE '${summaryDate}%' AND Completed = 1 ORDER BY LastUpdatedDateTime`);
+  const startDate = request.query.start;
+  const endDate = request.query.end;
+  const results = await db.promise.query(`SELECT * FROM task WHERE LastUpdatedDateTime >= '${startDate}' AND LastUpdatedDateTime < '${endDate}' AND Completed = 1 ORDER BY LastUpdatedDateTime`);
 
   let CompletedTasksByDate = [];
 
@@ -77,8 +78,8 @@ router.get('/GetCompletedTasksByDate', async (request, response) => {
     newCompletedTask.CompletedDate = element.LastUpdatedDateTime;
     CompletedTasksByDate.push(newCompletedTask);
 
-    response.status(200).send(newCompletedTask);
   });
+  response.status(200).send(CompletedTasksByDate);
 })
 
 router.get('/GetSummaryTimeSpentTableData', async (request, response) => {
