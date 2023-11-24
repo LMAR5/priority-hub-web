@@ -1,0 +1,24 @@
+.signup {
+  width: 400px;
+  text-align: center;
+  padding: 50px;
+}
+
+.signin {
+  width: 400px;
+  /*text-align: center;
+  padding: 50px;*/
+}
+
+.img-signin {
+  background-image: url(../images/signin_bg.jpeg);
+  background-size: cover;
+}
+
+.p-7rem {
+  padding: 7rem !important;
+}
+
+.h-15 {
+  height: 15% !important;
+}

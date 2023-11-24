@@ -1,6 +1,6 @@
-# CSC648-fa23-SectionName-teamNN Repository
+# CSC648-fall23-04-team05 Repository (Prototype branch)
 
-**Application URL: <https://example.com>**
+**Application URL: <http://54.162.22.91>**
 
 ## Before completing Milestone 0
 
@@ -16,9 +16,14 @@
    ACCEPT the invite**.
 3. Fill out the table below
 
-| Student Name | Student Email | GitHub Username | Student's role |
-| :----------: | :-----------: | :-------------: | :------------: |
-|   John Doe   | jdoe@sfsu.edu |      jdoe       |  Team Leader   |
+|    Student Name    |     Student Email      | GitHub Username | Student's role |
+| :----------------: | :--------------------: | :-------------: | :------------: |
+|   Trevor Eichler   | teichler@mail.sfsu.edu |   trevor-e123   |  GitHub Master |
+|    Luis Aguilar    | laguilar@sfsu.edu      |  luisaguilar159 |  Team Leader   |
+|      Lam Tran      | ltran24@mail.sfsu.edu  |   LamTran2530   |  Backend Lead  |
+|     Tyler Tam      | ttam2@mail.sfsu.edu    |     tytamz2     |  Scrum Master  |
+|      Andy Li       | ali27@mail.sfsu.edu    |    ali32901     |  Front Lead    |
+__________________________________________________________________________________
 
 **NO code should be stored in the root of your repository. You may rename the
 `application/` folder to your team's application name if you'd like, but all the
