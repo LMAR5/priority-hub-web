@@ -72,7 +72,7 @@ router.get('/GetCompletedTasksByDate', async (request, response) => {
   results[0].foreach((element, idx) => {
     let newCompletedTask = new CompletedTasksByDateModel();
 
-    newCompletedTask.ID = element.Id;
+    newCompletedTask.Id = element.Id;
     newCompletedTask.Title = element.Title;
     newCompletedTask.CompletedDate = element.LastUpdatedDateTime;
     CompletedTasksByDate.push(newCompletedTask);
