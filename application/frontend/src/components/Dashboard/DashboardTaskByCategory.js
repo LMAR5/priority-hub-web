@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import DashboardService from '../../services/DashboardService';
-import Row from 'react-bootstrap/esm/Row';
-import Col from 'react-bootstrap/esm/Col';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
  function DashboardTaskByCategory(props){
 
