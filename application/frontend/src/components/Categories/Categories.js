@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import CategoryService from '../../services/CategoryService'
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/esm/Row';
-import Col from 'react-bootstrap/esm/Col';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Table from 'react-bootstrap/Table';

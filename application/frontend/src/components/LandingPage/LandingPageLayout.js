@@ -1,7 +1,7 @@
 import React from 'react';
 import LandingPageHeader from './LandingPageHeader';
 import LandingPageFooter from './LandingPageFooter';
-import Container from 'react-bootstrap/esm/Container';
+import Container from 'react-bootstrap/Container';
 import { Outlet } from 'react-router-dom';
 
 function LandingPageLayout(){

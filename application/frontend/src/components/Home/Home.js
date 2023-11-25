@@ -8,7 +8,7 @@ import CategoryService from '../../services/CategoryService';
 import TaskModel from '../../models/TaskModel';
 import CategoryModel from '../../models/CategoryModel';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/esm/Col';
+import Col from 'react-bootstrap/Col';
 import Global from '../Generic/GlobalConstants';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';

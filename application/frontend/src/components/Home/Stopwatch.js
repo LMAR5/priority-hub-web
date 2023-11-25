@@ -6,8 +6,8 @@ import ActivityTrackerModel from '../../models/ActivityTrackerModel';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Global from '../Generic/GlobalConstants';
-import Row from 'react-bootstrap/esm/Row';
-import Col from 'react-bootstrap/esm/Col';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import TaskService from '../../services/TaskService';
 
