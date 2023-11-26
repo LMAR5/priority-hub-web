@@ -43,7 +43,7 @@ const SummaryService = {
         return tabledata;
     },
     getCompletedTasks: function (startDate, endDate) {
-        const url = process.env.REACT_APP_API_URL.concat("/api/TaskController/GetCompletedTasksByDate?date=")
+        const url ='/api/SummaryController/GetCompletedTasksByDate';
         const startString = "?start=".concat(startDate);
         const endString = "&end=".concat(endDate);
         const completedTasks = fetch(process.env.REACT_APP_API_URL.concat(url.concat(startString.concat(endString))))
