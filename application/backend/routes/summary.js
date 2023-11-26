@@ -80,7 +80,6 @@ router.get('/GetCompletedTasksByDate', async (request, response) => {
     CompletedTasksByDateTable.push(newCompletedTask);
 
   });
-  console.log(CompletedTasksByDateTable);
   response.status(200).send(CompletedTasksByDateTable);
 })
 
