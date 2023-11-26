@@ -27,7 +27,6 @@ function SummaryTimeSpent(props) {
     }
 
     // const data = [
-
     //     { name: 'Group A', value: 400 },
     //     { name: 'Group B', value: 300 },
     //     { name: 'Group C', value: 400 },
@@ -57,6 +56,7 @@ function SummaryTimeSpent(props) {
                     <PieChart width={400} height={400}>
                         <Pie
                             data={timeSpentData}
+                            isAnimationActive={false}
                             cx="50%"
                             cy="50%"
                             labelLine={false}
