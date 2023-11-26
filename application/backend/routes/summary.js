@@ -4,6 +4,7 @@ const db = require('../database');
 const CompletedTasksByDateModel =
   require('../models/completedTasksByDateModel');
 const TaskTimeSpentTableModel = require('../models/tasktimespenttablemodel');
+const TaskTimeSpentPieModel = require('../models/taskstimespentpiemodel');
 
 
 const router = Router();
@@ -82,10 +83,31 @@ router.get('/GetCompletedTasksByDate', async (request, response) => {
   response.status(200).send(CompletedTasksByDate);
 })
 
+router.get('/GetSummaryTimeSpentPieChart', async (request, response) => {
+  const startDate = request.query.start;
+  const endDate = request.query.end;
+  const results = await db.promise().query(`SELECT T.Id as TaskId, T.Title as TaskTitle, SUM(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime)/3600) as HourDiff, SUM(FLOOR(MOD(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime),3600)/60)) as MinDiff, SUM(MOD(MOD(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime),3600),60)) as SecDiff FROM Task T INNER JOIN ActivityTracker AT ON AT.TaskId = T.Id WHERE T.Deleted = 0 AND AT.LastUpdatedDateTime >= '${startDate}' AND AT.LastUpdatedDateTime < '${endDate}' GROUP BY T.Id, T.Title ORDER BY T.Id, T.Title`);
+  let timeSpentSummaryPieArray = [];
+  results[0].forEach((element, idx) => {
+    let newRecord = new TaskTimeSpentPieModel();
+    newRecord.Id = idx;
+    newRecord.TaskId = element.TaskId;
+    newRecord.TaskTitle = element.TaskTitle;
+    newRecord.TimeHours = parseFloat(element.HourDiff);
+    newRecord.TimeMins = parseFloat(element.MinDiff);
+    newRecord.TimeSecs = element.SecDiff;
+    console.log(newRecord.TaskTitle);
+    newRecord.TimeTotal = newRecord.TimeHours + "h, " + newRecord.TimeMins + "m, " + newRecord.TimeSecs + "s";
+    timeSpentSummaryPieArray.push(newRecord);
+  });
+
+  response.status(200).send(timeSpentSummaryPieArray);
+})
+
 router.get('/GetSummaryTimeSpentTableData', async (request, response) => {
   const startDate = request.query.start;
   const endDate = request.query.end;
-  const results = await db.promise().query(`SELECT T.Id as TaskId, T.Title as TaskTitle, AT.Title as ActivityTitle, SUM(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime) / 3600) as HourDiff, SUM(FLOOR(MOD(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime),3600)/60)) as MinDiff, SUM(MOD(MOD(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime),3600),60)) as SecDiff FROM Task T INNER JOIN ActivityTracker AT ON AT.TaskId = T.Id WHERE T.Deleted = 0 AND AT.LastUpdatedDateTime >= '${startDate}' AND AT.LastUpdatedDateTime < '${endDate}' GROUP BY T.Id, T.Title, AT.Title ORDER BY T.Id, T.Title, AT.Title`);
+  const results = await db.promise().query(`SELECT T.Id as TaskId, T.Title as TaskTitle, AT.Title as ActivityTitle, SUM(FLOOR(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime) / 3600)) as HourDiff, SUM(FLOOR(MOD(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime),3600)/60)) as MinDiff, SUM(MOD(MOD(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime),3600),60)) as SecDiff FROM Task T INNER JOIN ActivityTracker AT ON AT.TaskId = T.Id WHERE T.Deleted = 0 AND AT.LastUpdatedDateTime >= '${startDate}' AND AT.LastUpdatedDateTime < '${endDate}' GROUP BY T.Id, T.Title, AT.Title ORDER BY T.Id, T.Title, AT.Title`);
   let timeSpentSummaryTableArray = [];
   results[0].forEach((element, idx) => {
     let newRecord = new TaskTimeSpentTableModel();
