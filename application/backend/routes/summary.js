@@ -26,8 +26,7 @@ const generateDates =
     lastDate) => {
     var lstdates = [];
     while (startDate <= lastDate) {
-      let tmpDate = new Date(lastDate);
-      // tmpDate.setHours(tmpDate.getHours() - 8);
+      let tmpDate = new Date(lastDate);      
       tmpDate = tmpDate.toISOString();
       lstdates.push(tmpDate);
       lastDate = substractDays(lastDate, 1);
@@ -73,7 +72,6 @@ router.get('/GetCompletedTasksByDate', async (request, response) => {
 
   results[0].forEach((element, idx) => {
     let newCompletedTask = new CompletedTasksByDateModel();
-
     newCompletedTask.Id = element.Id;
     newCompletedTask.Title = element.Title;
     newCompletedTask.CompletedDate = element.LastUpdatedDateTime;
@@ -91,8 +89,7 @@ router.get('/GetSummaryTimeSpentPieChart', async (request, response) => {
   results[0].forEach((element, idx) => {
     let newRecord = new TaskTimeSpentPieModel();
     newRecord.TaskTitle = element.TaskTitle;
-    newRecord.TimeHours = parseFloat(element.HourDiff);
-    console.log(newRecord.TaskTitle);
+    newRecord.TimeHours = parseFloat(element.HourDiff);    
     timeSpentSummaryPieArray.push(newRecord);
   });
 

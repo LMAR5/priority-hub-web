@@ -149,8 +149,7 @@ function SignInCustom({setToken}) {
             }
           })
           Toast.fire({icon: 'warning', title: 'Complete all fields'})
-        } else if (password !== confirmPassword) {
-          // alert("Passwords don't match");
+        } else if (password !== confirmPassword) {          
           const Toast = MySwal.mixin({
             toast: true,
             position: 'top-end',

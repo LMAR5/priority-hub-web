@@ -70,7 +70,6 @@ router.get('/GetTaskById', async (request, response) => {
         newtask.LastUpdatedDateTime = element.LastUpdatedDateTime;
         lsttask.push(newtask);
     });
-
     response.status(200).send(lsttask);
 });
 
@@ -100,19 +99,10 @@ router.put('/UpdateTask', async (request, response) => {
     const TaskId = request.body.Id;
     const TaskTitle = request.body.Title;
     const TaskDescription = request.body.Description;
-    const TaskCategoryId = request.body.CategoryId;
-    //const TaskUserId = request.body.UserId;
-    //const TaskStatus = request.body.Status;
-    //const TaskPriority = request.body.Priority;
-    const TaskCompleted = request.body.Completed;
-    //const TaskDeleted = request.body.Deleted;
-    //const TaskIsFavorite = request.body.IsFavorite;
+    const TaskCategoryId = request.body.CategoryId;    
+    const TaskCompleted = request.body.Completed;    
     const TaskDueDate = request.body.DueDate.slice(0, 19);
-    const TaskNotes = request.body.Notes;
-    //const TaskCreatedBy = request.body.CreatedBy;
-    //const TaskCreatedDateTime = request.body.CreatedDateTime;
-    //const TaskLastUpdatedBy = request.body.LastUpdatedBy;
-    //const TaskLastUpdatedDateTime = request.body.LastUpdatedDateTime;
+    const TaskNotes = request.body.Notes;    
     let nowDateTime = (new Date(Date.now()).toISOString()).slice(0, 19);
 
     const results = await db.promise().query(`UPDATE Task SET
@@ -122,7 +112,7 @@ router.put('/UpdateTask', async (request, response) => {
     Completed = ${TaskCompleted},
     DueDate = '${TaskDueDate}',
     Notes = '${TaskNotes}',
-    LastUpdatedBy = 'System',
+    LastUpdatedBy = 'User',
     LastUpdatedDateTime = '${nowDateTime}'
     WHERE Id='${TaskId}';`);
 
@@ -153,8 +143,7 @@ router.put('/CompleteTask', async (request, response) => {
     const delTaskID = request.body.Id;
     let nowDateTimetmp = new Date(Date.now());
     nowDateTimetmp.setHours(nowDateTimetmp.getHours() - 8);
-    let nowDateTime = nowDateTimetmp.toISOString().slice(0, 19);
-    //let nowDateTime = (new Date(Date.now()).toISOString()).slice(0, 19);
+    let nowDateTime = nowDateTimetmp.toISOString().slice(0, 19);    
 
     const results = await db.promise().query(`UPDATE Task SET    
     Completed = 1,
@@ -174,8 +163,7 @@ router.put('/UpdateStatusToInProgress', async (request, response) => {
         if (error) {
             return response.status(500).json({ message: 'Error when creating record. Your time has not been recorded.', success: false });
         }
-        if (result.length === 1) {
-            debugger
+        if (result.length === 1) {            
             const newres = await db.promise().query(`UPDATE Task SET Status='In Progress' WHERE Id='${taskid}'`);
             if (newres[0].affectedRows === 1) {
                 return response.status(200).json({ message: 'Your task is updated', result: newres[0], success: true });
