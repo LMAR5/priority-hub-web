@@ -61,7 +61,7 @@ router.get('/GetTaskById', async (request, response) => {
         newtask.Deleted = element.Deleted;
         newtask.IsFavorite = element.IsFavorite;
         let tmpDate = new Date(element.DueDate);
-        tmpDate.setHours(tmpDate.getHours() - 7);
+        tmpDate.setHours(tmpDate.getHours() - 8);
         newtask.DueDate = tmpDate.toISOString().slice(0, 19);
         newtask.Notes = element.Notes;
         newtask.CreatedBy = element.CreatedBy;
@@ -152,7 +152,7 @@ router.put('/DeleteTask', async (request, response) => {
 router.put('/CompleteTask', async (request, response) => {
     const delTaskID = request.body.Id;
     let nowDateTimetmp = new Date(Date.now());
-    nowDateTimetmp.setHours(nowDateTimetmp.getHours() - 7);
+    nowDateTimetmp.setHours(nowDateTimetmp.getHours() - 8);
     let nowDateTime = nowDateTimetmp.toISOString().slice(0, 19);
     //let nowDateTime = (new Date(Date.now()).toISOString()).slice(0, 19);
 
