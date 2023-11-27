@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Cell, Pie, PieChart, ResponsiveContainer, Sector, Tooltip } from 'recharts';
+import { Cell, LabelList, Pie, PieChart, ResponsiveContainer, Sector, Tooltip } from 'recharts';
 import Card from 'react-bootstrap/Card';
 
 import SummaryService from '../../services/SummaryService';
@@ -26,13 +26,6 @@ function SummaryTimeSpent(props) {
         }
     }
 
-    // const data = [
-    //     { name: 'Group A', value: 400 },
-    //     { name: 'Group B', value: 300 },
-    //     { name: 'Group C', value: 400 },
-    //     { name: 'Group D', value: 200 },
-    // ];
-
     const RADIAN = Math.PI / 180;
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -50,10 +43,10 @@ function SummaryTimeSpent(props) {
 
     return (
         <ResponsiveContainer width="100%" height="100%">
-            <Card className='mt-3'>
+                <Card className='mt-3'>
                 <Card.Header as="h5">Overall Time Spent Chart</Card.Header>
                 <Card.Body>
-                    <PieChart width={400} height={400}>
+                        <PieChart width={500} height={500}>
                         <Pie
                             data={timeSpentData}
                             isAnimationActive={false}
@@ -65,12 +58,17 @@ function SummaryTimeSpent(props) {
                             fill="#8884d8"
                             dataKey="TimeHours"
                         >
+                        <LabelList className='pieLabel' 
+                            dataKey="TaskTitle"
+                            position="outside" 
+                            fontWeight={'bold'}
+                            angle=""   
+                        />
                             {timeSpentData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                         </Pie>
                     </PieChart>
-                    <Tooltip />
                 </Card.Body>
             </Card>
         </ResponsiveContainer>
