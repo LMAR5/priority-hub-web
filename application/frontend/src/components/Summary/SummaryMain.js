@@ -14,21 +14,14 @@ import SummaryTasksCompleted from './SummaryTasksCompleted';
 import SummaryTimeSpent from './SummaryTimeSpent';
 import SummaryTimeSpentTable from './SummaryTimeSpentTable';
 
-function SummaryMain() {
-    const [searchTerm, setSearchTerm] = useState('');
+function SummaryMain() {    
     const [loadingListDates, setLoadingListDates] = useState(true);
     const [lstDates, setLstDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState('');
 
     useEffect(() => {
         getListOfDates();
-    }, []);
-
-    const searchTermSummary =
-        () => {
-            let searchData = { searchkey: searchTerm }
-            // Update list of dates
-        }
+    }, []);    
 
     const getListOfDates =
         () => {
@@ -36,24 +29,7 @@ function SummaryMain() {
                 setLstDates(data.result);
                 setLoadingListDates(false);
             });
-        }
-
-    const renderSearchBar =
-        () => {
-            return (
-                <InputGroup className='mb-2'>
-                    <Form.Control placeholder=
-                        'Search...' value={searchTerm} onChange=
-                        {
-                            (event) => {
-                                setSearchTerm(event.target.value)
-                            }
-                        } />
-                    <Button variant="dark" onClick={() => { searchTermSummary() }}>
-                        <i className="bi bi-search"></i>
-                    </Button>
-                </InputGroup>);
-        }
+        }    
 
     const renderListofDates = () => {
         return (
@@ -70,10 +46,7 @@ function SummaryMain() {
     return (
         <div>
             <Row>
-                <Col sm={12} md={3} lg={3} className='border-end'>
-                    <Row>
-                        <Col>{renderSearchBar()}</Col>
-                    </Row>
+                <Col sm={12} md={3} lg={3} className='border-end'>                    
                     <Row>
                         <h3>Dates</h3>
                         {contentList}
@@ -86,10 +59,10 @@ function SummaryMain() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm={6} md={6} lg={6}>
+                        <Col sm={12} md={12} lg={6}>
                             <SummaryTimeSpent inputDate={selectedDate} />
                         </Col>
-                        <Col sm={6} md={6} lg={6}>
+                        <Col sm={12} md={12} lg={6}>
                             <SummaryTimeSpentTable inputDate={selectedDate} />
                         </Col>
                     </Row>
