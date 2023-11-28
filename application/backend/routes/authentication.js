@@ -40,7 +40,7 @@ router.post('/SignUp', (request, response, next) => {
         return response.status(400).json({ message: 'Missing required data', result: false });
     }
 
-    const insertQuery = 'INSERT INTO User (firstname, lastname, email, password, Status, createdby, lastupdatedby) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const insertQuery = 'INSERT INTO User (FirstName, LastName, Email, Password, Status, CreatedBy, LastUpdatedBy) VALUES (?, ?, ?, ?, ?, ?, ?)';
     const values = [firstname, lastname, email, password, 'ACTIVE', 'System', 'System'];
 
     db.query(insertQuery, values, (err, result) => {
