@@ -8,7 +8,7 @@ describe(Home, () => {
     // -------------------------------------------------------------------------
     it("Renders the text field to enter a new task title correctly", async () => {
         const component = render(<Home />);
-        const childComponent = await component.findByPlaceholderText("Add your task here...");//getByPlaceholderText("Add your task here...");
+        const childComponent = await component.findByPlaceholderText("Add your task here...");
         expect(childComponent).toBeInTheDocument();
     });
 
@@ -56,15 +56,32 @@ describe(Home, () => {
         });
     });
 
-    // it("Should be able to see the title of a Task", async () => {
-    //     const component = render(<Home />);
-    //     const user = userEvent.setup();
-    //     const selectedTaskBtn = await component.findByText("CSC 620 Discussion Post");
-    //     await user.click(selectedTaskBtn);
-    //     await waitFor(() => {
-    //         const titleSelectedTask = await screen
-    //     });
-    // });
+
+    it("Should be able to see the title of a Task", async () => {
+        const component = render(<Home />);
+        const user = userEvent.setup();
+        const selectedTaskBtn = await component.findByText("CSC 620 Discussion Post");
+        await user.click(selectedTaskBtn);
+        await waitFor(async () => {
+            const titleSelectedTask = (await screen.findByTestId("view_task_title"));            
+            expect(titleSelectedTask).toHaveValue("CSC 620 Discussion Post");
+        });
+    });
+
+    it("Should be able to edit the task title", async () => {
+        const component = render(<Home />);
+        const user = userEvent.setup();
+        const selectedTaskBtn = await component.findByText("CSC 620 Discussion Post");
+        await user.click(selectedTaskBtn);
+        await waitFor(async () => {
+            const editBtn = await screen.findByTestId("viewform_edit_btn");
+            await user.click(editBtn);
+            const titleSelectedTitleTask = await screen.findByTestId("editform_edit_btn");
+            await user.clear(titleSelectedTitleTask);
+            await user.type(titleSelectedTitleTask, "Updating task");
+            expect(titleSelectedTitleTask).toHaveValue("Updating task");
+        });
+    });
     // -------------------------------------------------------------------------
     // Feature: User should be able to Complete a Task
     // -------------------------------------------------------------------------    

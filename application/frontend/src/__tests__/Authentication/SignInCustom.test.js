@@ -12,6 +12,7 @@ describe(SignInCustom, () => {
         const signInText = (await screen.findByTestId('signin_title')).textContent;            
         expect(signInText).toEqual('Sign in to your account');
     });
+    
 
     // Testing the component renders the Sign Up link
     it("Checks if there is a 'Sign Up' button within the Sign In form", async () => {

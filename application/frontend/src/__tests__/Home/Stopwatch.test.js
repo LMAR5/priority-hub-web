@@ -11,4 +11,5 @@ describe(Home, () => {
         const childComponent = component.getByText("Stopwatch");
         expect(childComponent).toBeInTheDocument();
     });
+    
 })

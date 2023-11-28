@@ -356,7 +356,7 @@ function Home() {
                     </Col>
                     {showEditButton ?
                         <Col sm={4} className='text-end'>
-                            <Button className='' variant="dark" onClick={() => { setLoadingDataIsReady(!loadingDataIsReady) }}>Edit</Button>
+                            <Button data-testid="viewform_edit_btn" className='' variant="dark" onClick={() => { setLoadingDataIsReady(!loadingDataIsReady) }}>Edit</Button>
                         </Col> : <span></span>
                     }
                 </Row>
@@ -364,7 +364,7 @@ function Home() {
                     <Form.Group as={Row}>
                         <Col sm={8}>
                             <Form.Label>Title</Form.Label>
-                            <Form.Control id='task_title' type='text' maxLength={50} onChange={handleTaskChange} value={selectedTaskById.Title} disabled />
+                            <Form.Control data-testid="view_task_title" id='task_title' type='text' maxLength={50} onChange={handleTaskChange} value={selectedTaskById.Title} disabled />
                         </Col>
                         <Col sm={4}>
                             <Form.Label>Category</Form.Label>
@@ -418,7 +418,7 @@ function Home() {
                     <Form.Group as={Row}>
                         <Col sm={8}>
                             <Form.Label>Title</Form.Label>
-                            <Form.Control id='task_title' type='text' maxLength={50} onChange={handleTaskChange} value={selectedTaskById.Title} />
+                            <Form.Control data-testid="editform_edit_btn" id='task_title' type='text' maxLength={50} onChange={handleTaskChange} value={selectedTaskById.Title} />
                         </Col>
                         <Col sm={4}>
                             <Form.Label>Category</Form.Label>
