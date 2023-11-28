@@ -19,7 +19,7 @@ router.get('/GetTasksByCategory', async (request, response) => {
     const startDate = request.query.start;
     const endDate = request.query.end;
 
-    const results = await db.promise().query(`SELECT CategoryId, category.Title, count(CategoryId) AS TaskCount FROM Task INNER JOIN category ON CategoryId = category.Id WHERE task.Deleted=0 AND task.CreatedDateTime >= '${startDate}' AND task.CreatedDateTime <= '${endDate}' GROUP BY CategoryId ORDER BY CategoryId`);
+    const results = await db.promise().query(`SELECT CategoryId, Category.Title, count(CategoryId) AS TaskCount FROM Task INNER JOIN Category ON CategoryId = Category.Id WHERE Task.Deleted=0 AND Task.CreatedDateTime >= '${startDate}' AND Task.CreatedDateTime < '${endDate}' GROUP BY CategoryId ORDER BY CategoryId`);
     response.status(200).send(results[0]);
 });
 
@@ -32,7 +32,7 @@ router.get('/GetTasksByStatusChart', async (request, response) => {
     const startDate = request.query.start;
     const endDate = request.query.end;
 
-    const queryResults = await db.promise().query(`SELECT Status as TaskStatus, COUNT(Id) as NumStatus from Task WHERE Deleted=0 AND CreatedDateTime >= '${startDate}' AND CreatedDateTime < '${endDate}' GROUP BY status ORDER BY status`);
+    const queryResults = await db.promise().query(`SELECT Status as TaskStatus, COUNT(Id) as NumStatus from Task WHERE Deleted=0 AND CreatedDateTime >= '${startDate}' AND CreatedDateTime < '${endDate}' GROUP BY Status ORDER BY Status`);
     // response.status(200).send(queryResults[0]);
 
     let lstTasksByStatus = [];

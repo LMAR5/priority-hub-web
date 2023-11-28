@@ -15,10 +15,8 @@ router.use((request, response, next) => {
 router.post('/SignIn', (request, response) => {
     const emailSignIn = request.body.email;
     const passwordSignIn = request.body.password;
-
     const queryDB = 'SELECT * FROM User WHERE Email=? AND Password=?';
     const values = [emailSignIn, passwordSignIn];
-
     db.query(queryDB, values, (err, result) => {
         if (err) {
             return response.status(500).json({ message: 'Duplicate email entry in database', result: [], success: false });
@@ -35,20 +33,18 @@ router.post('/SignIn', (request, response) => {
 // Uri: http://localhost:3001/api/AuthController/SignUp
 // Type: Post
 // Description: Method to receive the user data from the front end for db
-router.post('/SignUp', (request, response, next) => {
-    // console.log(request.body);
+router.post('/SignUp', (request, response, next) => {    
     const { firstname, lastname, email, password } = request.body;
 
     if (!firstname || !lastname || !email || !password) {
         return response.status(400).json({ message: 'Missing required data', result: false });
     }
 
-    const insertQuery = 'INSERT INTO User (firstname, lastname, email, password, Status, createdby, lastupdatedby) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const insertQuery = 'INSERT INTO User (FirstName, LastName, Email, Password, Status, CreatedBy, LastUpdatedBy) VALUES (?, ?, ?, ?, ?, ?, ?)';
     const values = [firstname, lastname, email, password, 'ACTIVE', 'System', 'System'];
 
     db.query(insertQuery, values, (err, result) => {
-        if (err) {
-            console.error('Error in SignUp route:', err.code);
+        if (err) {            
             return response.status(500).json({ message: 'Duplicate email entry in database', result: false });
         }
         if (result.affectedRows === 1) {
