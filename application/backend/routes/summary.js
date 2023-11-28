@@ -88,7 +88,7 @@ router.get('/GetSummaryTimeSpentPieChart', async (request, response) => {
   let timeSpentSummaryPieArray = [];
   results[0].forEach((element, idx) => {
     let newRecord = new TaskTimeSpentPieModel();
-    newRecord.TaskTitle = element.TaskTitle;
+    newRecord.TaskTitle = element.TaskTitle.length > 15 ? element.TaskTitle.slice(0,15).concat("...") : element.TaskTitle;
     newRecord.TimeHours = parseFloat(element.HourDiff);    
     timeSpentSummaryPieArray.push(newRecord);
   });

@@ -26,11 +26,11 @@ function TaskByStatus(props) {
     const COLORS = ['#0088FE', '#00C49F', '#FF0000'];
 
     return (
-        <ResponsiveContainer width='100%' height='100%'>
-            <Row>
+        <ResponsiveContainer width='100%' height='300'>
+            <Row className='mt-3'>
                 <Col>
-                    <h2>Number of Tasks By Status</h2>
-                    <PieChart width={400} height={400}>
+                    <h3>Number of Tasks By Status</h3>
+                    <PieChart width={400} height={300}>
                         <Pie
                             data={lstTaskByStatus}
                             cx="50%"
