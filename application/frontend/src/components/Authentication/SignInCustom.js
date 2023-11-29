@@ -322,9 +322,15 @@ function SignInCustom({setToken}) {
                 <div className='p-7rem text-wrap text-white h-100'>
                     <Image className='h-15' src={require('../../assets/images/react.png')} />
                     <h6 className='display-6 my-3'>Organize your work</h6>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                    <p>
+                    Where productivity meets precision. 
+                    Optimize your workflow with intuitive task lists and a stopwatch, ensuring you stay focused and achieve your goals effortlessly. 
+                    Experience the next level of productivity mastery with Priority Hub - redefine how you work, boost efficiency, and accomplish more</p>
                     <h6 className='display-6 mt-4 mb-3'>See how you did</h6>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                    <p>
+                    Navigate productivity seamlessly with our Activity Tracker. 
+                    Monitor task progress, track milestones, and stay focused on your goals effortlessly. 
+                    Your personalized roadmap to success, helping you elevate efficiency and conquer tasks with confidence, one step at a time!</p>
                 </div>
             </div>
         );
