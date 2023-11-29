@@ -2,6 +2,7 @@ const { Router, request } = require('express');
 //Import MySQL connection
 const db = require('../database');
 const taskModelBack = require('../models/taskmodel');
+const { getalltasks, getdeltasks, getcomptasks, searchtasks } = require('./taskService');
 
 const router = Router();
 
@@ -10,36 +11,25 @@ router.use((request, response, next) => {
     next();
 });
 
-// Uri: http://localhost:3001/TaskController/GetAllTasks
+// URI: http://localhost:3001/TaskController/GetAllTasks
 // Type: GET
 // Description: Get list of all the tasks in DB
-router.get('/GetAllTasks', async (request, response) => {
-    const results = await db.promise().query(`SELECT * FROM Task WHERE Deleted = 0 and Completed = 0`);
-    response.status(200).send(results[0]);
-});
+router.get('/GetAllTasks', getalltasks);
 
-// GetAllDeletedTasks
-// Uri: http://localhost:3001/TaskController/GetAllDeletedTasks
-router.get('/GetAllDeletedTasks', async (request, response) => {
-    const results = await db.promise().query(`SELECT * FROM Task WHERE Deleted = 1`);
-    response.status(200).send(results[0]);
-});
+// URI: http://localhost:3001/TaskController/GetAllDeletedTasks
+// Type: GET
+// Description: Get list of all deleted tasks in DB
+router.get('/GetAllDeletedTasks', getdeltasks);
 
-// GetAllDeletedTasks
-// Uri: http://localhost:3001/TaskController/GetAllCompletedTasks
-router.get('/GetAllCompletedTasks', async (request, response) => {
-    const results = await db.promise().query(`SELECT * FROM Task WHERE Completed = 1`);
-    response.status(200).send(results[0]);
-});
+// URI: http://localhost:3001/TaskController/GetAllCompletedTasks
+// Type: GET
+// Description: Get list of all completed tasks in DB
+router.get('/GetAllCompletedTasks', getcomptasks);
 
 // Uri: http://localhost:3001/api/TaskController/SearchTask?key=dog
 // Type: GET
 // Description: Search a task by its name or other fields sending a keyword from frontend
-router.post('/SearchTask', async (request, response) => {
-    const keyTerm = request.body.searchkey;
-    const results = await db.promise().query(`SELECT * FROM Task WHERE Title like '%${keyTerm}%' OR Description LIKE '%${keyTerm}%' OR Notes LIKE '%${keyTerm}'`);
-    response.status(200).send(results[0]);
-});
+router.post('/SearchTask', searchtasks);
 
 // Uri: http://localhost:3001/api/TaskController/GetTaskById?tid=0000000000
 // Type: GET

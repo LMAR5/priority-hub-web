@@ -75,7 +75,7 @@ function Home() {
                 icon: 'warning',
                 showCancelButton: true,
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Create',
+                confirmButtonText: 'Create task',
                 confirmButtonColor: '#000'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -356,7 +356,7 @@ function Home() {
                     </Col>
                     {showEditButton ?
                         <Col sm={4} className='text-end'>
-                            <Button className='' variant="dark" onClick={() => { setLoadingDataIsReady(!loadingDataIsReady) }}>Edit</Button>
+                            <Button data-testid="viewform_edit_btn" className='' variant="dark" onClick={() => { setLoadingDataIsReady(!loadingDataIsReady) }}>Edit</Button>
                         </Col> : <span></span>
                     }
                 </Row>
@@ -364,7 +364,7 @@ function Home() {
                     <Form.Group as={Row}>
                         <Col sm={8}>
                             <Form.Label>Title</Form.Label>
-                            <Form.Control id='task_title' type='text' maxLength={50} onChange={handleTaskChange} value={selectedTaskById.Title} disabled />
+                            <Form.Control data-testid="view_task_title" id='task_title' type='text' maxLength={50} onChange={handleTaskChange} value={selectedTaskById.Title} disabled />
                         </Col>
                         <Col sm={4}>
                             <Form.Label>Category</Form.Label>
@@ -418,11 +418,11 @@ function Home() {
                     <Form.Group as={Row}>
                         <Col sm={8}>
                             <Form.Label>Title</Form.Label>
-                            <Form.Control id='task_title' type='text' maxLength={50} onChange={handleTaskChange} value={selectedTaskById.Title} />
+                            <Form.Control data-testid="editform_task_title" id='task_title' type='text' maxLength={50} onChange={handleTaskChange} value={selectedTaskById.Title} />
                         </Col>
                         <Col sm={4}>
                             <Form.Label>Category</Form.Label>
-                            <Form.Select id='task_categoryid' onChange={handleTaskChange} value={selectedTaskById.CategoryId} >
+                            <Form.Select data-testid="editform_task_cat" id='task_categoryid' onChange={handleTaskChange} value={selectedTaskById.CategoryId} >
                                 {lstCategories.map((item, idx) =>
                                     <option key={idx} value={item.Id}>{item.Title}</option>
                                 )}
@@ -452,8 +452,8 @@ function Home() {
                         </Row>
                     </Form.Group>
                     <Form.Group className='text-end'>
-                        <Button className="btn bg-dark-subtle border border-dark-subtle" variant='' type='submit' >Save changes</Button>
-                        <Button className="btn bg-primary-subtle border border-primary-subtle ms-2" variant='' onClick={() => { CompleteTask() }} >Complete</Button>
+                        <Button data-testid="editform_save_btn" className="btn bg-dark-subtle border border-dark-subtle" variant='' type='submit' >Save changes</Button>
+                        <Button data-testid="complete_task_btn" className="btn bg-primary-subtle border border-primary-subtle ms-2" variant='' onClick={() => { CompleteTask() }} >Complete</Button>
                         <Button className="btn bg-danger-subtle border border-danger-subtle ms-2" variant='' onClick={() => { DeleteTask() }}>Delete</Button>
                     </Form.Group>
                 </Form>
@@ -595,13 +595,13 @@ function Home() {
             </Row>
             <Row className='border border-top-0 px-2 py-3 text-center'>
                 <Col sm={12} md={12} lg={4} className='mt-2'>
-                    <Form.Control size='lg' type="text" value={TaskName} onChange={(event) => { setTaskName(event.target.value) }} placeholder="Add your task here..." />
+                    <Form.Control data-testid="create_task_title" size='lg' type="text" value={TaskName} onChange={(event) => { setTaskName(event.target.value) }} placeholder="Add your task here..." />
                 </Col>
                 <Col sm={12} md={12} lg={4} className='mt-2'>
-                    <Form.Control size='lg' type="datetime-local" min="2023-10-20T00:00" max="2024-10-21T00:00" value={TaskDueDate} onChange={(event) => { setTaskDueDate(event.target.value) }} placeholder="Due Date" />
+                    <Form.Control data-testid="create_duedate_input" size='lg' type="datetime-local" min="2023-10-20T00:00" max="2024-10-21T00:00" value={TaskDueDate} onChange={(event) => { setTaskDueDate(event.target.value) }} placeholder="Due Date" />
                 </Col>
                 <Col sm={6} md={6} lg={3} className='my-2'>
-                    <Form.Select size='lg' value={TaskCategory} onChange={(event) => { setTaskCategory(event.target.value) }}>
+                    <Form.Select data-testid="create_cat_select" size='lg' value={TaskCategory} onChange={(event) => { setTaskCategory(event.target.value) }}>
                         <option>Select category</option>
                         <option value="1">Study</option>
                         <option value="2">Work</option>
@@ -616,7 +616,7 @@ function Home() {
                     </Form.Select>
                 </Col>
                 <Col sm={6} md={6} lg={1} className='mt-2 ps-0'>
-                    <Button variant="dark" size='lg' type="submit" onClick={() => { Create() }}>
+                    <Button data-testid="create_btn" variant="dark" size='lg' type="submit" onClick={() => { Create() }}>
                         Create
                     </Button>
                 </Col>
