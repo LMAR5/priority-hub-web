@@ -1,4 +1,4 @@
-const { Router, request, response } = require('express');
+const { Router, request } = require('express');
 //Import MySQL connection
 const db = require('../database');
 const TasksByDateChartModel = require('../models/tasksbydatechartmodel');
@@ -33,7 +33,7 @@ router.get('/GetTasksByStatusChart', async (request, response) => {
     const startDate = request.query.start;
     const endDate = request.query.end;
 
-    const queryResults = await db.promise().query(`SELECT Status as TaskStatus, COUNT(Id) as NumStatus from Task WHERE Deleted=0 AND CreatedDateTime >= '${startDate}' AND CreatedDateTime < '${endDate}' GROUP BY Status ORDER BY Status`);
+    const queryResults = await db.promise().query(`SELECT Status as TaskStatus, COUNT(Id) as NumStatus FROM Task WHERE Deleted=0 AND CreatedDateTime >= '${startDate}' AND CreatedDateTime < '${endDate}' GROUP BY Status ORDER BY Status`);
     // response.status(200).send(queryResults[0]);
 
     let lstTasksByStatus = [];
@@ -62,7 +62,7 @@ router.get('/GetActivityTrackersByDateChart', async (request, response) => {
     //Initialize the array that will store the result of the SQL Query
     let lstTrackersByDate = [];
     //SQL query that will bring the number of ActivityTracker records that are between the "start" and "end" dates by Date
-    const queryResults = await db.promise().query(`SELECT DATE(CreatedDateTime) as DisplayDate, COUNT(Id) as NumTrackers from ActivityTracker WHERE Deleted=0 AND CreatedDateTime >= '${startDate}' AND CreatedDateTime < '${endDate}' GROUP BY DATE(CreatedDateTime) ORDER BY DATE(CreatedDateTime)`);
+    const queryResults = await db.promise().query(`SELECT DATE(AT.CreatedDateTime) as DisplayDate, COUNT(AT.Id) as NumTrackers FROM ActivityTracker AT INNER JOIN Task T ON AT.TaskId = T.Id WHERE T.Deleted=0 AND AT.CreatedDateTime >= '${startDate}' AND AT.CreatedDateTime < '${endDate}' GROUP BY DATE(AT.CreatedDateTime) ORDER BY DATE(AT.CreatedDateTime)`);
     //Map the result of the query (list of sql elements) into a list of type TasksByDateChartModel class.
     queryResults[0].forEach((element, idx) => {
         let newdatechart = new TasksByDateChartModel();
@@ -83,7 +83,7 @@ router.get('/GetActivityTrackersByDateChart', async (request, response) => {
 router.get('/GetTasksByTimeSpentChart', async(request, response) => {
     const startDate = request.query.start;
     const endDate = request.query.end;
-    const results = await db.promise().query(`SELECT DATE(AT.CreatedDateTime) AS ActivityDate, T.Title AS TaskTitle, SUM(TIMESTAMPDIFF(MINUTE, AT.StartTime, AT.StopTime)) AS TimeSpentMinutes FROM Task T INNER JOIN ActivityTracker AT ON T.Id = AT.TaskId WHERE T.Deleted = 0 AND AT.Deleted = 0 AND AT.CreatedDateTime >= '${startDate}' AND AT.CreatedDateTime < '${endDate}' GROUP BY DATE(AT.CreatedDateTime), T.Title ORDER BY DATE(AT.CreatedDateTime), TimeSpentMinutes DESC;`);
+    const results = await db.promise().query(`SELECT T.Id as TaskId, T.Title as TaskTitle, AT.Title as ActivityTitle, SUM(FLOOR(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime) / 3600)) as HourDiff, SUM(FLOOR(MOD(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime),3600)/60)) as MinDiff, SUM(MOD(MOD(TIMESTAMPDIFF(SECOND, AT.StartTime, AT.StopTime),3600),60)) as SecDiff FROM Task T INNER JOIN ActivityTracker AT ON AT.TaskId = T.Id WHERE T.Deleted = 0 AND AT.LastUpdatedDateTime >= '${startDate}' AND AT.LastUpdatedDateTime < '${endDate}' GROUP BY T.Id, T.Title, AT.Title ORDER BY T.Id, T.Title, AT.Title`);
     let timeSpentDashboardTableArray = [];
     results[0].forEach((element, idx) => {
         let newRecord = new TaskTimeSpentTableModel();

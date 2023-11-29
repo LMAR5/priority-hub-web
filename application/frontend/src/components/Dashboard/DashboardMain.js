@@ -52,7 +52,7 @@ function DashboardMain() {
 
     return (
         <div>
-            <h2>Dashboard</h2>
+            <h3>Dashboard</h3>
             <Form.Group as={Row} className='my-4'>
                 <Form.Label column sm={1}><strong>Start date</strong></Form.Label>
                 <Col sm={5}>
