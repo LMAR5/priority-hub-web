@@ -1,8 +1,9 @@
-const { Router, request } = require('express');
+const { Router, request, response } = require('express');
 //Import MySQL connection
 const db = require('../database');
 const TasksByDateChartModel = require('../models/tasksbydatechartmodel');
 const TasksByStatusChartModel = require('../models/tasksbystatuschartmodel');
+const TaskTimeSpentTableModel = require('../models/tasktimespenttablemodel')
 
 const router = Router();
 
@@ -79,5 +80,24 @@ router.get('/GetActivityTrackersByDateChart', async (request, response) => {
 // Uri: http://localhost:3001/api/DashboardController/GetTasksByTimeSpentChart
 // Type: GET or POST
 // Description: Method will receive the 2 dates from the frontend, and then use them in their filtering logic
+router.get('/GetTasksByTimeSpentChart', async(request, response) => {
+    const startDate = request.query.start;
+    const endDate = request.query.end;
+    const results = await db.promise().query(`SELECT DATE(AT.CreatedDateTime) AS ActivityDate, T.Title AS TaskTitle, SUM(TIMESTAMPDIFF(MINUTE, AT.StartTime, AT.StopTime)) AS TimeSpentMinutes FROM Task T INNER JOIN ActivityTracker AT ON T.Id = AT.TaskId WHERE T.Deleted = 0 AND AT.Deleted = 0 AND AT.CreatedDateTime >= '${startDate}' AND AT.CreatedDateTime < '${endDate}' GROUP BY DATE(AT.CreatedDateTime), T.Title ORDER BY DATE(AT.CreatedDateTime), TimeSpentMinutes DESC;`);
+    let timeSpentDashboardTableArray = [];
+    results[0].forEach((element, idx) => {
+        let newRecord = new TaskTimeSpentTableModel();
+        newRecord.Id = idx;
+        newRecord.TaskId = element.TaskId;
+        newRecord.TaskTitle = element.TaskTitle;
+        newRecord.ActivityTitle = element.ActivityTitle;
+        newRecord.TimeHours = parseFloat(element.HourDiff);
+        newRecord.TimeMins = parseFloat(element.MinDiff);
+        newRecord.TimeSecs = element.SecDiff;
+        timeSpentDashboardTableArray.push(newRecord);
+  });
+
+  response.status(200).send(timeSpentDashboardTableArray);
+})
 
 module.exports = router;
