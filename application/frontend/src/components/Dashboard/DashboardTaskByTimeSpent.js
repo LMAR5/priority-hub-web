@@ -22,7 +22,7 @@ function DashboardTaskByTimeSpent(props) {
 
     return (
         <div className='mt-3 dashboardTimeTableScroll'>
-            <h3>Activity Tracker records</h3>
+            <h4>Activity Tracker records</h4>
             <Table striped bordered hover>
                 <thead>
                     <tr>

@@ -29,7 +29,7 @@ function TaskByStatus(props) {
         <ResponsiveContainer width='100%' height='300'>
             <Row className='mt-3'>
                 <Col>
-                    <h3>Number of Tasks By Status</h3>
+                    <h4>Number of Tasks By Status</h4>
                     <PieChart width={400} height={300}>
                         <Pie
                             data={lstTaskByStatus}

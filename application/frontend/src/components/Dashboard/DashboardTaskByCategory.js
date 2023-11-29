@@ -27,7 +27,7 @@ import Col from 'react-bootstrap/Col';
   
     return(
         <div className='mt-3'>
-            <h3>Number Tasks By Category</h3>
+            <h4>Number of Tasks By Category</h4>
             <ResponsiveContainer width={"100%"} height={300}>
                 <BarChart
                     width={550}
@@ -44,7 +44,7 @@ import Col from 'react-bootstrap/Col';
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="TaskCount" name="Tasks" fill="#8884d8" activeBar={<Rectangle fill="black" stroke="blue" />}  />
+                    <Bar dataKey="TaskCount" name="Tasks" fill="#000" activeBar={<Rectangle fill="black" stroke="blue" />}  />
                 </BarChart>
             </ResponsiveContainer>
         </div>

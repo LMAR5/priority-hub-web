@@ -21,7 +21,7 @@ function DashboardTaskByDate(props) {
 
     return (
         <div className='mt-3'>
-            <h3>Number of Activity Tracker records by Date</h3>
+            <h4>Number of Activity Tracker records by Date</h4>
             <ResponsiveContainer width={"100%"} height={300}>
                 <LineChart
                     width={550}
