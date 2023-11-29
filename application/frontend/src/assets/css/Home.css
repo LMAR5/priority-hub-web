@@ -38,3 +38,10 @@
   scrollbar-width: none;
   height: 270px;
 }
+
+.dashboardTimeTableScroll {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 300px;
+}

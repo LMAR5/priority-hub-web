@@ -30,11 +30,8 @@ function SummaryTasksCompleted(props) {
 
     return (
         <Card className='mt-4'>
-            <Card.Header as="h5">Number of Tasks Completed</Card.Header>
-            <Card.Body>
-                <Card.Text>
-                    List of tasks completed
-                </Card.Text>
+            <Card.Header as="h5">List of Tasks Completed</Card.Header>
+            <Card.Body>                
                 <Table striped bordered hover>
                     <thead>
                         <tr>
