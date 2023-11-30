@@ -34,7 +34,7 @@ function DashboardTaskByTimeSpent(props) {
                 </thead>
                 <tbody>
                     {taskByTimeSpentData.length === 0 ?
-                        <tr className='fst-italic'><td colSpan={3}>No recorded activity</td>
+                        <tr className='fst-italic'><td colSpan={4}>No recorded activity</td>
                         </tr> :
                         taskByTimeSpentData.map((item, idx) =>
                             <tr key={idx}>

@@ -18,8 +18,7 @@ function TaskByStatus(props) {
         tempEndDate = tempEndDate.toISOString().slice(0, 10);
         DashboardService.getTasksByStatus(start_date, tempEndDate)
             .then((data) => {
-              setTaskByStatus(data);
-              console.log(data);
+              setTaskByStatus(data);              
             });
       }
 
