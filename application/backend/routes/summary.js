@@ -66,7 +66,7 @@ router.get('/GetSummaryDateList', (request, response) => {
 router.get('/GetCompletedTasksByDate', async (request, response) => {
   const startDate = request.query.start;
   const endDate = request.query.end;
-  const results = await db.promise().query(`SELECT * FROM task WHERE LastUpdatedDateTime >= '${startDate}' AND LastUpdatedDateTime < '${endDate}' AND Completed = 1 ORDER BY LastUpdatedDateTime`);
+  const results = await db.promise().query(`SELECT * FROM Task WHERE LastUpdatedDateTime >= '${startDate}' AND LastUpdatedDateTime < '${endDate}' AND Completed = 1 ORDER BY LastUpdatedDateTime`);
 
   let CompletedTasksByDateTable = [];
 
