@@ -34,19 +34,38 @@ function DashboardMain() {
         return tmpDate.toISOString().slice(0, 10);
     }
 
-    const updateStartDate = (value) => {
-        if (!value) {
-            MySwal.fire({ title: 'Start date', text: 'Provide a real date', icon: 'info', confirmButtonColor: '#000' });
+    const validDates = (start_date, end_date) => {
+        let tmpStartDate = new Date(start_date);
+        let tmpEndDate = new Date(end_date);
+        if (Date.parse(tmpStartDate) <= Date.parse(tmpEndDate)){
+            return true;
         } else {
-            setStartDate(value);
+            return false;
         }
     }
 
-    const updateEndDate = (value) => {
-        if (!value) {
-            MySwal.fire({ title: 'End date', text: 'Provide a real date', icon: 'info', confirmButtonColor: '#000' });
+    const updateStartDate = (value) => {
+        if (validDates(value, endDate)) {
+            if (!value) {
+                MySwal.fire({ title: 'Start date', text: 'Provide a real date', icon: 'info', confirmButtonColor: '#000' });
+            } else {
+                setStartDate(value);
+            }
         } else {
-            setEndDate(value);
+            MySwal.fire({ title: 'Start date!', text: 'Start date must be less than the End date.', icon: 'info', confirmButtonColor: '#000' });
+        }
+        
+    }
+
+    const updateEndDate = (value) => {
+        if (validDates(startDate, value)) {
+            if (!value) {
+                MySwal.fire({ title: 'End date', text: 'Provide a real date', icon: 'info', confirmButtonColor: '#000' });
+            } else {
+                setEndDate(value);
+            }
+        } else {
+            MySwal.fire({ title: 'End date!', text: 'End date must be greater than the Start date.', icon: 'info', confirmButtonColor: '#000' });
         }
     }
 
