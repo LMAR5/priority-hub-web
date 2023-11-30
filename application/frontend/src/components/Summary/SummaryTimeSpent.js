@@ -53,8 +53,8 @@ function SummaryTimeSpent(props) {
                             <Pie
                                 data={timeSpentData}
                                 isAnimationActive={false}
-                                cx='50%'
-                                cy='50%'
+                                cx={200}
+                                cy={150}
                                 labelLine={false}
                                 label={renderCustomizedLabel}
                                 outerRadius={80}
