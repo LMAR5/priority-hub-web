@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
+
 import SummaryService from '../../services/SummaryService';
 
 function SummaryTimeSpentTable(props) {
-
     const [timeSpentData, setTimeSpentData] = useState([]);
 
     useEffect(() => {

@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import DashboardService from '../../services/DashboardService';
-import Row from 'react-bootstrap/Row';
+import React, {useEffect, useState} from 'react';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import {Bar, BarChart, CartesianGrid, Legend, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 
- function DashboardTaskByCategory(props){
+import DashboardService from '../../services/DashboardService';
 
-    const [startDate, setStarDate] = useState("");
-    const [endDate, setEndDate] = useState("");
-    const [numCategories, setnumCategories] = useState([]);
+function DashboardTaskByCategory(props) {
+  const [startDate, setStarDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [numCategories, setnumCategories] = useState([]);
 
-    useEffect(  () => {
-        getTasksByDate(props.start, props.end);
-    }, [props.start, props.end]);
+  useEffect(() => {
+    getTasksByDate(props.start, props.end);
+  }, [props.start, props.end]);
 
-    
-    const getTasksByDate = (start_date, end_date) => {
+
+  const getTasksByDate =
+      (start_date, end_date) => {
         let tempEndDate = new Date(end_date);
         tempEndDate.setDate(tempEndDate.getDate() + 1);
         tempEndDate = tempEndDate.toISOString().slice(0, 10);
-        DashboardService.getTaskByCategory(start_date, tempEndDate).then((data) => {
-            setnumCategories(data);
-        });
-    }
+        DashboardService.getTaskByCategory(start_date, tempEndDate)
+            .then((data) => {
+              setnumCategories(data);
+            });
+      }
 
-  
-    return(
-        <div className='mt-3'>
-            <h4>Number of Tasks By Category</h4>
+
+    return (
+        <div className='mt-3'><h4>Number of Tasks By Category</h4>
             <ResponsiveContainer width={"100%"} height={300}>
                 <BarChart
                     width={550}
@@ -40,15 +41,13 @@ import Col from 'react-bootstrap/Col';
                         bottom: 5,
                     }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="Title" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="TaskCount" name="Tasks" fill="#000" activeBar={<Rectangle fill="black" stroke="blue" />}  />
+                    <XAxis dataKey='Title' /><YAxis /><Tooltip /><Legend />
+                    <Bar dataKey='TaskCount' name='Tasks' fill='#000' activeBar={
+                        <Rectangle fill='black' stroke='blue' />
+                    } />
                 </BarChart>
             </ResponsiveContainer>
-        </div>
-    );
- }
+        </div>);
+}
 
- export default DashboardTaskByCategory;
+export default DashboardTaskByCategory;

@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { Cell, Pie, PieChart, ResponsiveContainer, Sector, Tooltip } from 'recharts';
+import React, {useEffect, useState} from 'react';
+import {Col, Row} from 'react-bootstrap';
+import {Cell, Pie, PieChart, ResponsiveContainer, Sector, Tooltip} from 'recharts';
 
 import DashboardService from '../../services/DashboardService';
 
 function TaskByStatus(props) {
-    const [lstTaskByStatus, setTaskByStatus] = useState([]);
+  const [lstTaskByStatus, setTaskByStatus] = useState([]);
 
-    useEffect(() => {
-        getTaskByStatus(props.start, props.end);
-    }, [props.start, props.end]);
+  useEffect(() => {
+    getTaskByStatus(props.start, props.end);
+  }, [props.start, props.end]);
 
-    const getTaskByStatus =
-        (start_date, end_date) => {
-            let tempEndDate = new Date(end_date);
-            tempEndDate.setDate(tempEndDate.getDate() + 1);
-            tempEndDate = tempEndDate.toISOString().slice(0, 10);
-            DashboardService.getTasksByStatus(start_date, tempEndDate)
-                .then((data) => {
-                    setTaskByStatus(data);
-                    console.log(data);
-                });
-        }
+  const getTaskByStatus =
+      (start_date, end_date) => {
+        let tempEndDate = new Date(end_date);
+        tempEndDate.setDate(tempEndDate.getDate() + 1);
+        tempEndDate = tempEndDate.toISOString().slice(0, 10);
+        DashboardService.getTasksByStatus(start_date, tempEndDate)
+            .then((data) => {
+              setTaskByStatus(data);
+              console.log(data);
+            });
+      }
 
-    const COLORS = ['#0088FE', '#00C49F', '#FF0000'];
+  const COLORS = ['#0088FE', '#00C49F', '#FF0000'];
 
     return (
         <ResponsiveContainer width='100%' height='300'>
@@ -39,18 +39,15 @@ function TaskByStatus(props) {
                             label
                             outerRadius={80}
                             fill="#8884d8"
-                            dataKey="StatusNum"
-                        >
+                            dataKey="StatusNum">
                             {lstTaskByStatus.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))
-                            }
+                            ))}
                         </Pie>
                         <Tooltip />
                     </PieChart>
                 </Col>
             </Row>
-
         </ResponsiveContainer>
     );
 }

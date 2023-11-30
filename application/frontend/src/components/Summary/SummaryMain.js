@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import React, {useEffect, useState} from 'react';
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
 
 import SummaryService from '../../services/SummaryService';
@@ -14,24 +11,24 @@ import SummaryTasksCompleted from './SummaryTasksCompleted';
 import SummaryTimeSpent from './SummaryTimeSpent';
 import SummaryTimeSpentTable from './SummaryTimeSpentTable';
 
-function SummaryMain() {    
-    const [loadingListDates, setLoadingListDates] = useState(true);
-    const [lstDates, setLstDates] = useState([]);
-    const [selectedDate, setSelectedDate] = useState('');
+function SummaryMain() {
+  const [loadingListDates, setLoadingListDates] = useState(true);
+  const [lstDates, setLstDates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState('');
 
-    useEffect(() => {
-        getListOfDates();
-    }, []);    
+  useEffect(() => {
+    getListOfDates();
+  }, []);
 
-    const getListOfDates =
-        () => {
-            SummaryService.getSummaryDateList().then((data) => {
-                setLstDates(data.result);
-                setLoadingListDates(false);
-            });
-        }    
+  const getListOfDates =
+      () => {
+        SummaryService.getSummaryDateList().then((data) => {
+          setLstDates(data.result);
+          setLoadingListDates(false);
+        });
+      }
 
-    const renderListofDates = () => {
+  const renderListofDates = () => {
         return (
             <ListGroup className='summaryListScroll'>
                 {lstDates.map((date, idx) =>

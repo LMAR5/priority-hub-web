@@ -47,7 +47,7 @@ function SignInCustom({setToken}) {
       })
       Toast.fire({icon: 'warning', title: 'Provide email and password'})
     } else {
-      await AuthenticationService.signIn(returnUser).then( async (res) => {
+      await AuthenticationService.signIn(returnUser).then(async (res) => {
         if (!res.success) {
           const Toast = MySwal.mixin({
             toast: true,
@@ -61,7 +61,7 @@ function SignInCustom({setToken}) {
             }
           })
           Toast.fire({icon: 'warning', title: `${res.message}`})
-        } else {          
+        } else {
           const Toast = MySwal.mixin({
             toast: true,
             position: 'top-end',
@@ -73,7 +73,7 @@ function SignInCustom({setToken}) {
               toast.addEventListener('mouseleave', MySwal.resumeTimer)
             }
           })
-          Toast.fire({icon: 'success', title: `${res.message}`})          
+          Toast.fire({icon: 'success', title: `${res.message}`})
         }
         await delay(1500);
         setToken(res);
@@ -152,7 +152,7 @@ function SignInCustom({setToken}) {
             }
           })
           Toast.fire({icon: 'warning', title: 'Complete all fields'})
-        } else if (password !== confirmPassword) {          
+        } else if (password !== confirmPassword) {
           const Toast = MySwal.mixin({
             toast: true,
             position: 'top-end',
@@ -235,21 +235,21 @@ function SignInCustom({setToken}) {
         return (
             <Card className='signin mx-auto p-3 shadow rounded-4'>
                 <Card.Body>
-                    <Form className='rounded' onSubmit={HandleSubmit} data-testid="signin_form">
-                        <h2 data-testid="signin_title" className='mb-4'>Sign in to your account</h2>
+                    <Form className='rounded' onSubmit={HandleSubmit} data-testid='signin_form'>
+                        <h2 data-testid='signin_title' className='mb-4'>Sign in to your account</h2>
                         <Form.Group className="mb-3" controlId="signinBasicEmail">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control data-testid="signin_email" type='email' placeholder='Enter your email address' value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <Form.Control data-testid='signin_email' type='email' placeholder='Enter your email address' value={email} onChange={(e) => setEmail(e.target.value)} />
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='signinPassword'>
                             <Form.Label>Password</Form.Label>
                             <Form.Control data-testid="signin_password" type='password' placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                            <Button data-testid="signin_reset_btn" className='px-1' variant='link' onClick={() => {switchView('RESET') }}>Forgot password?</Button>
+                            <Button data-testid='signin_reset_btn' className='px-1' variant='link' onClick={() => {switchView('RESET') }}>Forgot password?</Button>
                         </Form.Group>
                         <Form.Group>
-                            <Button data-testid="signin_btn" className='w-100 mb-1' variant='dark' type='submit'>Sign In</Button>
+                            <Button data-testid='signin_btn' className='w-100 mb-1' variant='dark' type='submit'>Sign In</Button>
                             <span>Don't have an account?</span>
-                            <Button data-testid="signin_signup_btn" className='px-1' variant='link' onClick={() => {switchView('SIGNUP') }}>Sign Up</Button>
+                            <Button data-testid='signin_signup_btn' className='px-1' variant='link' onClick={() => {switchView('SIGNUP') }}>Sign Up</Button>
                         </Form.Group>
                     </Form>
                 </Card.Body>
@@ -269,7 +269,7 @@ function SignInCustom({setToken}) {
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='signupLastname'>
                             <Form.Label>Last name</Form.Label>
-                            <Form.Control data-testid="signup_lastname" type='text' placeholder='Enter your last name' value={lastname} onChange={(e) => setLastname(e.target.value)} />
+                            <Form.Control data-testid='signup_lastname' type='text' placeholder='Enter your last name' value={lastname} onChange={(e) => setLastname(e.target.value)} />
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='signupBasicEmail'>
                             <Form.Label>Email</Form.Label>
@@ -277,12 +277,12 @@ function SignInCustom({setToken}) {
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='signupPassword' >
                             <Form.Label>Password</Form.Label>
-                            <Form.Control data-testid="signup_password" type='password' placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <Form.Control data-testid='signup_password' type='password' placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)} />
                         </Form.Group>
                         <Form.Group>
-                            <Button data-testid="signup_btn" className='w-100 mb-1' variant='dark' type='submit'>Sign Up</Button>
+                            <Button data-testid='signup_btn' className='w-100 mb-1' variant='dark' type='submit'>Sign Up</Button>
                             <span>Already have an account?</span>
-                            <Button data-testid="signup_signin_btn" className='px-1' variant='link' onClick={() => {switchView('SIGNIN') }}>Sign In</Button>
+                            <Button data-testid='signup_signin_btn' className='px-1' variant='link' onClick={() => {switchView('SIGNIN') }}>Sign In</Button>
                         </Form.Group>
                     </Form>
                 </Card.Body>
@@ -302,7 +302,7 @@ function SignInCustom({setToken}) {
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='resetPassword' >
                             <Form.Label>New password</Form.Label>
-                            <Form.Control data-testid="reset_password" type='password' placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <Form.Control data-testid='reset_password' type='password' placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)} />
                         </Form.Group>
                         <Form.Group className='my-3' controlId='resetConfirmPassword' >
                             <Form.Label>Confirm password</Form.Label>
@@ -350,7 +350,7 @@ function SignInCustom({setToken}) {
                     </Navbar>
                 </Row>
                 <Row>
-                    <Col sm={12} lg={6} className='justify-content-center align-self-center my-3' data-testid="render_form">
+                    <Col sm={12} lg={6} className='justify-content-center align-self-center my-3' data-testid='render_form'>
                         {mode === 'SIGNIN' ? renderSignIn() : <span></span>}
                         {mode === 'SIGNUP' ? renderSignUp() : <span></span>}
                         {mode === 'RESET' ? renderResetPassword() : <span></span>}

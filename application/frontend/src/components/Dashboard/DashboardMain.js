@@ -1,26 +1,24 @@
-import React, { useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import DashboardTaskByCategory from './DashboardTaskByCategory';
-import DashboardTaskByStatus from './DashboardTaskByStatus';
-import DashboardTaskByDate from './DashboardTaskByDate';
+import React, {useState} from 'react';
+import {Col, Row} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
+
+import DashboardTaskByCategory from './DashboardTaskByCategory';
+import DashboardTaskByDate from './DashboardTaskByDate';
+import DashboardTaskByStatus from './DashboardTaskByStatus';
 import DashboardTaskByTimeSpent from './DashboardTaskByTimeSpent';
 
-const formatDate = (date) => {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+const formatDate =
+    (date) => {
+      var d = new Date(date), month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(), year = d.getFullYear();
 
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
 
-    return [year, month, day].join('-');
-}
+      return [year, month, day].join('-');
+    }
 
 function DashboardMain() {
     var initDate = new Date();
