@@ -96,8 +96,8 @@ function Stopwatch(props) {
                     if (result.isConfirmed) {
                         //Stop the timer
                         setIsRunning(!isRunning);
-                        const stopTrackTime = new Date(activityTrackerForm.StartTime);
-                        stopTrackTime.setHours(stopTrackTime.getHours() - 8);
+                        const stopTrackTime = new Date(activityTrackerForm.StartTime);                        
+                        stopTrackTime.setHours(stopTrackTime.getHours() - process.env.REACT_APP_TIMEZONE_OP);
                         if (hours > 0) {
                             stopTrackTime.setHours(stopTrackTime.getHours() + hours);
                         }
