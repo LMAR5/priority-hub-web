@@ -54,7 +54,7 @@ router.get('/GetTaskById', async (request, response) => {
     newtask.Deleted = element.Deleted;
     newtask.IsFavorite = element.IsFavorite;
     let tmpDate = new Date(element.DueDate);
-    tmpDate.setHours(tmpDate.getHours() - 8);
+    tmpDate.setHours(tmpDate.getHours() - process.env.API_TIMEZONE);
     newtask.DueDate = tmpDate.toISOString().slice(0, 19);
     newtask.Notes = element.Notes;
     newtask.CreatedBy = element.CreatedBy;
