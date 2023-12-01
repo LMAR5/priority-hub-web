@@ -49,6 +49,7 @@ function SummaryTimeSpent(props) {
                 <Card className='mt-3'>
                     <Card.Header as="h5">Overall Time Spent Chart</Card.Header>
                     <Card.Body>
+                        {timeSpentData.length === 0 ? <span><em>No recorded activity</em></span> :
                         <PieChart width={400} height={300}>
                             <Pie
                                 data={timeSpentData}
@@ -70,6 +71,7 @@ function SummaryTimeSpent(props) {
                                 ))}
                             </Pie>
                         </PieChart>
+                        }                        
                     </Card.Body>
                 </Card>
             </ResponsiveContainer>
