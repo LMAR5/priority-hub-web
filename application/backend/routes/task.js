@@ -178,9 +178,9 @@ router.put('/UpdateStatusToInProgress', async (request, response) => {
             {message: 'Your task was not updated.', success: true});
       }
     } else {
-      return response.status(500).json({
-        message: 'Something went wrong. Your time has not been recorded.',
-        success: false
+      return response.status(200).json({
+        message: 'Your task is already in progress.',
+        success: true
       });
     }
   });
