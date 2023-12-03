@@ -37,7 +37,7 @@ function DashboardTaskByDate(props) {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey='DateTitle' /><YAxis /><Tooltip /><Legend />
                     <Line type='monotone' dataKey='TrackerNum' name='Activity Tracker records' 
-                    stroke='#000' fill='#000' activeDot=
+                    stroke='#6c757d' fill='#6c757d' activeDot=
                         {
                             { r: 8 }
                         } />

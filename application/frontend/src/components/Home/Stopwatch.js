@@ -146,7 +146,7 @@ function Stopwatch(props) {
                             {seconds.toString().padStart(2, "0")}:
                             {milliseconds.toString().padStart(2, "0")}
                         </Card.Text>
-                        {props.isDisabled ? <Button variant='outline-dark' disabled>Start</Button> : isRunning ? <Button variant='outline-dark' disabled>Start</Button> : <Button data-testid="stopwatch_start_btn" variant='dark' onClick={() => { startAndStop('START') }}>Start</Button>}
+                        {props.isDisabled ? <Button variant='secondary-outline' disabled>Start</Button> : isRunning ? <Button variant='econdary-outline' disabled>Start</Button> : <Button data-testid="stopwatch_start_btn" variant='outline-secondary' onClick={() => { startAndStop('START') }}>Start</Button>}
                         {props.isDisabled ? <Button variant='outline-danger' className='ms-3' disabled>Stop</Button> : !isRunning ? <Button variant='outline-danger' className='ms-3' disabled>Stop</Button> : <Button data-testid="stopwatch_stop_btn" variant='danger' className='ms-3' onClick={() => { startAndStop('STOP') }}>Stop</Button>}                        
                     </Card.Body>
                 </Card>

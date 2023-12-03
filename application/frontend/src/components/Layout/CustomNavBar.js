@@ -7,6 +7,16 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import AuthenticationService from '../../services/AuthenticationService';
 
 function CustomNavBar() {
+
+    function updateTheme() {
+        if (document.documentElement.getAttribute('data-bs-theme') === 'dark') {
+            document.documentElement.setAttribute('data-bs-theme', 'light')            
+        }
+        else if (document.documentElement.getAttribute('data-bs-theme') === 'light') {
+            document.documentElement.setAttribute('data-bs-theme', 'dark')            
+        }        
+    }
+
     return (
         <header>
             <Navbar expand={false} bg='dark' variant='dark' data-bs-theme='dark' className='bg-body-tertiary mb-3'>
@@ -16,10 +26,11 @@ function CustomNavBar() {
                     <Navbar.Text>
                         <Dropdown>
                             <Dropdown.Toggle className='bg-body-tertiary border-0' bg="dark" variant="dark" id="dropdown-basic">
-                                <i className="bi bi-person-circle fs-4"></i>                                
+                                <i className="bi bi-person-circle fs-4"></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Dropdown.Item onClick={() => { AuthenticationService.signOut() }} >Sign out</Dropdown.Item>
+                                <Dropdown.Item id="btnSwitch" onClick={() => { updateTheme() }} >Change theme</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Navbar.Text>

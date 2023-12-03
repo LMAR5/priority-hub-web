@@ -81,18 +81,18 @@ function DashboardMain() {
                 </Col>
             </Form.Group>
             <Row className='mt-4'>
-                <Col>
+                <Col sm={12} md={12} lg={6}>
                     <DashboardTaskByCategory start={startDate} end={endDate} />
                 </Col>
-                <Col>
+                <Col sm={12} md={12} lg={6}>
                     <DashboardTaskByStatus start={startDate} end={endDate} />
                 </Col>
             </Row>
             <Row>
-                <Col>
+                <Col sm={12} md={12} lg={6}>
                     <DashboardTaskByDate start={startDate} end={endDate} />
                 </Col>
-                <Col>
+                <Col sm={12} md={12} lg={6}>
                     <DashboardTaskByTimeSpent start={startDate} end={endDate} />
                 </Col>
             </Row>

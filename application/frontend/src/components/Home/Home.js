@@ -466,7 +466,7 @@ function Home() {
             return (
                 <tr key={taskId}>
                     <td className='d-grid'>
-                        <Button className='rounded-0' variant='light' onClick={() => { getTaskById(taskId) }}>{taskName}</Button>
+                        <Button className='rounded-0' variant='' onClick={() => { getTaskById(taskId) }}>{taskName}</Button>
                     </td>
                 </tr>
             )
@@ -476,13 +476,13 @@ function Home() {
     const showTaskList = () => {
         return (
             <div className='taskTable text-center'>
-                <Table striped bordered hover>
+                <Table bordered hover>
                     {lstCategories.map((catInfo, catIdx) =>
                         catInfo.Id !== 0 ?
                             <>
                                 <thead>
-                                    <tr className='table-secondary border-0'>
-                                        <th className='border border-0' key={catIdx}>{catInfo.Title}</th>
+                                    <tr>
+                                        <th key={catIdx}>{catInfo.Title}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

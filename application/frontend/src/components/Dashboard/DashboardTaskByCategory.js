@@ -42,8 +42,8 @@ function DashboardTaskByCategory(props) {
                     }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey='Title' /><YAxis /><Tooltip /><Legend />
-                    <Bar dataKey='TaskCount' name='Tasks' fill='#000' activeBar={
-                        <Rectangle fill='black' stroke='blue' />
+                    <Bar dataKey='TaskCount' name='Tasks' fill='#6c757d' activeBar={
+                        <Rectangle fill='black' stroke='white' />
                     } />
                 </BarChart>
             </ResponsiveContainer>
