@@ -1,0 +1,47 @@
+.taskButton {
+  background-color: #e9ecef !important;
+  border-radius: 0px !important;
+}
+
+.taskTable {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 600px;
+}
+
+.taskTable::-webkit-scrollbar {
+  width: 0;
+}
+
+.d-grid {
+  padding: 0% !important;
+}
+
+.activityTrackerList {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 240px;
+}
+
+.summaryListScroll {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 600px;
+}
+
+.summaryTimeTableScroll {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 270px;
+}
+
+.dashboardTimeTableScroll {
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 300px;
+}
