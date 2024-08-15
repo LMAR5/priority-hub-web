@@ -15,7 +15,7 @@ router.use((request, response, next) => {
 // Description: Get list of all the activity trackers in DB
 router.get('/GetAllActivityTrackersByTaskId', async (request, response) => {
     const taskId = request.query.tid;
-    const results = await db.promise().query(`SELECT Id,Title,TIMESTAMPDIFF(SECOND, StartTime, StopTime) / 3600 as HourDiff,FLOOR(MOD(TIMESTAMPDIFF(SECOND, StartTime, StopTime),3600)/60) as MinDiff,MOD(MOD(TIMESTAMPDIFF(SECOND, StartTime, StopTime),3600),60) as SecDiff,TaskId FROM ActivityTracker WHERE TaskId='${taskId}'`);
+    const results = await db.promise().query(`SELECT Id,Title,FLOOR(TIMESTAMPDIFF(SECOND, StartTime, StopTime) / 3600) as HourDiff,FLOOR(MOD(TIMESTAMPDIFF(SECOND, StartTime, StopTime),3600)/60) as MinDiff,MOD(MOD(TIMESTAMPDIFF(SECOND, StartTime, StopTime),3600),60) as SecDiff,TaskId FROM ActivityTracker WHERE TaskId='${taskId}'`);
     let lst_activitytracks = [];
     results[0].forEach(record => {
         let newtrack = new activityTrackerListModelBack();
