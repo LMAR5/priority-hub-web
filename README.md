@@ -53,7 +53,7 @@ cd priority-hub-web
 ```
 3. Go to the `frontend` folder 
 ```
-cd frontend
+cd application/frontend
 ```
 4. Create an `.env` file with the following values:
 ```
@@ -99,10 +99,23 @@ npm run start
 
 ## App Screenshots
 
+### Login screen
 ![Login Screen](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/Login.jpg)
+
+### Home screen
 ![Home Screen](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/HomePage.jpg)
+
+### User action validation pop up
 ![User action validation](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/UserActionValidationPopUp.jpg)
-![Sidebar](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/Sidebardjpg)
+
+### Sidebar
+![Sidebar](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/Sidebar.jpg)
+
+### Task history
 ![Task History](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/TaskHistory.jpg)
+
+### Dashboard
 ![Dashboard](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/Dashboard.jpg)
+
+### End of Day Summary
 ![End of Day Summary](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/EndOfDaySummary.jpg)
