@@ -1,8 +1,10 @@
 # Priority Hub
 
-Priority Hub is a productivity web app that allows users to efficiently manage their tasks. With its user-friendly interface, the app enables users to keep track of their tasks and gain valuable insights through 8 intuitive charts.
+Priority Hub is a productivity web application that allows users to efficiently manage their tasks. With its user-friendly interface, the app enables users to keep track of their tasks and gain valuable insights through 8 intuitive charts.
 
-Some of the features Priority Hub offers are the following:
+![Login Screen](screenshots/Login.jpg)
+
+Some of the features Priority Hub offers include:
 - Authentication (sign in, sign up, sign out, reset password)
 - User should be able to create a task including name, due date, priority, category, and notes.
 - User should be able to edit/delete a task.
@@ -100,22 +102,22 @@ npm run start
 ## App Screenshots
 
 ### Login screen
-![Login Screen](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/Login.jpg)
+![Login Screen](screenshots/Login.jpg)
 
 ### Home screen
-![Home Screen](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/HomePage.jpg)
+![Home Screen](screenshots/HomePage.jpg)
 
 ### User action validation pop up
-![User action validation](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/UserActionValidationPopUp.jpg)
+![User action validation](screenshots/UserActionValidationPopUp.jpg)
 
 ### Sidebar
-![Sidebar](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/Sidebar.jpg)
+![Sidebar](screenshots/Sidebar.jpg)
 
 ### Task history
-![Task History](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/TaskHistory.jpg)
+![Task History](screenshots/TaskHistory.jpg)
 
 ### Dashboard
-![Dashboard](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/Dashboard.jpg)
+![Dashboard](screenshots/Dashboard.jpg)
 
 ### End of Day Summary
-![End of Day Summary](https://github.com/LMAR5/priority-hub-web/blob/master/screenshots/EndOfDaySummary.jpg)
+![End of Day Summary](screenshots/EndOfDaySummary.jpg)
